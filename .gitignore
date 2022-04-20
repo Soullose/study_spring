@@ -1,2 +1,2 @@
-/.idea/
-/start/target/
+!/.idea/
+!/start/target/
