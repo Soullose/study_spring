@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudyController {
     
     @GetMapping("/hello")
-    @PreAuthorize("hasAuthority('test')")
+    @PreAuthorize("hasAuthority('hello')")
     public String HelloWorld() {
         return "你好，世界！";
+    }
+    
+    @GetMapping("/test")
+    @PreAuthorize("hasAuthority('test')")
+    public String test() {
+        return "你好，测试！";
     }
 }

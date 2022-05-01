@@ -1,14 +1,19 @@
 package com.wsf.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wsf.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * open
@@ -24,13 +29,19 @@ public class LoginUserDetail implements UserDetails {
     
     private User user;
     
+    private List<String> permissions;
+    
+    @JsonIgnore
+    private List<SimpleGrantedAuthority> authorities;
     
     public LoginUserDetail() {
     }
     
-    public LoginUserDetail(final User user) {
+    public LoginUserDetail(final User user, final List<String> permissions) {
         this.user = user;
+        this.permissions = permissions;
     }
+    
     
     /**
      * 权限信息
@@ -39,7 +50,10 @@ public class LoginUserDetail implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if (authorities != null) {
+            return authorities;
+        }
+        return permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
     
     /**
