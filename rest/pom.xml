@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>start</artifactId>
+    <artifactId>rest</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -25,9 +25,8 @@
 
         <dependency>
             <groupId>com.wsf</groupId>
-            <artifactId>rest</artifactId>
+            <artifactId>system</artifactId>
             <version>${version}</version>
         </dependency>
     </dependencies>
-
 </project>
