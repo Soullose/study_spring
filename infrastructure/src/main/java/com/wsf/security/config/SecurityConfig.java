@@ -1,6 +1,7 @@
 package com.wsf.security.config;
 
 import com.wsf.security.filter.JwtAuthenticationTokenFilter;
+import com.wsf.security.service.AuthenticationFailureListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //登录接口允许匿名访问
                 .antMatchers("/open/login").anonymous()
                 //除上面外的所有请求全部需要认证
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .failureHandler(AuthenticationFailureListener)
+                ;
         
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
