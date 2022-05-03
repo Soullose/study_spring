@@ -1,8 +1,8 @@
 package com.wsf.security.filter;
 
-import com.wsf.utils.JwtUtil;
 import com.wsf.redis.utils.RedisCache;
 import com.wsf.security.domain.LoginUserDetail;
+import com.wsf.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             Claims claims = JwtUtil.parseJWT(token);
             userId = claims.getSubject();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("context{}", e.getCause());
             throw new RuntimeException("token非法");
         }
         

@@ -23,11 +23,11 @@ public class LoginAttemptService {
                 .expireAfterWrite(1, TimeUnit.DAYS)
                 .recordStats()
                 .build(new CacheLoader<String, Integer>() {
-            @Override
-            public Integer load(final String key) {
-                return 0;
-            }
-        });
+                    @Override
+                    public Integer load(final String key) {
+                        return 0;
+                    }
+                });
     }
     
     //
@@ -42,7 +42,7 @@ public class LoginAttemptService {
         try {
             attempts = attemptsCache.get(key2Base64(key));
         } catch (final ExecutionException e) {
-            e.printStackTrace();
+            log.error("context{}", e.getCause());
             attempts = 0;
         }
         attempts++;
