@@ -6,33 +6,35 @@ package com.wsf.entity;
  * 2022-04-28 09:44
  */
 
+import com.google.common.collect.Sets;
+import com.wsf.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @Table(name = "t_open_user_")
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
     
     private static final long serialVersionUID = 3050292059722106684L;
     
     /**
      * 主键
      */
-    @Id
-    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "idGenerator")
-    @Column(name = "id_")
-    @Access(AccessType.PROPERTY)
-    private String id;
+//    @Id
+//    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
+//    @GeneratedValue(generator = "idGenerator")
+//    @Column(name = "id_")
+//    @Access(AccessType.PROPERTY)
+//    private String id;
     /**
      * 用户名
      */
@@ -103,5 +105,9 @@ public class User implements Serializable {
      */
     @Column(name = "del_flag_")
     private Integer delFlag;
+    
+    @ManyToMany
+    @JoinTable(name = "t_open_user_role_", joinColumns = {@JoinColumn(name = "user_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
+    private Set<Role> roles = Sets.newHashSet();
 }
 
