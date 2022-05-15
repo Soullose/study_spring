@@ -5,10 +5,12 @@ package com.wsf.repository;
  * SoulLose
  * 2022-04-28 09:45
  */
-import com.wsf.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User,String> {
+import com.wsf.entity.User;
+import com.wsf.jpa.BaseRepository;
+import com.wsf.jpa.OpenRepository;
+
+public interface UserRepository extends OpenRepository<User> {
     
     User getUserByUserName(String userName);
     

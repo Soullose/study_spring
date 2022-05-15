@@ -58,5 +58,16 @@
             <artifactId>guava</artifactId>
         </dependency>
 
+        <!-- 支持领域语言查询 -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+        </dependency>
+
+        <!-- 此插件自动产生QueryDSL查询类 -->
+<!--        <dependency>-->
+<!--            <groupId>com.querydsl</groupId>-->
+<!--            <artifactId>querydsl-apt</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

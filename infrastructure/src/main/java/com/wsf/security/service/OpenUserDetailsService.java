@@ -1,10 +1,15 @@
 package com.wsf.security.service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wsf.entity.QMenu;
+import com.wsf.entity.QRole;
+import com.wsf.entity.QUser;
 import com.wsf.entity.User;
 import com.wsf.repository.UserRepository;
 import com.wsf.security.domain.LoginUserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,6 +33,9 @@ import java.util.Objects;
 public class OpenUserDetailsService implements UserDetailsService {
     
     @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+    
+    @Autowired
     private UserRepository userRepository;
     
     @Autowired
@@ -39,6 +47,10 @@ public class OpenUserDetailsService implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        QUser user_ = QUser.user;
+        QRole role_ = QRole.role;
+        QMenu menu_ = QMenu.menu;
+        
         String ip = getClientIP();
         if (loginAttemptService.isBlocked(ip)) {
             throw new RuntimeException("IP已锁住，禁止访问");
@@ -50,7 +62,18 @@ public class OpenUserDetailsService implements UserDetailsService {
 //            throw new UsernameNotFoundException(String.format("用户不存在 '%s'", userName));
             throw new RuntimeException(String.format("用户不存在 '%s'", userName));
         }
+        
         //TODO 查询权限信息
+        List<String> fetch = jpaQueryFactory.select(menu_.perms)
+                .from(user_)
+                .leftJoin(role_).on(user_.roles.any().id.eq(role_.id))
+                .leftJoin(menu_).on(menu_.roles.any().id.eq(role_.id))
+                .where(user_.id.eq(user.getId()))
+                .fetch();
+
+        log.info("-----{}",fetch);
+    
+    
         List<String> list = new ArrayList<>(Arrays.asList("test", "admin"));
         return new LoginUserDetail(user, list);
     }
