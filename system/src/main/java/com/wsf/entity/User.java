@@ -6,6 +6,7 @@ package com.wsf.entity;
  * 2022-04-28 09:44
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
 import com.wsf.domain.BaseEntity;
 import lombok.Getter;
@@ -106,6 +107,7 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "del_flag_")
     private Integer delFlag;
     
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "t_open_user_role_", joinColumns = {@JoinColumn(name = "user_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
     private Set<Role> roles = Sets.newHashSet();

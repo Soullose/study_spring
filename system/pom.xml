@@ -65,9 +65,9 @@
         </dependency>
 
         <!-- 此插件自动产生QueryDSL查询类 -->
-<!--        <dependency>-->
-<!--            <groupId>com.querydsl</groupId>-->
-<!--            <artifactId>querydsl-apt</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+        </dependency>
     </dependencies>
 </project>

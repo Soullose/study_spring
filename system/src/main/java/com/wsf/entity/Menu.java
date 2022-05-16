@@ -1,5 +1,6 @@
 package com.wsf.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wsf.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,7 @@ public class Menu extends BaseEntity implements Serializable {
     @Column(name = "createTime_")
     private Date createTime;
     
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "t_open_role_menu_", joinColumns = {@JoinColumn(name = "menu_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
     private Set<Role> roles;

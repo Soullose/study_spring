@@ -7,11 +7,10 @@ package com.wsf.repository;
  */
 
 import com.wsf.entity.User;
-import com.wsf.jpa.BaseRepository;
 import com.wsf.jpa.OpenRepository;
 
 public interface UserRepository extends OpenRepository<User> {
     
-    User getUserByUserName(String userName);
+    User findUserByUserName(String userName);
     
 }

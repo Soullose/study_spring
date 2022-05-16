@@ -32,8 +32,6 @@ import java.util.Objects;
 @Slf4j
 public class OpenUserDetailsService implements UserDetailsService {
     
-    @Autowired
-    private JPAQueryFactory jpaQueryFactory;
     
     @Autowired
     private UserRepository userRepository;
@@ -57,14 +55,14 @@ public class OpenUserDetailsService implements UserDetailsService {
         }
         log.info("用户名：{}", userName);
         //查询用户信息
-        User user = userRepository.getUserByUserName(userName);
+        User user = userRepository.findUserByUserName(userName);
         if (Objects.isNull(user)) {
 //            throw new UsernameNotFoundException(String.format("用户不存在 '%s'", userName));
             throw new RuntimeException(String.format("用户不存在 '%s'", userName));
         }
         
         //TODO 查询权限信息
-        List<String> fetch = jpaQueryFactory.select(menu_.perms)
+        List<String> fetch = userRepository.getQueryFactory().select(menu_.perms)
                 .from(user_)
                 .leftJoin(role_).on(user_.roles.any().id.eq(role_.id))
                 .leftJoin(menu_).on(menu_.roles.any().id.eq(role_.id))
@@ -75,7 +73,7 @@ public class OpenUserDetailsService implements UserDetailsService {
     
     
         List<String> list = new ArrayList<>(Arrays.asList("test", "admin"));
-        return new LoginUserDetail(user, list);
+        return new LoginUserDetail(user, fetch);
     }
     
     private String getClientIP() {

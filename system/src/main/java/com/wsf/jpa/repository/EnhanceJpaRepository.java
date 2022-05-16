@@ -12,5 +12,5 @@ public interface EnhanceJpaRepository<T, ID> extends JpaRepository<T, ID> {
     
     JPAQueryFactory getQueryFactory();
     
-    <M, N> M getReference(Class<M> clazz, N id);
+//    <M, N> M getReference(Class<M> clazz, N id);
 }

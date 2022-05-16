@@ -12,19 +12,9 @@ import javax.persistence.EntityManager;
  * 2022-05-11 19:35
  */
 public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> implements EnhanceJpaRepository<T,ID> {
-    private EntityManager em;
+    
+    private EntityManager manager;
     private JPAQueryFactory queryFactory;
-    /**
-     * Creates a new {@link SimpleJpaRepository} to manage objects of the given {@link JpaEntityInformation}.
-     *
-     * @param entityInformation must not be {@literal null}.
-     * @param entityManager     must not be {@literal null}.
-     */
-    public EnhanceJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
-        super(entityInformation, entityManager);
-        this.em = entityManager;
-        this.queryFactory = new JPAQueryFactory(this.em);
-    }
     
     /**
      * Creates a new {@link SimpleJpaRepository} to manage objects of the given domain type.
@@ -34,13 +24,25 @@ public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> im
      */
     public EnhanceJpaRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
-        this.em = entityManager;
-        this.queryFactory = new JPAQueryFactory(this.em);
+        this.manager = entityManager;
+        this.queryFactory = new JPAQueryFactory(this.manager);
+    }
+    
+    /**
+     * Creates a new {@link SimpleJpaRepository} to manage objects of the given {@link JpaEntityInformation}.
+     *
+     * @param entityInformation must not be {@literal null}.
+     * @param entityManager     must not be {@literal null}.
+     */
+    public EnhanceJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+        super(entityInformation, entityManager);
+        this.manager = entityManager;
+        this.queryFactory = new JPAQueryFactory(this.manager);
     }
     
     @Override
     public EntityManager getEntityManager() {
-        return this.em;
+        return this.manager;
     }
     
     @Override
@@ -48,8 +50,8 @@ public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> im
         return this.queryFactory;
     }
     
-    @Override
-    public <M, N> M getReference(Class<M> clazz, N id) {
-        return this.em.getReference(clazz, id);
-    }
+//    @Override
+//    public <M, N> M getReference(Class<M> clazz, N id) {
+//        return this.manager.getReference(clazz, id);
+//    }
 }

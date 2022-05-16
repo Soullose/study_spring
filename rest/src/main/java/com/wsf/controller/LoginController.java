@@ -34,7 +34,8 @@ public class LoginController {
         String jwt = loginService.login(loginUserParams);
         Map<String, Object> map = new HashMap<>();
         map.put("token",jwt);
-        return ResponseEntity.ok(map);
+        log.info("map{}",map);
+        return ResponseEntity.ok(jwt);
     }
     
     @GetMapping("/logout")
