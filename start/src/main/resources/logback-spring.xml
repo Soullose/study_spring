@@ -6,6 +6,8 @@
     <conversionRule conversionWord="default_color"
                     converterClass="com.wsf.logback.DefaultLogbackColor" />
 
+    <conversionRule conversionWord="color"
+                    converterClass="com.wsf.logback.LogbackColor" />
     <!--控制台日志，控制台输出 -->
     <!-- %d{HH: mm:ss.SSS}——日志输出时间 %thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用 %-5level——日志级别，并且使用5个字符靠左对齐
         %logger{36}——日志输出者的名字 %msg——日志消息 %n——平台的换行符 -->
@@ -25,6 +27,12 @@
         </encoder>
     </appender>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%color(%d{HH:mm:ss.SSS} [%13.13thread] %5level %36.80logger{36}: %msg%n)</pattern>
+        </encoder>
+    </appender>
+
 <!--    <appender name="FILE"-->
 <!--              class="ch.qos.logback.core.rolling.RollingFileAppender">-->
 
@@ -40,7 +48,6 @@
 
     <logger name="com.wsf" level="TRACE" additivity="false">
         <appender-ref ref="CUSTOM_STDOUT" />
-<!--        <appender-ref ref="FILE" />-->
     </logger>
 
 <!--    <logger name="com.wsf.mqtt" level="WARN" additivity="false">-->
@@ -49,7 +56,6 @@
 
     <logger name="org.springframework" level="INFO" additivity="false">
         <appender-ref ref="DEFAULT_STDOUT" />
-<!--        <appender-ref ref="FILE" />-->
     </logger>
 
     <!--

@@ -42,6 +42,7 @@ public class OpenJpaConfig {
     public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(@Qualifier(value = "openDataSource") DataSource openDataSource,
                                                                            JpaProperties jpaProperties,
                                                                            EntityManagerFactoryBuilder builder) {
+        log.debug("测试");
         return builder.dataSource(openDataSource).properties(jpaProperties.getProperties()).packages(REPOSITORY_PACKAGE).persistenceUnit("openDS").build();
     }
     
