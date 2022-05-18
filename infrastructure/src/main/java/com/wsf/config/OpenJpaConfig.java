@@ -1,6 +1,7 @@
 package com.wsf.config;
 
 import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
  * SoulLose
  * 2022-05-16 14:35
  */
+@Slf4j
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(

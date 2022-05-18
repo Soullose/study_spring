@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <conversionRule conversionWord="custom_color"
+                    converterClass="com.wsf.logback.CustomLogbackColor" />
+
+    <conversionRule conversionWord="default_color"
+                    converterClass="com.wsf.logback.DefaultLogbackColor" />
+
+    <!--控制台日志，控制台输出 -->
+    <!-- %d{HH: mm:ss.SSS}——日志输出时间 %thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用 %-5level——日志级别，并且使用5个字符靠左对齐
+        %logger{36}——日志输出者的名字 %msg——日志消息 %n——平台的换行符 -->
+    <appender name="CUSTOM_STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%custom_color(%d{HH:mm:ss.SSS} [%13.13thread] %5level %36.80logger{36}:　%msg%n)</pattern>
+        </encoder>
+    </appender>　
+
+    <appender name="DEFAULT_STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%default_color(%d{HH:mm:ss.SSS} [%13.13thread] %5level %36.80logger{36}: %msg%n)</pattern>
+        </encoder>
+    </appender>
+
+<!--    <appender name="FILE"-->
+<!--              class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>%d{yyyyMMdd}.log</fileNamePattern>-->
+<!--            <maxHistory>30</maxHistory>-->
+<!--        </rollingPolicy>-->
+
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%13.13thread] %5level %36.80logger{36}: %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+    <logger name="com.wsf" level="TRACE" additivity="false">
+        <appender-ref ref="CUSTOM_STDOUT" />
+<!--        <appender-ref ref="FILE" />-->
+    </logger>
+
+<!--    <logger name="com.wsf.mqtt" level="WARN" additivity="false">-->
+<!--        <appender-ref ref="CUSTOM_STDOUT" />-->
+<!--    </logger>-->
+
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="DEFAULT_STDOUT" />
+<!--        <appender-ref ref="FILE" />-->
+    </logger>
+
+    <!--
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"/>
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/>
+        <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/>
+    -->
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="DEFAULT_STDOUT" />
+    </root>
+</configuration>

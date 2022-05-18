@@ -30,7 +30,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUserParams loginUserParams) {
-        log.info("登录用户名密码：{}" ,loginUserParams);
+        log.debug("登录用户名密码：{}" ,loginUserParams);
         String jwt = loginService.login(loginUserParams);
         Map<String, Object> map = new HashMap<>();
         map.put("token",jwt);
