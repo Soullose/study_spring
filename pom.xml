@@ -82,6 +82,12 @@
 <!--                <classifier>jpa</classifier>-->
 <!--                <scope>provided</scope>-->
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-vfs2</artifactId>
+                <version>2.9.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
