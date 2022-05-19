@@ -1,2 +1,7 @@
 .idea
 start/target
+*.iws
+*.iml
+*.ipr
+
+target/
