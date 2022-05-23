@@ -29,13 +29,13 @@ public class LoginController {
      * @return                  {@link Map}
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginUserParams loginUserParams) {
+    public ResponseEntity<Map> login(@RequestBody LoginUserParams loginUserParams) {
         log.debug("登录用户名密码：{}" ,loginUserParams);
         String jwt = loginService.login(loginUserParams);
         Map<String, Object> map = new HashMap<>();
         map.put("token",jwt);
         log.info("map{}",map);
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(map);
     }
     
     @GetMapping("/logout")

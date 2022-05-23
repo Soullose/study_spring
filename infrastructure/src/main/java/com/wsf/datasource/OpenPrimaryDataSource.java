@@ -1,4 +1,4 @@
-package com.wsf.config;
+package com.wsf.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  * 2022-05-16 14:26
  */
 @Configuration
-public class OpenPrimaryDataSourceConfig {
+public class OpenPrimaryDataSource {
     
     @Primary
     @Bean(name = "openDataSourceProperties")

@@ -1,4 +1,4 @@
-package com.wsf.config;
+package com.wsf.datasource;
 
 import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
@@ -26,14 +25,14 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = OpenJpaConfig.REPOSITORY_PACKAGE,
+        basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE,
         entityManagerFactoryRef = "openEntityManagerFactory",
         transactionManagerRef = "openTransactionManager",
         repositoryBaseClass = EnhanceJpaRepositoryImpl.class
 )
-public class OpenJpaConfig {
+public class OpenPrimaryJpaConfig {
     
-    public OpenJpaConfig() {}
+    public OpenPrimaryJpaConfig() {}
     
     public static final String REPOSITORY_PACKAGE = "com.wsf.**";
     

@@ -56,7 +56,9 @@ public class OpenUserDetailsService implements UserDetailsService {
         log.info("用户名：{}", userName);
         //查询用户信息
         User user = userRepository.findUserByUserName(userName);
+        log.debug("用户:{}",user);
         if (Objects.isNull(user)) {
+            log.debug("用户不存在或用户名密码错误");
 //            throw new UsernameNotFoundException(String.format("用户不存在 '%s'", userName));
             throw new RuntimeException(String.format("用户不存在 '%s'", userName));
         }
@@ -70,9 +72,7 @@ public class OpenUserDetailsService implements UserDetailsService {
                 .fetch();
 
         log.info("-----{}",fetch);
-    
-    
-        List<String> list = new ArrayList<>(Arrays.asList("test", "admin"));
+        
         return new LoginUserDetail(user, fetch);
     }
     

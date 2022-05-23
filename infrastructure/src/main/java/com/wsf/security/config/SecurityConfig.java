@@ -1,7 +1,10 @@
 package com.wsf.security.config;
 
 import com.wsf.security.filter.JwtAuthenticationTokenFilter;
+import com.wsf.security.handler.AccessDeniedHandlerImpl;
+import com.wsf.security.handler.AuthenticationEntryPointImpl;
 import com.wsf.security.service.AuthenticationFailureListener;
+import com.wsf.security.service.OpenUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    
+    @Autowired
+    private AuthenticationEntryPointImpl authenticationEntryPoint;
+    
+    @Autowired
+    private AccessDeniedHandlerImpl accessDeniedHandler;
+    
+    @Autowired
+    private OpenUserDetailsService userDetailsService;
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -57,14 +69,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //登录接口允许匿名访问
                 .antMatchers("/open/login").anonymous()
+                .antMatchers("/test").anonymous()
+                .antMatchers("/employees").anonymous()
                 //除上面外的所有请求全部需要认证
                 .anyRequest().authenticated()
 //                .and()
 //                .formLogin()
 //                .failureHandler(AuthenticationFailureListener)
                 ;
-        
+        //添加过滤器
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //配置异常处理
+        http.exceptionHandling()
+                //认证失败
+                .authenticationEntryPoint(authenticationEntryPoint)
+                //授权失败
+                .accessDeniedHandler(accessDeniedHandler);
+        //允许跨域
+        http.cors();
+    }
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        super.configure(auth);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
     
     /**
@@ -88,4 +116,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    
+    
 }

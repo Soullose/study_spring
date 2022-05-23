@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * open
@@ -50,7 +51,7 @@ public class LoginUserServiceImpl implements LoginService {
         String jwt = JwtUtil.createJWT(id);
         log.info("jwt：{}", jwt);
     
-        redisCache.setCacheObject("open-login:"+id,loginUserDetail);
+        redisCache.setCacheObject("open-login:"+id,loginUserDetail,60,TimeUnit.MILLISECONDS);
         
         return jwt;
     }
