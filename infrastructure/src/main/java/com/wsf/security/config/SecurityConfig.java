@@ -69,15 +69,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //登录接口允许匿名访问
                 .antMatchers("/open/login").anonymous()
-                .antMatchers("/test").anonymous()
-                .antMatchers("/employees").anonymous()
                 //除上面外的所有请求全部需要认证
                 .anyRequest().authenticated()
 //                .and()
 //                .formLogin()
 //                .failureHandler(AuthenticationFailureListener)
                 ;
-        //添加过滤器
+        
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //配置异常处理
         http.exceptionHandling()
@@ -116,6 +114,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
-    
 }

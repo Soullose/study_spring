@@ -6,4 +6,4 @@ spring:
     ansi:
       enabled: detect
   profiles:
-    include: jpa,datasource,redis
+    include: datasource,jpa,redis

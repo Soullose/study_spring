@@ -51,7 +51,7 @@ public class LoginUserServiceImpl implements LoginService {
         String jwt = JwtUtil.createJWT(id);
         log.info("jwt：{}", jwt);
     
-        redisCache.setCacheObject("open-login:"+id,loginUserDetail,60,TimeUnit.MILLISECONDS);
+        redisCache.setCacheObject("open-login:"+id,loginUserDetail,60, TimeUnit.MINUTES);
         
         return jwt;
     }
