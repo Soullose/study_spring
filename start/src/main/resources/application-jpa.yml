@@ -1,16 +1,17 @@
 spring:
   jpa:
-    database: mysql
-    generate-ddl: true
-    open-in-view: true
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    properties:
+    primary:
+      database: mysql
+      generate-ddl: true
+      open-in-view: true
+      show-sql: true
       hibernate:
-        format_sql: true
-        use-sql-comments: true
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: update
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+        hibernate:
+          format_sql: true
+          use-sql-comments: true
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

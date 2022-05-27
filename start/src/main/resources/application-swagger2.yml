@@ -1,0 +1,15 @@
+open:
+  swagger2:
+    title: ${spring.application.name}
+    version: ${application.formatted-version}
+    termsOfServiceUrl: http://www.vuetify.com
+    license: Apache 2.0
+    licenseUrl: http://www.apache.org/licenses/LICENSE-2.0
+    contact:
+      name: OPEN Software
+      url: http://www.open.com
+      email: admin@open.com
+    apis:
+      open:
+        name: open
+        packages: com.wsf.controller

@@ -1,4 +1,4 @@
-package com.wsf.datasource;
+package com.wsf.config.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;

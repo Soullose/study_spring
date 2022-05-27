@@ -9,3 +9,7 @@ spring:
         max-wait: -1ms
         max-idle: 8
         min-idle: 0
+  data:
+    redis:
+      repositories:
+        enabled: false

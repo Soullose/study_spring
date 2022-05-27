@@ -2,6 +2,7 @@ package com.wsf.jpa.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
+import org.springframework.data.jpa.repository.support.QuerydslJpaPredicateExecutor;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import javax.persistence.EntityManager;
@@ -11,7 +12,7 @@ import javax.persistence.EntityManager;
  * SoulLose
  * 2022-05-11 19:35
  */
-public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> implements EnhanceJpaRepository<T,ID> {
+public class EnhanceJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements EnhanceJpaRepository<T, ID> {
     
     private EntityManager manager;
     private JPAQueryFactory queryFactory;
@@ -19,8 +20,8 @@ public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> im
     /**
      * Creates a new {@link SimpleJpaRepository} to manage objects of the given domain type.
      *
-     * @param domainClass must not be {@literal null}.
-     * @param entityManager          must not be {@literal null}.
+     * @param domainClass   must not be {@literal null}.
+     * @param entityManager must not be {@literal null}.
      */
     public EnhanceJpaRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
@@ -49,9 +50,9 @@ public class EnhanceJpaRepositoryImpl<T,ID> extends SimpleJpaRepository<T,ID> im
     public JPAQueryFactory getQueryFactory() {
         return this.queryFactory;
     }
-    
-//    @Override
-//    public <M, N> M getReference(Class<M> clazz, N id) {
-//        return this.manager.getReference(clazz, id);
-//    }
+
+    @Override
+    public <M, N> M getReference(Class<M> clazz, N id) {
+        return this.manager.getReference(clazz, id);
+    }
 }

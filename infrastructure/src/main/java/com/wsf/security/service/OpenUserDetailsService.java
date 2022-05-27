@@ -1,15 +1,10 @@
 package com.wsf.security.service;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.entity.QMenu;
-import com.wsf.entity.QRole;
-import com.wsf.entity.QUser;
-import com.wsf.entity.User;
+import com.wsf.entity.*;
 import com.wsf.repository.UserRepository;
 import com.wsf.security.domain.LoginUserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,7 +49,7 @@ public class OpenUserDetailsService implements UserDetailsService {
         log.info("用户名：{}", userName);
         //查询用户信息
         User user = userRepository.findUserByUserName(userName);
-        log.debug("用户:{}",user);
+        log.debug("用户:{}", user);
         if (Objects.isNull(user)) {
             log.debug("用户不存在或用户名密码错误");
 //            throw new UsernameNotFoundException(String.format("用户不存在 '%s'", userName));
@@ -70,9 +63,20 @@ public class OpenUserDetailsService implements UserDetailsService {
                 .leftJoin(menu_).on(menu_.roles.any().id.eq(role_.id))
                 .where(user_.id.eq(user.getId()))
                 .fetch();
-
-        log.info("-----{}",fetch);
         
+        log.info("-----{}", fetch);
+    
+//        Specification<User> spec = ((root, query, criteriaBuilder) -> {
+//            List<Predicate> predicates = new ArrayList<>();
+//            Root<User> userRoot = query.from(User.class);
+//            Root<Role> roleRoot = query.from(Role.class);
+//            Root<Menu> menuRoot = query.from(Menu.class);
+//
+//            predicates.add(criteriaBuilder.equal(userRoot.get("id"),roleRoot.get("id")));
+//            predicates.add(criteriaBuilder.equal(menuRoot.get("id"),roleRoot.get("id")));
+//            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+//        });
+//        System.out.println("-----"+userRepository.findAll(spec));
         return new LoginUserDetail(user, fetch);
     }
     

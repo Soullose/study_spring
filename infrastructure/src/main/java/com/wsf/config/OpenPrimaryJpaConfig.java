@@ -1,9 +1,11 @@
-package com.wsf.datasource;
+package com.wsf.config;
 
 import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,6 @@ import javax.sql.DataSource;
  * SoulLose
  * 2022-05-16 14:35
  */
-@Slf4j
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
@@ -31,18 +32,30 @@ import javax.sql.DataSource;
         repositoryBaseClass = EnhanceJpaRepositoryImpl.class
 )
 public class OpenPrimaryJpaConfig {
+    private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
     
     public OpenPrimaryJpaConfig() {}
     
     public static final String REPOSITORY_PACKAGE = "com.wsf.**";
     
+    
+    @Primary
+    @Bean(name = "openPrimaryJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.primary")
+    public JpaProperties jpaProperties() {
+        return new JpaProperties();
+    }
+    
     @Primary
     @Bean(name = "openEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(@Qualifier(value = "openDataSource") DataSource openDataSource,
-                                                                           JpaProperties jpaProperties,
+                                                                           @Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
                                                                            EntityManagerFactoryBuilder builder) {
-        log.debug("测试");
-        return builder.dataSource(openDataSource).properties(jpaProperties.getProperties()).packages(REPOSITORY_PACKAGE).persistenceUnit("openDS").build();
+        return builder.dataSource(openDataSource)
+                .properties(jpaProperties.getProperties())
+                .packages(REPOSITORY_PACKAGE)
+                .persistenceUnit("openDS")
+                .build();
     }
     
 //    public JpaTransactionManager
