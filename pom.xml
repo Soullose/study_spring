@@ -39,6 +39,7 @@
         <module>infrastructure</module>
         <module>rest</module>
         <module>system</module>
+        <module>api</module>
     </modules>
 
     <dependencyManagement>

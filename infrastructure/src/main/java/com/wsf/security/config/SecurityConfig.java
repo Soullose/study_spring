@@ -4,6 +4,8 @@ import com.wsf.security.filter.JwtAuthenticationTokenFilter;
 import com.wsf.security.handler.AccessDeniedHandlerImpl;
 import com.wsf.security.handler.AuthenticationEntryPointImpl;
 import com.wsf.security.service.OpenUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final static Logger log = LoggerFactory.getLogger(SecurityConfig.class);
     
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
@@ -59,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        log.debug("Using custom configure(HttpSecurity). If subclassed this will potentially override subclass configure(HttpSecurity).");
+
         http
                 //关闭csrf
                 .csrf().disable()
@@ -106,6 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        super.configure(auth);
+//        UserDetailsPasswordService
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
     

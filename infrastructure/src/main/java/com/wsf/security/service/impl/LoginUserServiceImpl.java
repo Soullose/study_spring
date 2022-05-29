@@ -37,6 +37,7 @@ public class LoginUserServiceImpl implements LoginService {
      */
     @Override
     public String login(LoginUserParams params) {
+        log.info("2");
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(params.getUserName(), params.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>start</artifactId>
+    <artifactId>api</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -22,24 +22,5 @@
             <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.wsf</groupId>
-            <artifactId>system</artifactId>
-            <version>${version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.wsf</groupId>
-            <artifactId>rest</artifactId>
-            <version>${version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.wsf</groupId>
-            <artifactId>api</artifactId>
-            <version>${version}</version>
-        </dependency>
     </dependencies>
-
 </project>
