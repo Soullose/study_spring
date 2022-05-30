@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 2022-04-25 16:14
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) //基于表达式进行方法访问控制
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final static Logger log = LoggerFactory.getLogger(SecurityConfig.class);
     

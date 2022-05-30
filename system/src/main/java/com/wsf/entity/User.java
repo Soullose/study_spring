@@ -135,7 +135,7 @@ public class User extends BaseEntity implements Serializable {
     
     
 //    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "t_open_user_role_", joinColumns = {@JoinColumn(name = "user_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
     private Set<Role> roles = Sets.newHashSet();
 }

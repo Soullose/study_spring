@@ -3,6 +3,10 @@ package com.wsf.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +34,16 @@ public class TestController {
     
     @GetMapping("/employees")
     public String employee(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        Object principal = authentication.getPrincipal();
+        log.debug("当前用户:{}",principal);
         return "人员信息";
+    }
+
+    @GetMapping("/testAnonyMous")
+    @PreAuthorize("hasAuthority('ROLE_ANONYMOUS')")
+    public String anonyMous() {
+        return "匿名访问";
     }
 }
