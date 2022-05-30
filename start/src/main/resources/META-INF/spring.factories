@@ -1,2 +1,2 @@
 org.springframework.boot.SpringApplicationRunListener=\
-  com.wsf.open.OpenApplicationRunListener
+  com.wsf.infrastructure.open.OpenApplicationRunListener

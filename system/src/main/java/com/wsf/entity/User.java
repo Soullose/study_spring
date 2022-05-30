@@ -133,7 +133,8 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "create_time_")
     private LocalDateTime createTime;
     
-    @JsonIgnore
+    
+//    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "t_open_user_role_", joinColumns = {@JoinColumn(name = "user_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
     private Set<Role> roles = Sets.newHashSet();

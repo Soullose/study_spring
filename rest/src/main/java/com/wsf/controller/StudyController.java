@@ -28,16 +28,16 @@ public class StudyController {
         return "你好，世界！";
     }
     
-    @GetMapping("/test")
-//    @PreAuthorize("hasAuthority('test')")
-    public ResponseEntity<String> test() {
-        String forObject = restTemplate.getForObject("http://localhost:8080/employees", String.class);
-        log.debug("测试:{}",forObject);
-        return ResponseEntity.ok("你好，测试！");
-    }
-    
-    @GetMapping("/employees")
-    public String employee(){
-        return "人员信息";
-    }
+//    @GetMapping("/test")
+////    @PreAuthorize("hasAuthority('test')")
+//    public ResponseEntity<String> test() {
+//        String forObject = restTemplate.getForObject("http://localhost:8080/employees", String.class);
+//        log.debug("测试:{}",forObject);
+//        return ResponseEntity.ok("你好，测试！");
+//    }
+//
+//    @GetMapping("/employees")
+//    public String employee(){
+//        return "人员信息";
+//    }
 }

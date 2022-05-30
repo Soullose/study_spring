@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
     <conversionRule conversionWord="custom_color"
-                    converterClass="com.wsf.logback.CustomLogbackColor" />
+                    converterClass="com.wsf.infrastructure.logback.CustomLogbackColor" />
 
     <conversionRule conversionWord="default_color"
-                    converterClass="com.wsf.logback.DefaultLogbackColor" />
+                    converterClass="com.wsf.infrastructure.logback.DefaultLogbackColor" />
 
     <conversionRule conversionWord="color"
-                    converterClass="com.wsf.logback.LogbackColor" />
+                    converterClass="com.wsf.infrastructure.logback.LogbackColor" />
     <!--控制台日志，控制台输出 -->
     <!-- %d{HH: mm:ss.SSS}——日志输出时间 %thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用 %-5level——日志级别，并且使用5个字符靠左对齐
         %logger{36}——日志输出者的名字 %msg——日志消息 %n——平台的换行符 -->

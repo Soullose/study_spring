@@ -1,7 +1,7 @@
 package com.wsf.controller;
 
 import com.wsf.params.LoginUserParams;
-import com.wsf.service.LoginService;
+import com.wsf.infrastructure.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

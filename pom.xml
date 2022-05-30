@@ -32,6 +32,8 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <swagger-models.version>1.5.21</swagger-models.version>
+        <poi-tl.version>1.12.0</poi-tl.version>
+        <poi-scratchpad.version>5.2.2</poi-scratchpad.version>
     </properties>
 
     <modules>
@@ -135,6 +137,19 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger-models.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.deepoove</groupId>
+                <artifactId>poi-tl</artifactId>
+                <version>${poi-tl.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi-scratchpad.version}</version>
             </dependency>
 
         </dependencies>

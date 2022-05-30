@@ -47,7 +47,7 @@ public class Menu extends BaseEntity implements Serializable {
     @Column(name = "createTime_")
     private Date createTime;
     
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "t_open_role_menu_", joinColumns = {@JoinColumn(name = "menu_id_")}, inverseJoinColumns = {@JoinColumn(name = "role_id_")})
     private Set<Role> roles;
