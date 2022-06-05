@@ -34,6 +34,7 @@
         <swagger-models.version>1.5.21</swagger-models.version>
         <poi-tl.version>1.12.0</poi-tl.version>
         <poi-scratchpad.version>5.2.2</poi-scratchpad.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
     </properties>
 
     <modules>
@@ -150,6 +151,13 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
                 <version>${poi-scratchpad.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
 
         </dependencies>

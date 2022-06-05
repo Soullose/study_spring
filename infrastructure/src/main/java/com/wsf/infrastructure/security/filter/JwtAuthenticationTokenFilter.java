@@ -3,6 +3,7 @@ package com.wsf.infrastructure.security.filter;
 import com.wsf.infrastructure.utils.RedisCache;
 import com.wsf.infrastructure.security.domain.LoginUserDetail;
 import com.wsf.infrastructure.utils.JwtUtil;
+import com.wsf.mapstruct.UserMapper;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     
     @Autowired
     private RedisCache redisCache;
-    
-   
+
+    @Autowired(required = false)
+    private UserMapper userMapper;
     
     
     /**

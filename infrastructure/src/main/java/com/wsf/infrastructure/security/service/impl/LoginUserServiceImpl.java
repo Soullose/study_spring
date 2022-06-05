@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.security.service.impl;
 
+import com.wsf.mapstruct.UserMapper;
 import com.wsf.params.LoginUserParams;
 import com.wsf.infrastructure.utils.JwtUtil;
 import com.wsf.infrastructure.utils.RedisCache;
@@ -30,6 +31,9 @@ public class LoginUserServiceImpl implements LoginService {
     
     @Autowired
     private RedisCache redisCache;
+
+    @Autowired(required = false)
+    private UserMapper userMapper;
     /**
      * 登录并返回jwt
      * @param params   前端传过来的登录信息
@@ -51,7 +55,7 @@ public class LoginUserServiceImpl implements LoginService {
         String id = loginUserDetail.getUser().getId();
         String jwt = JwtUtil.createJWT(id);
         log.info("jwt：{}", jwt);
-    
+
 //        redisCache.setCacheObject("open-login:"+id,loginUserDetail,60, TimeUnit.MINUTES);
         redisCache.setCacheObject("open-login:"+id,loginUserDetail);
         return jwt;
