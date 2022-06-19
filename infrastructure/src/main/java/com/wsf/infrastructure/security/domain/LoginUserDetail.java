@@ -2,6 +2,7 @@ package com.wsf.infrastructure.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.wsf.dto.UserDto;
 import com.wsf.entity.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,9 @@ import java.util.stream.Collectors;
 //@AllArgsConstructor
 public class LoginUserDetail implements UserDetails {
     
-    private User user;
+//    private User user;
+    
+    private UserDto user;
     
     private List<String> permissions;
     
@@ -36,7 +39,7 @@ public class LoginUserDetail implements UserDetails {
     public LoginUserDetail() {
     }
     
-    public LoginUserDetail(final User user, final List<String> permissions) {
+    public LoginUserDetail(final UserDto user, final List<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }

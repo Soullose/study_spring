@@ -1,6 +1,8 @@
 package com.wsf.infrastructure.security.service;
 
+import com.wsf.dto.UserDto;
 import com.wsf.entity.*;
+import com.wsf.mapstruct.UserMapper;
 import com.wsf.repository.UserRepository;
 import com.wsf.infrastructure.security.domain.LoginUserDetail;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,12 @@ public class OpenUserDetailsService implements UserDetailsService {
     @Autowired(required = false)
     private HttpServletRequest request;
     
+    private final UserMapper userMapper;
+    
+    public OpenUserDetailsService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+    
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         QUser user_ = QUser.user;
@@ -49,6 +57,7 @@ public class OpenUserDetailsService implements UserDetailsService {
         log.info("用户名：{}", userName);
         //查询用户信息
         User user = userRepository.findUserByUserName(userName);
+        UserDto userDto = userMapper.toDto(user);
         log.debug("用户:{}", user);
         if (Objects.isNull(user)) {
             log.debug("用户不存在或用户名密码错误");
@@ -65,7 +74,7 @@ public class OpenUserDetailsService implements UserDetailsService {
                 .fetch();
 
         log.info("-----{}", fetch);
-        return new LoginUserDetail(user, fetch);
+        return new LoginUserDetail(userDto, fetch);
     }
     
     private String getClientIP() {

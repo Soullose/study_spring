@@ -8,6 +8,7 @@ package com.wsf.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.common.collect.Sets;
 import com.wsf.domain.BaseEntity;
@@ -27,6 +28,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "t_open_user_")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends BaseEntity implements Serializable {
     
     private static final long serialVersionUID = 3050292059722106684L;
