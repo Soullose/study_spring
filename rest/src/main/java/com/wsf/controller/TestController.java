@@ -21,29 +21,4 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("test")
 @RestController
 public class TestController {
-    
-    @Autowired
-    private RestTemplate restTemplate;
-    
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        String forObject = restTemplate.getForObject("http://localhost:8080/test/employees", String.class);
-        log.debug("测试:{}",forObject);
-        return ResponseEntity.ok("你好，测试！");
-    }
-    
-    @GetMapping("/employees")
-    public String employee(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        Object principal = authentication.getPrincipal();
-        log.debug("当前用户:{}",principal);
-        return "人员信息";
-    }
-
-    @GetMapping("/testAnonyMous")
-    @PreAuthorize("hasAuthority('ROLE_ANONYMOUS')")
-    public String anonyMous() {
-        return "匿名访问";
-    }
 }

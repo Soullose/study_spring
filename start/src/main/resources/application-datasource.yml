@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     open:
-      url:  jdbc:postgresql://127.0.0.1:5432/open
-      username: open
+      url: jdbc:postgresql://127.0.0.1:5432/postgres
+      username: postgres
       password: 123456789
       driver-class-name: org.postgresql.Driver

@@ -16,26 +16,26 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
-    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "idGenerator")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "custom-id-generator")
+    @GenericGenerator(name = "custom-id-generator", strategy = "com.wsf.domain.CustomIdGenerator")
     @Column(name = "id_")
     @Access(AccessType.PROPERTY)
     private String id;
-    
+
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        
+
         if (id == null || object == null || getClass() != object.getClass()) {
             return false;
         }
-        
+
         final BaseEntity other = (BaseEntity) object;
-        
+
         return id.equals(other.id);
     }
-    
+
     public int hashCode() {
         return (id == null) ? super.hashCode() : id.hashCode();
     }
