@@ -1,5 +1,8 @@
 server:
   port: 8080
+  error:
+    include-exception: true
+    include-message: always
 
 spring:
   output:
@@ -7,3 +10,4 @@ spring:
       enabled: detect
   profiles:
     include: jpa,datasource,redis,swagger2
+    #打包的程序输出的异常信息前端可以显示

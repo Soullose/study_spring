@@ -19,25 +19,26 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class LoginController {
-    
+
     @Autowired
     private LoginService loginService;
-    
+
     /**
      * 登录
-     * @param loginUserParams   前端传过来的登录信息
-     * @return                  {@link Map}
+     * 
+     * @param loginUserParams 前端传过来的登录信息
+     * @return {@link Map}
      */
     @PostMapping("/login")
-    public ResponseEntity<Map> login(@RequestBody LoginUserParams loginUserParams) {
-        log.debug("登录用户名密码：{}" ,loginUserParams);
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginUserParams loginUserParams) {
+        log.debug("登录用户名密码：{}", loginUserParams);
         String jwt = loginService.login(loginUserParams);
         Map<String, Object> map = new HashMap<>();
-        map.put("token",jwt);
-        log.info("map{}",map);
+        map.put("token", jwt);
+        log.info("map{}", map);
         return ResponseEntity.ok(map);
     }
-    
+
     @GetMapping("/logout")
     public ResponseEntity<?> logout() {
         loginService.logout();

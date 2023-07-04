@@ -22,11 +22,5 @@
             <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.wsf</groupId>-->
-<!--            <artifactId>system</artifactId>-->
-<!--            <version>${version}</version>-->
-<!--        </dependency>-->
     </dependencies>
 </project>

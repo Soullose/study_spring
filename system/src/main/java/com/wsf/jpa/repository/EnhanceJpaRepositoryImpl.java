@@ -1,11 +1,11 @@
 package com.wsf.jpa.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import javax.persistence.EntityManager;
+
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.QuerydslJpaPredicateExecutor;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-import javax.persistence.EntityManager;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 /**
  * open
@@ -13,12 +13,13 @@ import javax.persistence.EntityManager;
  * 2022-05-11 19:35
  */
 public class EnhanceJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements EnhanceJpaRepository<T, ID> {
-    
+
     private EntityManager manager;
     private JPAQueryFactory queryFactory;
-    
+
     /**
-     * Creates a new {@link SimpleJpaRepository} to manage objects of the given domain type.
+     * Creates a new {@link SimpleJpaRepository} to manage objects of the given
+     * domain type.
      *
      * @param domainClass   must not be {@literal null}.
      * @param entityManager must not be {@literal null}.
@@ -28,9 +29,10 @@ public class EnhanceJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> 
         this.manager = entityManager;
         this.queryFactory = new JPAQueryFactory(this.manager);
     }
-    
+
     /**
-     * Creates a new {@link SimpleJpaRepository} to manage objects of the given {@link JpaEntityInformation}.
+     * Creates a new {@link SimpleJpaRepository} to manage objects of the given
+     * {@link JpaEntityInformation}.
      *
      * @param entityInformation must not be {@literal null}.
      * @param entityManager     must not be {@literal null}.
@@ -40,12 +42,12 @@ public class EnhanceJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> 
         this.manager = entityManager;
         this.queryFactory = new JPAQueryFactory(this.manager);
     }
-    
+
     @Override
     public EntityManager getEntityManager() {
         return this.manager;
     }
-    
+
     @Override
     public JPAQueryFactory getQueryFactory() {
         return this.queryFactory;
