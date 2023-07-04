@@ -39,4 +39,5 @@ public abstract class BaseEntity {
     public int hashCode() {
         return (id == null) ? super.hashCode() : id.hashCode();
     }
+
 }

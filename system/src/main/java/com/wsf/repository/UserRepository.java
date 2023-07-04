@@ -10,7 +10,7 @@ import com.wsf.entity.User;
 import com.wsf.jpa.OpenRepository;
 
 public interface UserRepository extends OpenRepository<User> {
-    
+
     User findUserByUserName(String userName);
-    
+
 }
