@@ -55,7 +55,6 @@ public class OpenPrimaryJpaConfig {
                 .build();
     }
 
-    // public JpaTransactionManager
     @Primary
     @Bean(name = "openTransactionManager")
     public JpaTransactionManager openTransactionManager(
