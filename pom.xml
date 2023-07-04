@@ -26,8 +26,8 @@
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <jjwt.version>0.9.0</jjwt.version>
         <lombok.version>1.18.8</lombok.version>
-        <querydsl-jpa.version>4.2.1</querydsl-jpa.version>
-        <querydsl-apt.version>4.2.1</querydsl-apt.version>
+        <querydsl-jpa.version>5.0.0</querydsl-jpa.version>
+        <querydsl-apt.version>5.0.0</querydsl-apt.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <postgresql.version>42.6.0</postgresql.version>
         <hibernate.core.version>5.4.24.Final</hibernate.core.version>
@@ -101,13 +101,14 @@
 <!--                <version>5.0.0</version>-->
 <!--                <classifier>jpa</classifier>-->
 <!--                <scope>provided</scope>-->
+                <classifier>jakarta</classifier>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.core.version}</version>
+                <!-- <version>${hibernate.core.version}</version> -->
             </dependency>
 
 
