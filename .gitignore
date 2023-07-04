@@ -4,4 +4,6 @@ start/target
 *.iml
 *.ipr
 
+.vscode
+
 target/
