@@ -1,2 +1,3 @@
 # study_spring
-基于springboot2.1.8版本，maven多模块项目(主要包含jpa,springSecurity,redis),主要用于学习
+
+基于 springboot2.3.5.RELEASE 版本，maven 多模块项目(主要包含 jpa,springSecurity,redis),主要用于学习
