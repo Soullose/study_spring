@@ -1,0 +1,10 @@
+
+   ____  _____  ______ _   _
+  / __ \|  __ \|  ____| \ | |   OPEN ${application.formatted-version}
+ | |  | | |__) | |__  |  \| |   port ${server.port}
+ | |  | |  ___/|  __| | . ` |   pid ${pid}
+ | |__| | |    | |____| |\  |
+  \____/|_|    |______|_| \_|
+
+Spring Boot Version: ${spring-boot.version}
+
