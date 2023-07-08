@@ -1,7 +1,9 @@
 package com.wsf.dto;
 
 import com.wsf.entity.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -10,6 +12,8 @@ import java.util.Set;
  * 2022/6/4
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private String id;
     private String userName;

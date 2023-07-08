@@ -25,40 +25,43 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE, entityManagerFactoryRef = "openEntityManagerFactory", transactionManagerRef = "openTransactionManager", repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
+@EnableJpaRepositories(basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE,
+		entityManagerFactoryRef = "openEntityManagerFactory",
+		transactionManagerRef = "openTransactionManager",
+		repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
 public class OpenPrimaryJpaConfig {
-    private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
+	private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
 
-    public OpenPrimaryJpaConfig() {
-    }
+	public OpenPrimaryJpaConfig() {
+	}
 
-    public static final String REPOSITORY_PACKAGE = "com.wsf.**";
+	public static final String REPOSITORY_PACKAGE = "com.wsf.**";
 
-    @Primary
-    @Bean(name = "openPrimaryJpaProperties")
-    @ConfigurationProperties(prefix = "spring.jpa.primary")
-    public JpaProperties jpaProperties() {
-        log.debug(REPOSITORY_PACKAGE);
-        return new JpaProperties();
-    }
+	@Primary
+	@Bean(name = "openPrimaryJpaProperties")
+	@ConfigurationProperties(prefix = "spring.jpa.primary")
+	public JpaProperties jpaProperties() {
+		log.debug(REPOSITORY_PACKAGE);
+		return new JpaProperties();
+	}
 
-    @Primary
-    @Bean(name = "openEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
-            @Qualifier(value = "openDataSource") DataSource openDataSource,
-            @Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
-            EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(openDataSource)
-                .properties(jpaProperties.getProperties())
-                .packages(REPOSITORY_PACKAGE)
-                .persistenceUnit("openDS")
-                .build();
-    }
+	@Primary
+	@Bean(name = "openEntityManagerFactory")
+	public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
+			@Qualifier(value = "openDataSource") DataSource openDataSource,
+			@Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
+			EntityManagerFactoryBuilder builder) {
+		return builder.dataSource(openDataSource)
+				.properties(jpaProperties.getProperties())
+				.packages(REPOSITORY_PACKAGE)
+				.persistenceUnit("openDS")
+				.build();
+	}
 
-    @Primary
-    @Bean(name = "openTransactionManager")
-    public JpaTransactionManager openTransactionManager(
-            @Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
-        return new JpaTransactionManager(factory);
-    }
+	@Primary
+	@Bean(name = "openTransactionManager")
+	public JpaTransactionManager openTransactionManager(
+			@Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
+		return new JpaTransactionManager(factory);
+	}
 }

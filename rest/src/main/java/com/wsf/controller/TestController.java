@@ -36,8 +36,6 @@ public class TestController {
     public ResponseEntity<?> test() {
 
         User user = new User();
-        user.setUserName("test");
-        user.setPassword("123456");
         user.setIdCardNumber("333333333333333");
         user.setPhoneNumber("13333333333");
         user.setCreateTime(LocalDateTime.now());

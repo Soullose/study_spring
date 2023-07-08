@@ -15,7 +15,7 @@ import java.util.Map;
  * SoulLose
  * 2022-04-27 19:01
  */
-@RequestMapping("/open")
+@RequestMapping("/api/v1/")
 @RestController
 @Slf4j
 public class LoginController {

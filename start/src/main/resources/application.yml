@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 40001
   error:
     include-exception: true
     include-message: always
@@ -9,5 +9,7 @@ spring:
     ansi:
       enabled: detect
   profiles:
-    include: jpa,datasource,redis,swagger2
+    #,redis,swagger2
+    include: jpa,datasource
     #打包的程序输出的异常信息前端可以显示
+
