@@ -1,23 +1,13 @@
 package com.wsf.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Set;
-
-import javax.persistence.*;
-
-/**
- * open
- * SoulLose
- * 2022-04-28 09:44
- */
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.google.common.collect.Sets;
 import com.wsf.domain.BaseEntity;
-
 import lombok.*;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -3,6 +3,7 @@ package com.wsf.infrastructure.security.filter;
 import com.wsf.infrastructure.security.service.JwtService;
 import com.wsf.infrastructure.security.service.OpenUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import java.io.IOException;
 /**
  * @author soullose
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -47,6 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		}
 		jwt = authHeader.substring(7);
 		username = jwtService.extractUsername(jwt);
+		log.debug("SecurityHolder:{}", SecurityContextHolder.getContext().getAuthentication());
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 			if (jwtService.isTokenValid(jwt, userDetails)) {
