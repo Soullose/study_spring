@@ -38,8 +38,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(
 			@NonNull HttpServletRequest request,
 			@NonNull HttpServletResponse response,
-			@NonNull FilterChain filterChain
-	) throws ServletException, IOException {
+			@NonNull FilterChain filterChain) throws ServletException, IOException {
 		final String authHeader = request.getHeader(AUTHORIZATION);
 		final String jwt;
 		final String username;
@@ -49,16 +48,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		}
 		jwt = authHeader.substring(7);
 		username = jwtService.extractUsername(jwt);
+		log.debug("username:{}", username);
 		log.debug("SecurityHolder:{}", SecurityContextHolder.getContext().getAuthentication());
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 			if (jwtService.isTokenValid(jwt, userDetails)) {
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities()
-				);
-				///添加其他详细信息到身份认证中如IP地址、会话ID或任何其他相关详细信息。
-				///通过设置身份验证令牌的详细信息，您可以将这些信息提供给身份验证和授权过程的其他组件。
-				///它允许下游组件（如身份验证提供者或访问决策管理器）在身份验证和授权过程中访问和使用这些附加细节。
+						userDetails, null, userDetails.getAuthorities());
+				/// 添加其他详细信息到身份认证中如IP地址、会话ID或任何其他相关详细信息。
+				/// 通过设置身份验证令牌的详细信息，您可以将这些信息提供给身份验证和授权过程的其他组件。
+				/// 它允许下游组件（如身份验证提供者或访问决策管理器）在身份验证和授权过程中访问和使用这些附加细节。
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
