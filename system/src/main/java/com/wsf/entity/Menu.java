@@ -1,8 +1,7 @@
 package com.wsf.entity;
 
 import com.wsf.domain.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +15,9 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "t_open_menu_")
 public class Menu extends BaseEntity implements Serializable {
