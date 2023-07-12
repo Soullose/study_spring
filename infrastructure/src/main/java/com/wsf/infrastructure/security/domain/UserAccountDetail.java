@@ -3,7 +3,6 @@ package com.wsf.infrastructure.security.domain;
 import com.wsf.entity.Role;
 import com.wsf.entity.UserAccount;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,9 +25,9 @@ public class UserAccountDetail implements UserDetails {
     ///获取角色权限
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        log.debug("UserAccountDetail-userAccount:{}",userAccount);
         Set<Role> roles = userAccount.getRoles();
-        log.debug("UserAccountDetail-roles:{}",roles);
+        int roleSize = roles.size();
+        log.debug("UserAccountDetail-roles:{}", roleSize);
         if (roles == null) {
             return null;
         }

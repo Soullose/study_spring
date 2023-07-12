@@ -1,6 +1,5 @@
 package com.wsf.entity;
 
-import com.google.common.collect.Sets;
 import com.wsf.domain.BaseEntity;
 import lombok.*;
 
@@ -9,7 +8,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,5 +50,5 @@ public class UserAccount extends BaseEntity implements Serializable {
             inverseJoinColumns = {
                     @JoinColumn(name = "role_id_")
             })
-    private Set<Role> roles = Sets.newHashSet();
+    private Set<Role> roles;
 }

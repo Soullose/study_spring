@@ -3,8 +3,7 @@ package com.wsf.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
 import com.wsf.domain.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +17,9 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "t_open_role_")
 public class Role extends BaseEntity implements Serializable {
@@ -37,8 +39,9 @@ public class Role extends BaseEntity implements Serializable {
     private Date createTime;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "t_open_userAccount_role_", joinColumns = {@JoinColumn(name = "role_id_")},
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "t_open_userAccount_role_",
+            joinColumns = {@JoinColumn(name = "role_id_")},
             inverseJoinColumns = {
                     @JoinColumn(name = "userAccount_id_")})
     private Set<UserAccount> userAccounts;
