@@ -1,80 +1,114 @@
 package com.wsf.infrastructure.security.service;
 
+import com.wsf.entity.Token;
 import com.wsf.entity.User;
 import com.wsf.entity.UserAccount;
+import com.wsf.enums.TokenType;
 import com.wsf.infrastructure.security.domain.*;
+import com.wsf.repository.TokenRepository;
 import com.wsf.repository.UserAccountRepository;
 import com.wsf.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
-    private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
-//	private final RoleRepository roleRepository;
+	//	private final RoleRepository roleRepository;
 
-    private final UserAccountRepository userAccountRepository;
+	private final TokenRepository tokenRepository;
 
-    private final JwtService jwtService;
+	private final UserAccountRepository userAccountRepository;
 
-    private final AuthenticationManager authenticationManager;
+	private final JwtService jwtService;
 
-    private final UserAccountDetailService userAccountDetailService;
+	private final AuthenticationManager authenticationManager;
 
-    public RegisterResponse register(RegisterRequest request) {
-        UserAccount userAccount = UserAccount.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
+	private final UserAccountDetailService userAccountDetailService;
 
-        UserAccount account = userAccountRepository.save(userAccount);
+	public RegisterResponse register(RegisterRequest request) {
+		UserAccount userAccount = UserAccount.builder()
+				.username(request.getUsername())
+				.password(passwordEncoder.encode(request.getPassword()))
+				.build();
 
-        User user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .userAccount(account)
-                .build();
-        userRepository.save(user);
-        String token = jwtService.generateToken(new UserAccountDetail(account));
-        return RegisterResponse.builder().token(token).build();
-    }
+		UserAccount account = userAccountRepository.save(userAccount);
 
-    public AuthenticateResponse authenticate(AuthenticateRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+		User user = User.builder()
+				.firstname(request.getFirstname())
+				.lastname(request.getLastname())
+				.email(request.getEmail())
+				.userAccount(account)
+				.build();
+		userRepository.save(user);
+		String jwtToken = jwtService.generateToken(new UserAccountDetail(account));
+		saveUserToken(account, jwtToken);
+		return RegisterResponse.builder().token(jwtToken).build();
+	}
 
-//		UserAccount userAccount = userAccountRepository.findByUsername(request.getUsername())
-//				.orElseThrow(null);
-//
-//		Set<Role> roles = roleRepository.findByUserAccounts(userAccount).orElseThrow(NullPointerException::new);
-//
-//		log.debug("roles:{}",roles.size());
-//
-//		userAccount.setRoles(roles);
-//
-//		log.debug("userAccount-roles:{}",userAccount.getRoles().size());
-//
-//		userAccount.setRoles(roles);
-        UserDetails userDetails = userAccountDetailService.loadUserDetailByUsername(request.getUsername());
-//		log.debug("AuthenticationService-userDetails:{}",userDetails);
-        String token = jwtService.generateToken(userDetails);
-//		String token = jwtService.generateToken(new UserAccountDetail(userAccount));
-        return AuthenticateResponse.builder().token(token).build();
-    }
+	public AuthenticateResponse authenticate(AuthenticateRequest request) {
+		authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(
+						request.getUsername(),
+						request.getPassword()
+				)
+		);
+
+		//		UserAccount userAccount = userAccountRepository.findByUsername(request.getUsername())
+		//				.orElseThrow(null);
+		//
+		//		Set<Role> roles = roleRepository.findByUserAccounts(userAccount).orElseThrow(NullPointerException::new);
+		//
+		//		log.debug("roles:{}",roles.size());
+		//
+		//		userAccount.setRoles(roles);
+		//
+		//		log.debug("userAccount-roles:{}",userAccount.getRoles().size());
+		//
+		//		userAccount.setRoles(roles);
+		UserAccountDetail userDetails = userAccountDetailService.loadUserDetailByUsername(request.getUsername());
+		//		log.debug("AuthenticationService-userDetails:{}",userDetails);
+		String jwtToken = jwtService.generateToken(userDetails);
+		//		String token = jwtService.generateToken(new UserAccountDetail(userAccount));
+		revokeAllUserAccountTokens(userDetails.getUserAccount());
+		saveUserToken(userDetails.getUserAccount(), jwtToken);
+		return AuthenticateResponse.builder().token(jwtToken).build();
+	}
+
+	///撤销所有token
+	private void revokeAllUserAccountTokens(UserAccount account) {
+		Set<Token> tokens = tokenRepository.findByUserAccount(account)
+				.orElseThrow(NullPointerException::new);
+		if (tokens.isEmpty())
+			return;
+		tokens.forEach(token -> {
+			token.setRevoked(true);
+			token.setExpired(true);
+		});
+		tokenRepository.saveAll(tokens);
+	}
+
+	///保存token
+	private void saveUserToken(UserAccount account, String jwtToken) {
+		Token token = Token.builder()
+				.userAccount(account)
+				.token(jwtToken)
+				.tokenType(TokenType.BEARER)
+				.expired(false)
+				.revoked(false)
+				.build();
+		tokenRepository.save(token);
+	}
 }

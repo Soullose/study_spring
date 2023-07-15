@@ -41,8 +41,13 @@ public class UserAccount extends BaseEntity implements Serializable {
     @Column(name = "enabled_")
     private boolean enabled;
 
+    ///人员
     @OneToOne(mappedBy = "userAccount")
     private User user;
+
+    ///登录的token
+    @OneToMany(mappedBy = "userAccount")
+    private Set<Token> tokens;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "t_open_userAccount_role_",
