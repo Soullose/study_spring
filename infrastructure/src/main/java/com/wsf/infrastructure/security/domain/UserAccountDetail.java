@@ -22,6 +22,10 @@ public class UserAccountDetail implements UserDetails {
         this.userAccount = userAccount;
     }
 
+    public UserAccount getUserAccount(){
+        return this.userAccount;
+    }
+
     ///获取角色权限
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
