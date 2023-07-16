@@ -9,6 +9,6 @@ import org.apache.commons.vfs2.VFS;
 public class VFSInitializer {
 	public void test() throws FileSystemException {
 		FileSystemManager fileSystemManager = VFS.getManager();
-		fileSystemManager.addOperationProvider();
+//		fileSystemManager.addOperationProvider();
 	}
 }

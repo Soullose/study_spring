@@ -1,7 +1,10 @@
 package com.wsf.infrastructure.open;
 
+import com.wsf.infrastructure.vfs.VFSProtocolResolver;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
@@ -15,8 +18,12 @@ import java.time.Duration;
  * SoulLose
  * 2022-05-26 20:58
  */
+//@RequiredArgsConstructor
 public class OpenApplicationRunListener implements SpringApplicationRunListener {
 	private static final Logger log = LoggerFactory.getLogger(OpenApplicationRunListener.class);
+
+
+//	private VFSProtocolResolver vfsProtocolResolver;
 
 	public OpenApplicationRunListener(SpringApplication springApplication, String[] args) {
 	}
@@ -35,6 +42,7 @@ public class OpenApplicationRunListener implements SpringApplicationRunListener 
 	@Override
 	public void contextPrepared(ConfigurableApplicationContext context) {
 		log.debug("服务启动Runner contextPrepared");
+		context.addProtocolResolver(new VFSProtocolResolver());
 	}
 
 	@Override
