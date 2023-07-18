@@ -1,10 +1,9 @@
 package com.wsf.infrastructure.open;
 
+import com.wsf.infrastructure.vfs.VFSInitializer;
 import com.wsf.infrastructure.vfs.VFSProtocolResolver;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
@@ -18,14 +17,19 @@ import java.time.Duration;
  * SoulLose
  * 2022-05-26 20:58
  */
-//@RequiredArgsConstructor
 public class OpenApplicationRunListener implements SpringApplicationRunListener {
 	private static final Logger log = LoggerFactory.getLogger(OpenApplicationRunListener.class);
 
+	private  VFSInitializer vfs = new VFSInitializer();
 
 //	private VFSProtocolResolver vfsProtocolResolver;
 
+//	private final SpringApplication application;
+//	private final String[] args;
+
 	public OpenApplicationRunListener(SpringApplication springApplication, String[] args) {
+//		this.application = springApplication,
+//		this.args = args;
 	}
 
 	@Override
@@ -37,6 +41,7 @@ public class OpenApplicationRunListener implements SpringApplicationRunListener 
 	public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
 			ConfigurableEnvironment environment) {
 		log.debug("服务启动Runner environmentPrepared");
+		vfs.init();
 	}
 
 	@Override
