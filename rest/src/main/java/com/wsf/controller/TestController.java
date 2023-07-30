@@ -1,5 +1,6 @@
 package com.wsf.controller;
 
+import com.wsf.infrastructure.security.domain.UserAccountDetail;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -49,7 +50,7 @@ public class TestController {
     public String employee(){
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        Object principal = authentication.getPrincipal();
+        UserAccountDetail principal = (UserAccountDetail)authentication.getPrincipal();
         log.debug("当前用户:{}",principal);
         return "人员信息";
     }

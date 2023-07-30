@@ -15,6 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Set;
 
 @Slf4j
@@ -87,12 +90,14 @@ public class AuthenticationService {
 
 	///保存token
 	private void saveUserToken(UserAccount account, String jwtToken) {
+//		log.info("{}",LocalDateTime.now(Clock.system(ZoneId.of("CTT",ZoneId.SHORT_IDS))));
 		Token token = Token.builder()
 				.userAccount(account)
 				.token(jwtToken)
 				.tokenType(TokenType.BEARER)
 				.expired(false)
 				.revoked(false)
+				.createDateTime(LocalDateTime.now())
 				.build();
 		tokenRepository.save(token);
 	}

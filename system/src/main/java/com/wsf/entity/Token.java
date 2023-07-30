@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,12 +38,13 @@ public class Token extends BaseEntity implements Serializable {
 	@Column(name = "revoked_")
 	private boolean revoked;
 
+	///创建时间(登录时间)
+	@Column(name = "create_date_time_")
+	private LocalDateTime createDateTime;
+
 	@ManyToOne
 	@JoinColumn(name = "user_account_id_")
 	private UserAccount userAccount;
 
-	@CreatedBy
-	@Column(name = "create_user_")
-	private String createdBy;
 
 }
