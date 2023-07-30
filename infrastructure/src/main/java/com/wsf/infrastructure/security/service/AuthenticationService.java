@@ -65,23 +65,8 @@ public class AuthenticationService {
 						request.getPassword()
 				)
 		);
-
-		//		UserAccount userAccount = userAccountRepository.findByUsername(request.getUsername())
-		//				.orElseThrow(null);
-		//
-		//		Set<Role> roles = roleRepository.findByUserAccounts(userAccount).orElseThrow(NullPointerException::new);
-		//
-		//		log.debug("roles:{}",roles.size());
-		//
-		//		userAccount.setRoles(roles);
-		//
-		//		log.debug("userAccount-roles:{}",userAccount.getRoles().size());
-		//
-		//		userAccount.setRoles(roles);
 		UserAccountDetail userDetails = userAccountDetailService.loadUserDetailByUsername(request.getUsername());
-		//		log.debug("AuthenticationService-userDetails:{}",userDetails);
 		String jwtToken = jwtService.generateToken(userDetails);
-		//		String token = jwtService.generateToken(new UserAccountDetail(userAccount));
 		revokeAllUserAccountTokens(userDetails.getUserAccount());
 		saveUserToken(userDetails.getUserAccount(), jwtToken);
 		return AuthenticateResponse.builder().token(jwtToken).build();

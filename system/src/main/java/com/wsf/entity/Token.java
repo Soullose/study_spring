@@ -3,6 +3,8 @@ package com.wsf.entity;
 import com.wsf.domain.BaseEntity;
 import com.wsf.enums.TokenType;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "t_open_token_")
 public class Token extends BaseEntity implements Serializable {
 
@@ -37,4 +40,9 @@ public class Token extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_account_id_")
 	private UserAccount userAccount;
+
+	@CreatedBy
+	@Column(name = "create_user_")
+	private String createdBy;
+
 }

@@ -45,4 +45,12 @@ public class TestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/employees")
+    public String employee(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        Object principal = authentication.getPrincipal();
+        log.debug("当前用户:{}",principal);
+        return "人员信息";
+    }
 }

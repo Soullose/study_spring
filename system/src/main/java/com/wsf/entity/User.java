@@ -46,7 +46,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(name = "email_")
 	private String email;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "create_time_")
 	private LocalDateTime createTime;
 

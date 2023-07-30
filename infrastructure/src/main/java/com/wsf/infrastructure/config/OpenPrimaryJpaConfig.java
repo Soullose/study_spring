@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.config;
 
+import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
 import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -29,6 +32,7 @@ import javax.sql.DataSource;
 		entityManagerFactoryRef = "openEntityManagerFactory",
 		transactionManagerRef = "openTransactionManager",
 		repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
+@EnableJpaAuditing
 public class OpenPrimaryJpaConfig {
 	private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
 
@@ -63,5 +67,11 @@ public class OpenPrimaryJpaConfig {
 	public JpaTransactionManager openTransactionManager(
 			@Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
 		return new JpaTransactionManager(factory);
+	}
+
+	@Primary
+	@Bean(name = "currentUserAuditorAware")
+	public AuditorAware<String> currentUserAuditorAware(){
+		return new CurrentUserAuditorAware();
 	}
 }

@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -46,7 +48,7 @@ public class Menu extends BaseEntity implements Serializable {
     private String icon;
 
     @Column(name = "createTime_")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     // @JsonIgnore
     @ManyToMany

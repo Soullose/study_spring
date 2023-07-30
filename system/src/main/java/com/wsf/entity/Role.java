@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class Role extends BaseEntity implements Serializable {
     private boolean status = false;
 
     @Column(name = "createTime_")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
