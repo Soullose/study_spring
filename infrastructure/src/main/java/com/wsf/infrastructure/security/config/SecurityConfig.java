@@ -40,6 +40,7 @@ public class SecurityConfig {
 				.httpBasic(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests
 						// .antMatchers("/hello").permitAll()
+						.antMatchers("/api/doc.html").permitAll()
 						.antMatchers("/test/**").permitAll()
 						.antMatchers("/api/v1/auth/**").permitAll()
 						.anyRequest().authenticated())

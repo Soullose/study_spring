@@ -12,4 +12,6 @@ spring:
     #,redis,swagger2
     include: jpa,datasource
     #打包的程序输出的异常信息前端可以显示
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
