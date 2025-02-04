@@ -1,9 +1,9 @@
 package com.wsf.entity;
 
 import com.wsf.domain.BaseEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 

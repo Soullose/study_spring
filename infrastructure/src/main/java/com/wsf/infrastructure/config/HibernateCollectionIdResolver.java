@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DatabindContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import org.hibernate.collection.internal.*;
+import org.hibernate.collection.spi.*;
 import org.hibernate.mapping.Array;
 import org.hibernate.mapping.List;
 

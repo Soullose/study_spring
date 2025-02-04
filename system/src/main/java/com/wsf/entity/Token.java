@@ -2,11 +2,10 @@ package com.wsf.entity;
 
 import com.wsf.domain.BaseEntity;
 import com.wsf.enums.TokenType;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

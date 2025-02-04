@@ -40,21 +40,21 @@ public class SecurityConfig {
 				.httpBasic(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests
 						// .antMatchers("/hello").permitAll()
-						.antMatchers("/api/doc.html").permitAll()
-						.antMatchers("/test/**").permitAll()
-						.antMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/doc.html").permitAll()
+						.requestMatchers("/test/**").permitAll()
+						.requestMatchers("/api/v1/auth/**").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(management -> management
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-				.logout()
-				.logoutUrl("/api/v1/auth/logout")
-				.addLogoutHandler(logoutHandler)
-				.logoutSuccessHandler(
-						(request, response, authentication) ->
-								SecurityContextHolder.clearContext()
-				)
+//				.logout()
+//				.logoutUrl("/api/v1/auth/logout")
+//				.addLogoutHandler(logoutHandler)
+//				.logoutSuccessHandler(
+//						(request, response, authentication) ->
+//								SecurityContextHolder.clearContext()
+//				)
 
 		;
 
