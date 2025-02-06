@@ -2,27 +2,22 @@ package com.wsf.controller;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wsf.entity.QUser;
+import com.wsf.entity.User;
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
-import jakarta.persistence.EntityManager;
+import com.wsf.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import com.wsf.entity.User;
-import com.wsf.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * open
@@ -60,13 +55,20 @@ public class TestController {
         List<User> fetch = jpaQueryFactory.selectFrom(QUser.user).fetch();
         return ResponseEntity.ok(fetch);
     }
+    @Transactional
+    @GetMapping("/test2")
+    public ResponseEntity<?> test2() {
+        QUser qUser = QUser.user;
+        long xxxxx = jpaQueryFactory.update(qUser).set(qUser.email, "xxxxx").where(qUser.id.eq("Q0JKC9LFrA_fjn3HhAY-x")).execute();
+        return ResponseEntity.ok(xxxxx);
+    }
 
     @GetMapping("/employees")
-    public String employee(){
+    public String employee() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        UserAccountDetail principal = (UserAccountDetail)authentication.getPrincipal();
-        log.debug("当前用户:{}",principal);
+        UserAccountDetail principal = (UserAccountDetail) authentication.getPrincipal();
+        log.debug("当前用户:{}", principal);
         return "人员信息";
     }
 }
