@@ -1,10 +1,14 @@
 package com.wsf.controller;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wsf.entity.QUser;
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +37,9 @@ public class TestController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
     @GetMapping("/test")
     public ResponseEntity<?> test() {
 
@@ -44,6 +51,14 @@ public class TestController {
         userRepository.save(user);
         log.info("test");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/test1")
+    public ResponseEntity<?> test1() {
+
+//        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(manager);
+        List<User> fetch = jpaQueryFactory.selectFrom(QUser.user).fetch();
+        return ResponseEntity.ok(fetch);
     }
 
     @GetMapping("/employees")

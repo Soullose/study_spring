@@ -1,10 +1,15 @@
 package com.wsf.infrastructure.config;
 
+import com.querydsl.jpa.impl.JPAProvider;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
 import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -19,6 +24,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
+
 import javax.sql.DataSource;
 
 /**
@@ -29,49 +35,59 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE,
-		entityManagerFactoryRef = "openEntityManagerFactory",
-		transactionManagerRef = "openTransactionManager",
-		repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
+        entityManagerFactoryRef = "openEntityManagerFactory",
+        transactionManagerRef = "openTransactionManager",
+        repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
 @EnableJpaAuditing
 public class OpenPrimaryJpaConfig {
-	private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
 
-	public OpenPrimaryJpaConfig() {
-	}
+    public OpenPrimaryJpaConfig() {
+    }
 
-	public static final String REPOSITORY_PACKAGE = "com.wsf.**";
+    //	@PersistenceContext(unitName = "openDS")
+//	private EntityManager entityManager;
+    @Primary
+    @Bean
+    @ConditionalOnMissingBean
+    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+        log.debug("创建JPAQueryFactory");
+        return new JPAQueryFactory(JPAProvider.getTemplates(entityManager), entityManager);
+    }
 
-	@Primary
-	@Bean(name = "openPrimaryJpaProperties")
-	@ConfigurationProperties(prefix = "spring.jpa.primary")
-	public JpaProperties jpaProperties() {
-		log.debug(REPOSITORY_PACKAGE);
-		return new JpaProperties();
-	}
+    public static final String REPOSITORY_PACKAGE = "com.wsf.**";
 
-	@Primary
-	@Bean(name = "openEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
-			@Qualifier(value = "openDataSource") DataSource openDataSource,
-			@Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
-			EntityManagerFactoryBuilder builder) {
-		return builder.dataSource(openDataSource)
-				.properties(jpaProperties.getProperties())
-				.packages(REPOSITORY_PACKAGE)
-				.persistenceUnit("openDS")
-				.build();
-	}
+    @Primary
+    @Bean(name = "openPrimaryJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.primary")
+    public JpaProperties jpaProperties() {
+        log.debug(REPOSITORY_PACKAGE);
+        return new JpaProperties();
+    }
 
-	@Primary
-	@Bean(name = "openTransactionManager")
-	public JpaTransactionManager openTransactionManager(
-			@Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
-		return new JpaTransactionManager(factory);
-	}
+    @Primary
+    @Bean(name = "openEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
+            @Qualifier(value = "openDataSource") DataSource openDataSource,
+            @Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
+            EntityManagerFactoryBuilder builder) {
+        return builder.dataSource(openDataSource)
+                .properties(jpaProperties.getProperties())
+                .packages(REPOSITORY_PACKAGE)
+                .persistenceUnit("openDS")
+                .build();
+    }
 
-	@Primary
-	@Bean(name = "currentUserAuditorAware")
-	public AuditorAware<String> currentUserAuditorAware(){
-		return new CurrentUserAuditorAware();
-	}
+    @Primary
+    @Bean(name = "openTransactionManager")
+    public JpaTransactionManager openTransactionManager(
+            @Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
+        return new JpaTransactionManager(factory);
+    }
+
+    @Primary
+    @Bean(name = "currentUserAuditorAware")
+    public AuditorAware<String> currentUserAuditorAware() {
+        return new CurrentUserAuditorAware();
+    }
 }
