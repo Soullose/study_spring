@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -63,6 +64,13 @@ public class OpenPrimaryJpaConfig {
     public JpaProperties jpaProperties() {
         log.debug(REPOSITORY_PACKAGE);
         return new JpaProperties();
+    }
+
+    @Primary
+    @Bean(name = "openPrimaryJpaProperties")
+    @ConfigurationProperties(prefix = "spring.jpa.primary.hibernate")
+    public HibernateProperties hibernateProperties() {
+        return new HibernateProperties();
     }
 
     @Primary
