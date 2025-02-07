@@ -1,2 +1,3 @@
-org.springframework.boot.SpringApplicationRunListener=\
-  com.wsf.infrastructure.open.OpenApplicationRunListener
+#org.springframework.boot.SpringApplicationRunListener=\
+#  com.wsf.infrastructure.open.OpenApplicationRunListener
+org.springframework.context.ApplicationContextInitializer=com.wsf.infrastructure.vfs.ApacheVfsApplicationContextInitializer
