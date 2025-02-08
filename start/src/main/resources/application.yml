@@ -10,7 +10,7 @@ spring:
       enabled: detect
   profiles:
     #,redis,swagger2
-    include: jpa,datasource
+    include: jpa,datasource,openapi
     #打包的程序输出的异常信息前端可以显示
   mvc:
     pathmatch:

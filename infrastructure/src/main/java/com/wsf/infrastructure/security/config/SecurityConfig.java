@@ -40,6 +40,11 @@ public class SecurityConfig {
 				.httpBasic(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests
 						// .antMatchers("/hello").permitAll()
+						.requestMatchers("/doc.html").permitAll()
+						.requestMatchers("/swagger-ui.html").permitAll()
+						.requestMatchers("/webjars/**").permitAll()
+						.requestMatchers("/v3/**").permitAll()
+						.requestMatchers("/swagger-resources/**").permitAll()
 						.requestMatchers("/api/doc.html").permitAll()
 						.requestMatchers("/test/**").permitAll()
 						.requestMatchers("/api/v1/auth/**").permitAll()

@@ -32,7 +32,7 @@
         <mysql.version>8.4.0</mysql.version>
         <postgresql.version>42.7.4</postgresql.version>
 <!--        <hibernate.core.version>5.4.24.Final</hibernate.core.version>-->
-        <knife4j.version>4.3.0</knife4j.version>
+        <knife4j.version>4.5.0</knife4j.version>
     </properties>
 
     <modules>
