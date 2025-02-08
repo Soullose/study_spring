@@ -15,7 +15,7 @@ public class ApacheVfsProtocolResolver  implements ProtocolResolver {
         if (location == null || resourceLoader == null) {
             log.warn("Location or ResourceLoader is null");
         }
-        log.info("ApacheVfsProtocolResolver.resolve() called with location: {}", location);
+//        log.info("ApacheVfsProtocolResolver.resolve() called with location: {}", location);
         return StringUtils.startsWith(location, ApacheVfsConstants.VFS_PROTOCOL) ? new ApacheVfsResource(location)
                 : null;
     }
