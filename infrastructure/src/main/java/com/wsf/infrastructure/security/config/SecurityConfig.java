@@ -16,9 +16,8 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,7 +34,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AutoConfigureAfter(value = OpenPrimaryJpaConfig.class)
 public class SecurityConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
@@ -58,7 +57,7 @@ public class SecurityConfig {
         QUser qUser = QUser.user;
         User o = (User) jpaQueryFactory.from(qUser).fetchFirst();
         log.debug("o:{}", o);
-        redisUtil.setStr("xxxx1", "222222222222222222222",60000);
+        redisUtil.setStr("xxxx1", "222222222222222222222", 60000);
         http
                 .authorizeHttpRequests((requests) -> requests
                         // .antMatchers("/hello").permitAll()
@@ -73,7 +72,8 @@ public class SecurityConfig {
                         .requestMatchers("/test/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
-                .authenticationProvider(authenticationProvider())
+//                .authenticationProvider(authenticationProvider())
+//                .authenticationManager(authenticationManager)
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
@@ -90,10 +90,10 @@ public class SecurityConfig {
 
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
@@ -101,8 +101,8 @@ public class SecurityConfig {
     /// todo 添加其他provider
 
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    AuthenticationManager authenticationManager(DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
+        return new ProviderManager(daoAuthenticationProvider);
     }
 
     /// 密码加密设置
