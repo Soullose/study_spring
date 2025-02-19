@@ -9,7 +9,6 @@ import com.wsf.infrastructure.security.handler.LogoutHandlerImpl;
 import com.wsf.infrastructure.security.service.OpenUserDetailsService;
 import com.wsf.infrastructure.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -38,7 +37,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    // private AuthenticationProvider authenticationProvider;
 
     private final OpenUserDetailsService userDetailsService;
 
@@ -46,7 +44,6 @@ public class SecurityConfig {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    private final RedissonClient redissonClient;
 
     private final RedisUtil redisUtil;
 

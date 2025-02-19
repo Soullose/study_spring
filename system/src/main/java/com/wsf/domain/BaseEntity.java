@@ -1,9 +1,9 @@
 package com.wsf.domain;
 
+import com.wsf.domain.annotation.BaseId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * open
@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "custom-id-generator")
-    @GenericGenerator(name = "custom-id-generator", strategy = "com.wsf.domain.CustomIdGenerator")
+    @BaseId
     @Column(name = "id_")
     @Access(AccessType.PROPERTY)
     private String id;
