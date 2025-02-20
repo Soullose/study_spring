@@ -15,9 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Set;
 
 @Slf4j
@@ -25,80 +23,80 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-	private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	//	private final RoleRepository roleRepository;
+    //	private final RoleRepository roleRepository;
 
-	private final TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
-	private final UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
-	private final JwtService jwtService;
+    private final JwtService jwtService;
 
-	private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-	private final UserAccountDetailService userAccountDetailService;
+    private final UserAccountDetailService userAccountDetailService;
 
-	public RegisterResponse register(RegisterRequest request) {
-		UserAccount userAccount = UserAccount.builder()
-				.username(request.getUsername())
-				.password(passwordEncoder.encode(request.getPassword()))
-				.build();
+    public RegisterResponse register(RegisterRequest request) {
+        UserAccount userAccount = UserAccount.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .build();
 
-		UserAccount account = userAccountRepository.save(userAccount);
+        UserAccount account = userAccountRepository.save(userAccount);
 
-		User user = User.builder()
-				.firstname(request.getFirstname())
-				.lastname(request.getLastname())
-				.email(request.getEmail())
-				.userAccount(account)
-				.build();
-		userRepository.save(user);
-		String jwtToken = jwtService.generateToken(new UserAccountDetail(account));
-		saveUserToken(account, jwtToken);
-		return RegisterResponse.builder().token(jwtToken).build();
-	}
+        User user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .userAccount(account)
+                .build();
+        userRepository.save(user);
+//		String jwtToken = jwtService.generateToken(new UserAccountDetail(account));
+//		saveUserToken(account, jwtToken);
+        return RegisterResponse.builder().token(request.getFirstname() + request.getLastname()).build();
+    }
 
-	public AuthenticateResponse authenticate(AuthenticateRequest request) {
-		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(
-						request.getUsername(),
-						request.getPassword()
-				)
-		);
-		UserAccountDetail userDetails = userAccountDetailService.loadUserDetailByUsername(request.getUsername());
-		String jwtToken = jwtService.generateToken(userDetails);
-		revokeAllUserAccountTokens(userDetails.getUserAccount());
-		saveUserToken(userDetails.getUserAccount(), jwtToken);
-		return AuthenticateResponse.builder().token(jwtToken).build();
-	}
+    public AuthenticateResponse authenticate(AuthenticateRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request.getPassword()
+                )
+        );
+        UserAccountDetail userDetails = userAccountDetailService.loadUserDetailByUsername(request.getUsername());
+        String jwtToken = jwtService.generateToken(userDetails);
+        revokeAllUserAccountTokens(userDetails.getUserAccount());
+        saveUserToken(userDetails.getUserAccount(), jwtToken);
+        return AuthenticateResponse.builder().token(jwtToken).build();
+    }
 
-	///撤销所有token
-	private void revokeAllUserAccountTokens(UserAccount account) {
-		Set<Token> tokens = tokenRepository.findByUserAccount(account)
-				.orElseThrow(NullPointerException::new);
-		if (tokens.isEmpty())
-			return;
-		tokens.forEach(token -> {
-			token.setRevoked(true);
-			token.setExpired(true);
-		});
-		tokenRepository.saveAll(tokens);
-	}
+    /// 撤销所有token
+    private void revokeAllUserAccountTokens(UserAccount account) {
+        Set<Token> tokens = tokenRepository.findByUserAccount(account)
+                .orElseThrow(NullPointerException::new);
+        if (tokens.isEmpty())
+            return;
+        tokens.forEach(token -> {
+            token.setRevoked(true);
+            token.setExpired(true);
+        });
+        tokenRepository.saveAll(tokens);
+    }
 
-	///保存token
-	private void saveUserToken(UserAccount account, String jwtToken) {
+    /// 保存token
+    private void saveUserToken(UserAccount account, String jwtToken) {
 //		log.info("{}",LocalDateTime.now(Clock.system(ZoneId.of("CTT",ZoneId.SHORT_IDS))));
-		Token token = Token.builder()
-				.userAccount(account)
-				.token(jwtToken)
-				.tokenType(TokenType.BEARER)
-				.expired(false)
-				.revoked(false)
-				.createDateTime(LocalDateTime.now())
-				.build();
-		tokenRepository.save(token);
-	}
+        Token token = Token.builder()
+                .userAccount(account)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .createDateTime(LocalDateTime.now())
+                .build();
+        tokenRepository.save(token);
+    }
 }

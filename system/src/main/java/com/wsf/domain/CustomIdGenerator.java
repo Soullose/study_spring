@@ -1,17 +1,19 @@
 package com.wsf.domain;
 
-import java.io.Serializable;
-
+import cn.hutool.core.util.IdUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
+
+import java.io.Serializable;
 
 ///NanoId主键生成策略
 public class CustomIdGenerator implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor arg0, Object arg1) throws HibernateException {
-        return NanoIdUtils.randomNanoId();
+//        return NanoIdUtils.randomNanoId();
+        return IdUtil.fastSimpleUUID();
     }
 
 }
