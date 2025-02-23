@@ -1,5 +1,7 @@
 package com.wsf.infrastructure.security.filter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -19,6 +22,7 @@ import java.io.IOException;
 
 @Getter
 @Setter
+//@Component
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -42,6 +46,12 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login",
             "POST");
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public LoginFilter() {
+        super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+    }
+
     protected LoginFilter(AuthenticationManager authenticationManager) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
     }
@@ -52,22 +62,46 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
+        JsonNode jsonNode = objectMapper.readTree(request.getInputStream());
+        String username = obtainUsername(jsonNode);
+        username = (username != null) ? username.trim() : "";
+        String password = obtainPassword(jsonNode);
+        password = (password != null) ? password : "";
+
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                username,
+                password
+        );
+        setDetails(request, usernamePasswordAuthenticationToken);
+        return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
+    }
+
+    @Nullable
+    protected String obtainPassword(JsonNode jsonNode) {
+        if (jsonNode.has(this.passwordParameter)) {
+            return jsonNode.get(this.passwordParameter).asText("");
+        }
         return null;
     }
 
     @Nullable
-    protected String obtainPassword(HttpServletRequest request) {
-        return request.getParameter(this.passwordParameter);
+    protected String obtainUsername(JsonNode jsonNode) {
+        if (jsonNode.has(this.usernameParameter)) {
+            return jsonNode.get(this.usernameParameter).asText("");
+        }
+        return null;
     }
 
     @Nullable
-    protected String obtainUsername(HttpServletRequest request) {
-        return request.getParameter(this.usernameParameter);
+    protected boolean obtainRememberMe(JsonNode jsonNode) {
+        if (jsonNode.has(this.rememberMeParameter)) {
+            return jsonNode.get(this.rememberMeParameter).asBoolean(false);
+        }
+        return false;
     }
 
-    @Nullable
-    protected String obtainRememberMe(HttpServletRequest request) {
-        return request.getParameter(this.rememberMeParameter);
+    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+        authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     }
 
 }
