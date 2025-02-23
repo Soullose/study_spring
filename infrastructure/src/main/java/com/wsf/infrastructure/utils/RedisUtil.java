@@ -31,6 +31,15 @@ public class RedisUtil {
     }
 
     /**
+     * 判断key是否存在
+     * @param key
+     * @return
+     */
+    public boolean hasKey(String key) {
+        return redissonClient.getBucket(key).isExists();
+    }
+
+    /**
      * 用于操作key
      *
      * @return RKeys 对象
@@ -57,6 +66,20 @@ public class RedisUtil {
     public <T> T get(String key, Class<T> clazz) {
         RBucket<T> bucket = redissonClient.getBucket(key);
         return bucket.get();
+    }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @param ttl
+     * @return
+     * @param <T>
+     */
+    public <T> T set(String key, T value, long ttl) {
+        RBucket<T> bucket = redissonClient.getBucket(key);
+        bucket.set(value, Duration.ofSeconds(ttl));
+        return value;
     }
 
     /**

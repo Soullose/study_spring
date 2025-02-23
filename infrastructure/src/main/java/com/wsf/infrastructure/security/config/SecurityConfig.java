@@ -5,6 +5,7 @@ import com.wsf.entity.QUser;
 import com.wsf.entity.User;
 import com.wsf.infrastructure.config.OpenPrimaryJpaConfig;
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
+import com.wsf.infrastructure.security.extension.remermberme.RedisTokenRepositoryImpl;
 import com.wsf.infrastructure.security.filter.JwtAuthenticationTokenFilter;
 import com.wsf.infrastructure.security.filter.LoginFilter;
 import com.wsf.infrastructure.security.handler.LogoutHandlerImpl;
@@ -29,7 +30,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+
+import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
@@ -52,8 +57,9 @@ public class SecurityConfig {
     private final RedisUtil redisUtil;
 
     private final JwtService jwtService;
+
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,LoginFilter loginFilter) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, LoginFilter loginFilter, RememberMeServices rememberMeServices) throws Exception {
         log.debug("配置SecurityFilterChain");
         /// 测试
         QUser qUser = QUser.user;
@@ -84,7 +90,12 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-
+                .rememberMe(remember -> {
+//                    remember.alwaysRemember(true);
+                    remember.userDetailsService(userDetailsService);
+                    remember.rememberMeParameter("rememberMe");
+                    remember.rememberMeServices(rememberMeServices);
+                })
         ;
 
         return http.build();
@@ -92,9 +103,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public LoginFilter loginFilter(AuthenticationManager authenticationManager) throws Exception {
+    public RememberMeServices rememberMeServices() {
+        RedisTokenRepositoryImpl redisTokenRepository = new RedisTokenRepositoryImpl(redisUtil);
+        return new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userDetailsService, redisTokenRepository);
+    }
+
+    @Bean
+    public LoginFilter loginFilter(AuthenticationManager authenticationManager, RememberMeServices rememberMeServices) throws Exception {
         LoginFilter loginFilter = new LoginFilter();
         loginFilter.setAuthenticationManager(authenticationManager);
+        loginFilter.setRememberMeServices(rememberMeServices);
         loginFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
             log.debug("登录成功");
             UserAccountDetail userAccountDetail = (UserAccountDetail) authentication.getPrincipal();
