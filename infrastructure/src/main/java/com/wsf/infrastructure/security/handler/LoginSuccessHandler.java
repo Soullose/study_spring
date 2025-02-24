@@ -1,27 +1,39 @@
 package com.wsf.infrastructure.security.handler;
 
-import com.wsf.infrastructure.security.service.JwtService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import com.wsf.infrastructure.security.domain.UserAccountDetail;
+import com.wsf.infrastructure.security.service.JwtService;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final JwtService jwtService;
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Override
-    public void onAuthenticationSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
+	private final JwtService jwtService;
+
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+		log.debug("登录成功");
+
+		UserAccountDetail userAccountDetail = (UserAccountDetail) authentication.getPrincipal();
+
+		String jwtToken = jwtService.generateToken(userAccountDetail);
+
+		response.getWriter().write(jwtToken);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
 }
