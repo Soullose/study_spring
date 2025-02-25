@@ -1,11 +1,11 @@
 package com.wsf.infrastructure.security.extension.mobile.token;
 
+import java.io.Serial;
+import java.util.Collection;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
-
-import java.io.Serial;
-import java.util.Collection;
 
 public class MobileAuthenticationToken extends AbstractAuthenticationToken {
 
@@ -43,11 +43,11 @@ public class MobileAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return this.code;
     }
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.principal;
     }
 }
