@@ -34,7 +34,9 @@
 <!--        <hibernate.core.version>5.4.24.Final</hibernate.core.version>-->
         <knife4j.version>4.5.0</knife4j.version>
         <redisson.version>3.44.0</redisson.version>
+        <cosid.version>2.11.0</cosid.version>
         <hutool.version>5.8.35</hutool.version>
+        <uuid-creator.version>6.0.0</uuid-creator.version>
     </properties>
 
     <modules>
@@ -177,10 +179,38 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-<!--                <type>pom</type>-->
-                <!-- 注意这里是import -->
-<!--                <scope>import</scope>-->
             </dependency>
+
+
+            <dependency>
+                <groupId>me.ahoo.cosid</groupId>
+                <artifactId>cosid-spring-redis</artifactId>
+                <version>${cosid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>me.ahoo.cosid</groupId>
+                <artifactId>cosid-spring-boot-starter</artifactId>
+                <version>${cosid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.f4b6a3</groupId>
+                <artifactId>uuid-creator</artifactId>
+                <version>${uuid-creator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

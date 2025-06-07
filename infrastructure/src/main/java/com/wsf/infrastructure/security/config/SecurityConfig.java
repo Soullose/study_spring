@@ -13,10 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wsf.entity.QUser;
@@ -56,6 +59,17 @@ public class SecurityConfig {
 
     private final JwtService jwtService;
 
+    // 在 SecurityConfiguration 中声明
+    @Bean
+    public RequestMatcher whiteListRequestMatcher() {
+        return new OrRequestMatcher(
+                new AntPathRequestMatcher("/test/**"),
+                new AntPathRequestMatcher("/api/v1/auth/**"),
+                new AntPathRequestMatcher("/doc.html")
+                // 其他白名单路径...
+        );
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http,AuthenticationManager authenticationManager) throws Exception {
         log.debug("配置SecurityFilterChain");
@@ -69,12 +83,6 @@ public class SecurityConfig {
                         // .antMatchers("/hello").permitAll()
                         .requestMatchers("/doc.html", "/swagger-ui.html", "/api/doc.html", "/webjars/**",
                                 "/v3/**", "/swagger-resources/**").permitAll()
-//                        .requestMatchers("/doc.html").permitAll()
-//                        .requestMatchers("/swagger-ui.html").permitAll()
-//                        .requestMatchers("/webjars/**").permitAll()
-//                        .requestMatchers("/v3/**").permitAll()
-//                        .requestMatchers("/swagger-resources/**").permitAll()
-//                        .requestMatchers("/api/doc.html").permitAll()
                         .requestMatchers("/test/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
@@ -135,7 +143,8 @@ public class SecurityConfig {
     /// 密码加密设置
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+//        return new BCryptPasswordEncoder();
     }
 
 }
