@@ -1,11 +1,7 @@
 package com.wsf.infrastructure.config;
 
-import com.querydsl.jpa.impl.JPAProvider;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
-import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,9 +20,13 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import jakarta.persistence.EntityManagerFactory;
+import com.querydsl.jpa.impl.JPAProvider;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
+import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
 
-import javax.sql.DataSource;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 /**
  * open
@@ -49,7 +49,7 @@ public class OpenPrimaryJpaConfig {
     //	@PersistenceContext(unitName = "openDS")
 //	private EntityManager entityManager;
     @Primary
-    @Bean
+    @Bean(name = "jpaQueryFactory")
     @ConditionalOnMissingBean
     public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
         log.debug("创建JPAQueryFactory");
@@ -61,15 +61,15 @@ public class OpenPrimaryJpaConfig {
     @Primary
     @Bean(name = "openPrimaryJpaProperties")
     @ConfigurationProperties(prefix = "spring.jpa.primary")
-    public JpaProperties jpaProperties() {
+    public JpaProperties openPrimaryJpaProperties() {
         log.debug(REPOSITORY_PACKAGE);
         return new JpaProperties();
     }
 
     @Primary
-    @Bean(name = "openPrimaryJpaProperties")
+    @Bean(name = "openPrimaryHibernateProperties")
     @ConfigurationProperties(prefix = "spring.jpa.primary.hibernate")
-    public HibernateProperties hibernateProperties() {
+    public HibernateProperties openPrimaryHibernateProperties() {
         return new HibernateProperties();
     }
 
