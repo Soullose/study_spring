@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>system</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- spring security安全框架-->

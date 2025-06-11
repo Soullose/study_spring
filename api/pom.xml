@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>infrastructure</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

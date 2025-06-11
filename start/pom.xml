@@ -26,25 +26,25 @@
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>infrastructure</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>system</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>rest</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>api</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.redisson</groupId>
