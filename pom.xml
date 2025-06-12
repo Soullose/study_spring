@@ -21,22 +21,20 @@
         <maven.compiler.target>17</maven.compiler.target>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <commons-io.version>2.18.0</commons-io.version>
-        <commons-vfs2.version>2.9.0</commons-vfs2.version>
-        <guava.version>33.4.0-jre</guava.version>
+        <commons-vfs2.version>2.10.0</commons-vfs2.version>
+        <guava.version>33.4.8-jre</guava.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <jjwt.version>0.12.6</jjwt.version>
-        <lombok.version>1.18.36</lombok.version>
-        <querydsl-jpa.version>5.1.0</querydsl-jpa.version>
-        <querydsl-apt.version>5.1.0</querydsl-apt.version>
+<!--        <lombok.version>1.18.38</lombok.version>-->
+        <querydsl.version>5.1.0</querydsl.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <mysql.version>8.4.0</mysql.version>
-        <postgresql.version>42.7.4</postgresql.version>
-<!--        <hibernate.core.version>5.4.24.Final</hibernate.core.version>-->
-        <knife4j.version>4.5.0</knife4j.version>
+        <mysql.version>9.2.0</mysql.version>
+        <postgresql.version>42.7.5</postgresql.version>
         <redisson.version>3.44.0</redisson.version>
         <cosid.version>2.11.0</cosid.version>
         <hutool.version>5.8.35</hutool.version>
-        <uuid-creator.version>6.0.0</uuid-creator.version>
+        <uuid-creator.version>6.1.1</uuid-creator.version>
+        <knife4j.version>4.5.0</knife4j.version>
     </properties>
 
     <modules>
@@ -49,6 +47,12 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
             <!-- Apache 工具库 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -81,12 +85,6 @@
                 <version>${guava-retrying.version}</version>
             </dependency>
 
-            <!-- JWT工具类-->
-<!--            <dependency>-->
-<!--                <groupId>io.jsonwebtoken</groupId>-->
-<!--                <artifactId>jjwt</artifactId>-->
-<!--                <version>${jjwt.version}</version>-->
-<!--            </dependency>-->
 
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -107,24 +105,19 @@
             </dependency>
 
 
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
             <dependency>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-jpa</artifactId>
                 <classifier>jakarta</classifier>
-                <version>${querydsl-jpa.version}</version>
+                <version>${querydsl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-apt</artifactId>
                 <classifier>jakarta</classifier>
-                <version>${querydsl-apt.version}</version>
+                <version>${querydsl.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
@@ -139,6 +132,12 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
@@ -156,23 +155,12 @@
 
 
             <!--引入Knife4j的官方start包,该指南选择Spring Boot版本<3.0,开发者需要注意-->
-<!--            <dependency>-->
-<!--                <groupId>com.github.xiaoymin</groupId>-->
-<!--                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>-->
-<!--                <version>${knife4j.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-dependencies</artifactId>
                 <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>${redisson.version}</version>
             </dependency>
 
             <dependency>
