@@ -17,6 +17,7 @@ import java.time.Duration;
  * SoulLose
  * 2022-05-26 20:58
  */
+@Deprecated
 public class OpenApplicationRunListener implements SpringApplicationRunListener {
 	private static final Logger log = LoggerFactory.getLogger(OpenApplicationRunListener.class);
 
