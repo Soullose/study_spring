@@ -1,5 +1,17 @@
 package com.wsf.infrastructure.security.config;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wsf.entity.QUser;
+import com.wsf.entity.User;
+import com.wsf.infrastructure.config.OpenPrimaryJpaConfig;
+import com.wsf.infrastructure.security.filter.JwtAuthenticationTokenFilter;
+import com.wsf.infrastructure.security.filter.LoginFilter;
+import com.wsf.infrastructure.security.handler.LoginSuccessHandler;
+import com.wsf.infrastructure.security.handler.LogoutHandlerImpl;
+import com.wsf.infrastructure.security.service.JwtService;
+import com.wsf.infrastructure.security.service.OpenUserDetailsService;
+import com.wsf.infrastructure.utils.RedisUtil;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -17,23 +29,9 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.entity.QUser;
-import com.wsf.entity.User;
-import com.wsf.infrastructure.config.OpenPrimaryJpaConfig;
-import com.wsf.infrastructure.security.filter.JwtAuthenticationTokenFilter;
-import com.wsf.infrastructure.security.filter.LoginFilter;
-import com.wsf.infrastructure.security.handler.LoginSuccessHandler;
-import com.wsf.infrastructure.security.handler.LogoutHandlerImpl;
-import com.wsf.infrastructure.security.service.JwtService;
-import com.wsf.infrastructure.security.service.OpenUserDetailsService;
-import com.wsf.infrastructure.utils.RedisUtil;
-
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -63,15 +61,15 @@ public class SecurityConfig {
     @Bean
     public RequestMatcher whiteListRequestMatcher() {
         return new OrRequestMatcher(
-                new AntPathRequestMatcher("/test/**"),
-                new AntPathRequestMatcher("/api/v1/auth/**"),
-                new AntPathRequestMatcher("/doc.html")
+                PathPatternRequestMatcher.withDefaults().matcher("/test/**"),
+                PathPatternRequestMatcher.withDefaults().matcher("/api/v1/auth/**"),
+                PathPatternRequestMatcher.withDefaults().matcher("/doc.html")
                 // 其他白名单路径...
         );
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,AuthenticationManager authenticationManager) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         log.debug("配置SecurityFilterChain");
         /// 测试
         QUser qUser = QUser.user;
@@ -114,7 +112,7 @@ public class SecurityConfig {
 //        return new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userDetailsService, redisTokenRepository);
 //    }
 
-//    @Bean
+    //    @Bean
     public LoginFilter loginFilter(AuthenticationManager authenticationManager) throws Exception {
         LoginFilter loginFilter = new LoginFilter();
         loginFilter.setAuthenticationManager(authenticationManager);
@@ -126,8 +124,7 @@ public class SecurityConfig {
 
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
