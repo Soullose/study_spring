@@ -14,26 +14,6 @@ import java.util.Map;
 @Configuration
 public class Knife4jConfiguration {
 
-//    @Bean(value = "knife4jConfigurationBean")
-//    public Docket knife4jConfigurationBean() {
-//        //指定使用Swagger2规范
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .apiInfo(new ApiInfoBuilder()
-//                        //描述字段支持Markdown语法
-//                        .title("接口文档")
-//                        .description("# spring-template RESTful APIs")
-//                        .termsOfServiceUrl("https://w2.api.cn/")
-//                        .contact(new Contact("w2", "", "xxx@xxx.com"))
-//                        .version("1.0")
-//                        .build())
-//                //分组名称
-//                .groupName("学习Spring")
-//                .select()
-//                //这里指定Controller扫描包路径
-//                .apis(RequestHandlerSelectors.basePackage("com.wsf.controller"))
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
 
     /**
      * 根据@Tag 上的排序，写入x-order

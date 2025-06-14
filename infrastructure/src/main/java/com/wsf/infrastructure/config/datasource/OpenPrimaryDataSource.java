@@ -20,13 +20,13 @@ public class OpenPrimaryDataSource {
     @Primary
     @Bean(name = "openDataSourceProperties")
     @ConfigurationProperties(prefix = "spring.datasource.open")
-    public DataSourceProperties dataSourceProperties() {
+    public DataSourceProperties openDataSourceProperties() {
         return new DataSourceProperties();
     }
     
     @Primary
     @Bean(name = "openDataSource")
     public DataSource openDataSource() {
-        return this.dataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
+        return this.openDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 }
