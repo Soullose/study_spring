@@ -43,6 +43,9 @@
         <module>rest</module>
         <module>system</module>
         <module>api</module>
+        <module>domain</module>
+        <module>app</module>
+        <module>adapter</module>
     </modules>
 
     <dependencyManagement>
