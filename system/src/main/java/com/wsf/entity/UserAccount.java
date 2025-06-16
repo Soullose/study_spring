@@ -40,7 +40,7 @@ public class UserAccount extends BaseEntity implements Serializable {
 
     ///禁用
     @Column(name = "enabled_")
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     ///人员
     @OneToOne(mappedBy = "userAccount")

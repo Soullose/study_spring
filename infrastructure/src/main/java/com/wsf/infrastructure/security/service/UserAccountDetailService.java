@@ -1,15 +1,18 @@
 package com.wsf.infrastructure.security.service;
 
+import java.util.Set;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
 import com.wsf.entity.Role;
 import com.wsf.entity.UserAccount;
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
 import com.wsf.repository.RoleRepository;
 import com.wsf.repository.UserAccountRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -27,7 +30,7 @@ public class UserAccountDetailService {
 	 */
 	public UserAccountDetail loadUserDetailByUsername(String username) {
 		UserAccount userAccount = userAccountRepository.findByUsername(username)
-				.orElseThrow(() -> new NullPointerException("用户不存在"));
+				.orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
 
 		Set<Role> roles = roleRepository.findByUserAccounts(userAccount)
 				.orElseThrow(NullPointerException::new);

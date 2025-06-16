@@ -7,28 +7,25 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * 统一处理 Spring Security 认证失败响应
- */
 @Slf4j
-public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
+public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		String errorMsg = authException.getMessage();
-		if (authException instanceof UsernameNotFoundException) {
-			int status = HttpStatus.UNAUTHORIZED.value();
-			response.setStatus(status);
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		int status = HttpStatus.UNAUTHORIZED.value();
+		response.setStatus(status);
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		if (errorMsg != null && errorMsg.equals("Bad credentials")) {
+			errorMsg = "用户名或密码错误";
 		}
 		try (PrintWriter writer = response.getWriter()) {
 			writer.print(errorMsg);

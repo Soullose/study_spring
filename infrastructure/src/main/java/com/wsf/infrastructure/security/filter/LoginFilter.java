@@ -17,6 +17,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wsf.infrastructure.security.handler.AuthenticationFailureHandlerImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,6 +55,9 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public LoginFilter() {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+        // 继续执行拦截器链，执行被拦截的 url 对应的接口
+        super.setContinueChainBeforeSuccessfulAuthentication(true);
+        setAuthenticationFailureHandler(new AuthenticationFailureHandlerImpl());
     }
 
     protected LoginFilter(AuthenticationManager authenticationManager) {
