@@ -1,17 +1,21 @@
 package com.wsf.infrastructure.security.domain;
 
-import com.wsf.entity.Role;
-import com.wsf.entity.UserAccount;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.wsf.entity.Role;
+import com.wsf.entity.UserAccount;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Getter
 @Slf4j
 @Data
 public class UserAccountDetail implements UserDetails {
@@ -20,10 +24,6 @@ public class UserAccountDetail implements UserDetails {
 
     public UserAccountDetail(UserAccount userAccount) {
         this.userAccount = userAccount;
-    }
-
-    public UserAccount getUserAccount(){
-        return this.userAccount;
     }
 
     ///获取角色权限
@@ -68,6 +68,6 @@ public class UserAccountDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return userAccount.isEnabled();
     }
 }

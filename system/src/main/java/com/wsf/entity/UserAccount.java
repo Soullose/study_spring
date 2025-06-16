@@ -1,11 +1,12 @@
 package com.wsf.entity;
 
-import com.wsf.domain.BaseEntity;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.io.Serializable;
 import java.util.Set;
+
+import com.wsf.domain.BaseEntity;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 
 @Getter
@@ -39,7 +40,7 @@ public class UserAccount extends BaseEntity implements Serializable {
 
     ///禁用
     @Column(name = "enabled_")
-    private boolean enabled;
+    private boolean enabled = false;
 
     ///人员
     @OneToOne(mappedBy = "userAccount")

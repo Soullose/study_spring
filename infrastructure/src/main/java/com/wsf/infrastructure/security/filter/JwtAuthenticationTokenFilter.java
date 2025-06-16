@@ -73,4 +73,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		}
 		filterChain.doFilter(request, response);
 	}
+
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		return super.shouldNotFilter(request);
+	}
 }
