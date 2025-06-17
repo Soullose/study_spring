@@ -76,6 +76,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		return super.shouldNotFilter(request);
+		return request.getRequestURI().startsWith("/api/v1/auth/login");
 	}
 }
