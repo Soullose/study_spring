@@ -55,8 +55,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public LoginFilter() {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-        // 继续执行拦截器链，执行被拦截的 url 对应的接口
-        super.setContinueChainBeforeSuccessfulAuthentication(true);
         setAuthenticationFailureHandler(new AuthenticationFailureHandlerImpl());
     }
 
