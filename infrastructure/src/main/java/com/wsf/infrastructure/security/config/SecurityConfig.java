@@ -1,11 +1,17 @@
 package com.wsf.infrastructure.security.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,7 +65,9 @@ public class SecurityConfig {
 
 	private final JwtService jwtService;
 
-	// 在 SecurityConfiguration 中声明
+	private final ApplicationEventPublisher applicationEventPublisher;
+
+	/// 在 SecurityConfiguration 中声明
 	@Bean
 	public RequestMatcher whiteListRequestMatcher() {
 		return new OrRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher("/test/**"),
@@ -79,7 +87,6 @@ public class SecurityConfig {
 		log.debug("o:{}", o);
 		redisUtil.setStr("xxxx1", "222222222222222222222", 60000);
 		http.authorizeHttpRequests((requests) -> requests
-				// .antMatchers("/hello").permitAll()
 				.requestMatchers("/doc.html", "/swagger-ui.html", "/api/doc.html", "/webjars/**", "/v3/**",
 						"/swagger-resources/**")
 				.permitAll().requestMatchers("/test/**").permitAll().requestMatchers("/api/v1/auth/**").permitAll()
@@ -99,26 +106,11 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.addFilterAt(loginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-		// .rememberMe(remember -> {
-		// remember.alwaysRemember(true);
-		// remember.userDetailsService(userDetailsService);
-		// remember.rememberMeParameter("rememberMe");
-		// remember.rememberMeServices(rememberMeServices);
-		// })
 		;
 
 		return http.build();
 
 	}
-
-	// @Bean
-	// public RememberMeServices rememberMeServices() {
-	// RedisTokenRepositoryImpl redisTokenRepository = new
-	// RedisTokenRepositoryImpl(redisUtil);
-	// return new
-	// PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(),
-	// userDetailsService, redisTokenRepository);
-	// }
 
 	// @Bean
 	public LoginFilter loginFilter(AuthenticationManager authenticationManager) throws Exception {
@@ -138,17 +130,20 @@ public class SecurityConfig {
 	}
 
 	/// todo 添加其他provider
-
 	@Bean
 	AuthenticationManager authenticationManager(DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
-		return new ProviderManager(daoAuthenticationProvider);
+		List<AuthenticationProvider> providerList = new ArrayList<>();
+		providerList.add(daoAuthenticationProvider);
+		ProviderManager providerManager = new ProviderManager(providerList);
+		providerManager
+				.setAuthenticationEventPublisher(new DefaultAuthenticationEventPublisher(applicationEventPublisher));
+		return providerManager;
 	}
 
 	/// 密码加密设置
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-		// return new BCryptPasswordEncoder();
 	}
 
 }
