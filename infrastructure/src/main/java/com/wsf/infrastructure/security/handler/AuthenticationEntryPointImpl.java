@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+import com.wsf.infrastructure.security.exception.JWTAuthException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,11 +26,14 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		String errorMsg = authException.getMessage();
+		int status = HttpStatus.UNAUTHORIZED.value();
+		response.setStatus(status);
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		if (authException instanceof UsernameNotFoundException) {
-			int status = HttpStatus.UNAUTHORIZED.value();
-			response.setStatus(status);
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+			errorMsg = "用户名或密码错误";
+		} else if (authException instanceof JWTAuthException) {
+			errorMsg = "JWT异常";
 		}
 		try (PrintWriter writer = response.getWriter()) {
 			writer.print(errorMsg);

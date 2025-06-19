@@ -61,7 +61,7 @@ public class SecurityConfig {
 
 	private final JPAQueryFactory jpaQueryFactory;
 
-	private final RedisUtil redisUtil;
+//	private final RedisUtil redisUtil;
 
 	private final JwtService jwtService;
 
@@ -85,6 +85,7 @@ public class SecurityConfig {
 		QUser qUser = QUser.user;
 		User o = (User) jpaQueryFactory.from(qUser).fetchFirst();
 		log.debug("o:{}", o);
+		RedisUtil redisUtil = new RedisUtil();
 		redisUtil.setStr("xxxx1", "222222222222222222222", 60000);
 		http.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/doc.html", "/swagger-ui.html", "/api/doc.html", "/webjars/**", "/v3/**",
@@ -104,7 +105,7 @@ public class SecurityConfig {
 				.formLogin(AbstractHttpConfigurer::disable)
 				/// 禁用 X-Frame-Options 响应头，允许页面被嵌套到 iframe 中
 				.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-				.addFilterBefore(loginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
+				.addFilterAt(loginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 		;
 

@@ -1,25 +1,31 @@
 package com.wsf.infrastructure.security.extension.remermberme;
 
-import com.wsf.infrastructure.utils.RedisUtil;
-import lombok.RequiredArgsConstructor;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import java.util.Date;
+import com.wsf.infrastructure.utils.RedisUtil;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class RedisTokenRepositoryImpl implements PersistentTokenRepository {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(RedisTokenRepositoryImpl.class);
 
 
     private final String SERIES_PREFIX = "spring:security:rememberMe:series:";
     private final String USERNAME_PREFIX = "spring:security:rememberMe:username:";
 
     private final RedisUtil redisUtil;
+
+    public RedisTokenRepositoryImpl() {
+        redisUtil = new RedisUtil();
+    }
 
     private String generateKey(String prefix, String var) {
         return prefix + var;

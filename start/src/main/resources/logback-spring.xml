@@ -24,7 +24,7 @@
         <appender-ref ref="DEFAULT_STDOUT"/>
     </logger>
 
-    <logger name="com.wsf" level="TRACE" additivity="false">
+    <logger name="com.wsf" level="DEBUG" additivity="false">
         <appender-ref ref="DEFAULT_STDOUT"/>
     </logger>
     <!-- 日志输出级别 -->
