@@ -1,5 +1,8 @@
 package com.wsf;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import com.wsf.infrastructure.vfs.ApacheVfsApplicationContextInitializer;
 
 @SpringBootApplication
 public class StartApplication {
@@ -20,6 +22,7 @@ public class StartApplication {
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(StartApplication.class);
+        springApplication.addInitializers(new ApacheVfsApplicationContextInitializer());
         Environment env = springApplication.run(args).getEnvironment();
         springApplication.setBannerMode(Banner.Mode.CONSOLE);
         logApplicationStartup(env);

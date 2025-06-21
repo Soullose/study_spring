@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wsf.infrastructure.utils.IpUtils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,8 +23,12 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
+
+		log.debug("ip:{}", IpUtils.getIpAddr(request));
+		log.debug("request:{}", request);
 		HashMap<String, String> map = new HashMap<>(2);
 		String errorMsg = authException.getMessage();
+		log.error("AuthenticationFailureHandlerImpl:{}", errorMsg);
 		String requestURI = request.getRequestURI();
 		int status = HttpStatus.UNAUTHORIZED.value();
 		response.setStatus(status);

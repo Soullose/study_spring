@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -42,7 +43,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain) throws ServletException, IOException {
-		log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		final String authHeader = request.getHeader(AUTHORIZATION);
 		final String jwt;
 		final String username;
@@ -54,8 +54,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 			jwt = authHeader.substring(7);
 			username = jwtService.extractUsername(jwt);
 			log.debug("JwtAuthenticationTokenFilter-username:{}", username);
-			log.debug("JwtAuthenticationTokenFilter-SecurityHolder:{}",
-					SecurityContextHolder.getContext().getAuthentication());
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 				/// 数据库校验token有效性
@@ -68,20 +66,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 					/// 通过设置身份验证令牌的详细信息，您可以将这些信息提供给身份验证和授权过程的其他组件。
 					/// 它允许下游组件（如身份验证提供者或访问决策管理器）在身份验证和授权过程中访问和使用这些附加细节。
 					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+					/// 设置认证信息到 SecurityContext
 					SecurityContextHolder.getContext().setAuthentication(authToken);
 				}
 			}
 			filterChain.doFilter(request, response);
 		} catch (JwtException e) { // 捕获 JWT 库的原生异常（如 ExpiredJwtException、MalformedJwtException）
 			log.warn("JWT 异常: {}", e.getMessage());
-//			throw new JWTAuthException("无效的 JWT 令牌: " + e.getMessage()); // 抛出自定义认证异常
-// 方案1：将自定义异常信息存储到请求属性中
-//			request.setAttribute("JWT_AUTH_EXCEPTION", new JWTAuthException("无效的 JWT 令牌: " + e.getMessage()));
-
-			// 方案2：直接处理响应（推荐）
 			handleJwtException(response, e);
-
-			return;
+		} catch (UsernameNotFoundException e) {
+			log.warn("用户不存在: {}", e.getMessage());
+			throw e;
 		}
 	}
 	/**

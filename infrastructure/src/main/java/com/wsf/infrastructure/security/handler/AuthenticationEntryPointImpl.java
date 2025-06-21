@@ -25,7 +25,9 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
+		log.debug("request:{}", request);
 		String errorMsg = authException.getMessage();
+		log.error("AuthenticationEntryPointImpl:{}", errorMsg);
 		int status = HttpStatus.UNAUTHORIZED.value();
 		response.setStatus(status);
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
