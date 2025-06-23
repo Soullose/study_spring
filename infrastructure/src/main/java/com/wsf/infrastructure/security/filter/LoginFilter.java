@@ -1,6 +1,7 @@
 package com.wsf.infrastructure.security.filter;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,18 +69,23 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
-        JsonNode jsonNode = objectMapper.readTree(request.getInputStream());
-        String username = obtainUsername(jsonNode);
-        username = (username != null) ? username.trim() : "";
-        String password = obtainPassword(jsonNode);
-        password = (password != null) ? password : "";
+        try (InputStream is = request.getInputStream()){
+            JsonNode jsonNode = objectMapper.readTree(is);
+            String username = obtainUsername(jsonNode);
+            username = (username != null) ? username.trim() : "";
+            String password = obtainPassword(jsonNode);
+            password = (password != null) ? password : "";
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                username,
-                password
-        );
-        setDetails(request, usernamePasswordAuthenticationToken);
-        return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    username,
+                    password
+            );
+            setDetails(request, usernamePasswordAuthenticationToken);
+            return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
+        } catch (Exception e) {
+            log.error("attemptAuthentication error: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @Nullable

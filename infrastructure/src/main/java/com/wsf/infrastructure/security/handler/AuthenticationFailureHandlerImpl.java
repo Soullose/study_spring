@@ -23,7 +23,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-
+//		LoginAttemptService loginAttemptService = new LoginAttemptService();
 		log.debug("ip:{}", IpUtils.getIpAddr(request));
 		log.debug("request:{}", request);
 		HashMap<String, String> map = new HashMap<>(2);
@@ -36,6 +36,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		if (errorMsg != null && errorMsg.equals("Bad credentials")) {
 			errorMsg = "用户名或密码错误";
+//			loginAttemptService.recordFailedLogin();
 		}
 		try (PrintWriter writer = response.getWriter()) {
 			map.put("uri", requestURI);

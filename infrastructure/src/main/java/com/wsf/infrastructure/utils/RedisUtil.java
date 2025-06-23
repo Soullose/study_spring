@@ -107,6 +107,10 @@ public class RedisUtil {
 		bucket.setIfAbsent(value, Duration.ofSeconds(ttl));
 	}
 
+	public RAtomicLong rAtomicLong(String key) {
+        return redissonClient.getAtomicLong(key);
+	}
+
 	/**
 	 * 增加
 	 *

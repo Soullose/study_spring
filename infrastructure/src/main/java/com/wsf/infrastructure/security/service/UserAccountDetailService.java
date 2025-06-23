@@ -29,6 +29,9 @@ public class UserAccountDetailService {
 	 * @return	{@link UserAccountDetail}
 	 */
 	public UserAccountDetail loadUserDetailByUsername(String username) {
+//		if (username != null) {
+//			throw new LockedException("用户被锁定");
+//		}
 		UserAccount userAccount = userAccountRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
 
