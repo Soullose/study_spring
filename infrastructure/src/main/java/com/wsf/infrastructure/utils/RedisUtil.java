@@ -118,9 +118,11 @@ public class RedisUtil {
 	 *            键
 	 * @return {@link Long}
 	 */
-	public Long increment(String key) {
+	public Long increment(String key,Duration duration) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		return atomicLong.incrementAndGet();
+		long result = atomicLong.incrementAndGet();
+		atomicLong.expire(duration);
+		return result;
 	}
 
 	/**

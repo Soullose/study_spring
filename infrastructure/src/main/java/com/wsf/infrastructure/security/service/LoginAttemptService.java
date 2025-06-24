@@ -1,6 +1,7 @@
 package com.wsf.infrastructure.security.service;
 
-import org.redisson.api.RAtomicLong;
+import java.time.Duration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.LockedException;
@@ -25,14 +26,12 @@ public class LoginAttemptService {
 		String lockKey = LOCK_KEY_PREFIX + username;
 		String attemptsKey = FAILED_ATTEMPTS_KEY_PREFIX + username;
 		/// 获取失败次数
-		RAtomicLong rAtomicLong = redisUtil.rAtomicLong(attemptsKey);
+		Long attemptsCounter = redisUtil.increment(attemptsKey, Duration.ofMinutes(5));
 
 		if (redisUtil.hasKey(attemptsKey)) {
-			long currentCounter = rAtomicLong.get();
-			if (currentCounter >= MAX_FAILED_ATTEMPTS) {
+			if (attemptsCounter >= MAX_FAILED_ATTEMPTS) {
 				throw new LockedException("账户被锁定,请于15分后重新登录");
 			}
-			Long attemptsCounter = redisUtil.increment(attemptsKey);
 		}
 	}
 
