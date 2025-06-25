@@ -24,6 +24,10 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
         <!-- spring security安全框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
