@@ -15,11 +15,11 @@ spring:
 #        nodes:
       ssl:
         enabled: false
-cosid:
-  namespace: ${spring.application.name}
-  machine:
-    enabled: true # 可选，当需要使用雪花算法时，需要设置为 true
-    distributor:
-      type: redis
-  generator:
-    enabled: true
+#cosid:
+#  namespace: ${spring.application.name}
+#  machine:
+#    enabled: true # 可选，当需要使用雪花算法时，需要设置为 true
+#    distributor:
+#      type: redis
+#  generator:
+#    enabled: true

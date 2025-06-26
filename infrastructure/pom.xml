@@ -102,17 +102,17 @@
             <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>me.ahoo.cosid</groupId>
-            <artifactId>cosid-spring-redis</artifactId>
-            <version>${cosid.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>me.ahoo.cosid</groupId>-->
+<!--            <artifactId>cosid-spring-redis</artifactId>-->
+<!--            <version>${cosid.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>me.ahoo.cosid</groupId>
-            <artifactId>cosid-spring-boot-starter</artifactId>
-            <version>${cosid.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>me.ahoo.cosid</groupId>-->
+<!--            <artifactId>cosid-spring-boot-starter</artifactId>-->
+<!--            <version>${cosid.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
