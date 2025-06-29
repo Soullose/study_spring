@@ -1,0 +1,7 @@
+spring:
+  quartz:
+#    enabled: true
+    overwrite-existing-jobs: true
+    auto-startup: true
+    job-store-type: memory
+
