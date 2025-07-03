@@ -16,7 +16,8 @@ public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
             log.debug("request-url:{}", request.uri());
             ctx.pipeline().remove(this);
             ctx.fireChannelRead(request);
+        }else {
+            ctx.fireChannelRead(msg);
         }
-        ctx.fireChannelRead(msg);
     }
 }

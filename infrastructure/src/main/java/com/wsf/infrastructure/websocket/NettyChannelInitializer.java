@@ -41,5 +41,7 @@ public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
          */
         // 添加 /websocket路由用于识别websocket请求, 方便在nginx中作localtion配置
         pipeline.addLast(new WebSocketServerProtocolHandler(WEB_SOCKET_PATH));
+
+        pipeline.addLast(new NettyWebSocketServerHandler());
     }
 }
