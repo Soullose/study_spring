@@ -1,8 +1,10 @@
 package com.wsf.infrastructure.modbus.client;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -34,13 +36,13 @@ public class ModbusClient {
 	}
 
 	// 连接到Modbus服务器
-	public CompletableFuture<Void> connect(String host, int port) {
-		CompletableFuture<Void> future = new CompletableFuture<>();
+	public CompletableFuture<Channel> connect(String host, int port) {
+		CompletableFuture<Channel> future = new CompletableFuture<>();
 
 		bootstrap.connect(host, port).addListener((ChannelFuture channelFuture) -> {
 			if (channelFuture.isSuccess()) {
 				this.channel = channelFuture.channel();
-				future.complete(null);
+				future.complete(channel);
 			} else {
 				future.completeExceptionally(channelFuture.cause());
 			}
@@ -61,32 +63,6 @@ public class ModbusClient {
 		return handler.sendRequest(channel, request).thenApply(ModbusResponse::getRegisterValues);
 	}
 
-	// 断开连接
-	public CompletableFuture<Void> disconnect1() {
-		CompletableFuture<Void> future = new CompletableFuture<>();
-
-		if (channel != null && channel.isActive()) {
-			channel.close().addListener(channelFuture -> {
-				group.shutdownGracefully().addListener(groupFuture -> {
-					if (groupFuture.isSuccess()) {
-						future.complete(null);
-					} else {
-						future.completeExceptionally(groupFuture.cause());
-					}
-				});
-			});
-		} else {
-			group.shutdownGracefully().addListener(groupFuture -> {
-				if (groupFuture.isSuccess()) {
-					future.complete(null);
-				} else {
-					future.completeExceptionally(groupFuture.cause());
-				}
-			});
-		}
-
-		return future;
-	}
 
 	// 检查连接状态
 	public boolean isConnected() {
@@ -96,57 +72,6 @@ public class ModbusClient {
 	private final ConcurrentMap<Integer, ScheduledFuture<?>> periodicTasks = new ConcurrentHashMap<>();
 	private final AtomicInteger taskIdGenerator = new AtomicInteger(0);
 
-	/**
-	 * 启动周期性读取保持寄存器
-	 * @param unitId 设备ID
-	 * @param startAddress 起始地址
-	 * @param quantity 读取数量
-	 * @param periodMillis 读取周期(毫秒)
-	 * @param callback 读取结果回调
-	 * @param errorHandler 错误处理回调
-	 * @return 任务ID (可用于停止任务)
-	 */
-	public int startPeriodicRead(
-			int unitId,
-			int startAddress,
-			int quantity,
-			long periodMillis,
-			Consumer<int[]> callback,
-			Consumer<Throwable> errorHandler) {
-
-		if (periodMillis <= 0) {
-			throw new IllegalArgumentException("Period must be positive");
-		}
-
-		int taskId = taskIdGenerator.incrementAndGet();
-		ScheduledFuture<?> future = channel.eventLoop().scheduleAtFixedRate(() -> {
-			if (!isConnected()) {
-				errorHandler.accept(new IllegalStateException("Connection lost during periodic read"));
-				return;
-			}
-
-			readHoldingRegisters(unitId, startAddress, quantity)
-					.thenAccept(callback)
-					.exceptionally(ex -> {
-						errorHandler.accept(ex.getCause());
-						return null;
-					});
-		}, 0, periodMillis, TimeUnit.MILLISECONDS);
-
-		periodicTasks.put(taskId, future);
-		return taskId;
-	}
-
-	/**
-	 * 停止周期性读取任务
-	 * @param taskId 任务ID
-	 */
-	public void stopPeriodicRead(int taskId) {
-		ScheduledFuture<?> future = periodicTasks.remove(taskId);
-		if (future != null) {
-			future.cancel(false);
-		}
-	}
 
 	// 修改断开连接方法，清理所有周期任务
 	public CompletableFuture<Void> disconnect() {
@@ -191,29 +116,11 @@ public class ModbusClient {
 
 			// 读取Holding Registers
 			// 从地址0开始读取10个寄存器，设备ID为1
-//			int[] values = client.readHoldingRegisters(1, 0, 10).get();
-//			System.out.println("读取的寄存器值:");
-//			for (int i = 0; i < values.length; i++) {
-//				System.out.printf("地址 %d: %d (0x%04X)\n", i, values[i], values[i]);
-//			}
-
-			// 启动周期性读取 (每2秒读取一次)
-			int taskId = client.startPeriodicRead(
-					1, 0, 10, 1000,
-					values -> {
-						System.out.println("周期读取结果:");
-						for (int i = 0; i < values.length; i++) {
-							System.out.printf("地址 %d: %d\n", i, values[i]);
-						}
-					},
-					error -> System.err.println("读取失败: " + error.getMessage())
-			);
-
-			// 让程序运行一段时间
-			Thread.sleep(10000);
-
-			// 停止周期性读取
-			client.stopPeriodicRead(taskId);
+			int[] values = client.readHoldingRegisters(1, 0, 10).get();
+			System.out.println("读取的寄存器值:");
+			for (int i = 0; i < values.length; i++) {
+				System.out.printf("地址 %d: %d (0x%04X)\n", i, values[i], values[i]);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
