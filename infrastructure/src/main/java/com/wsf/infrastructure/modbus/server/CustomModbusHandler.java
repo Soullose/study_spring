@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.modbus.server;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -9,6 +10,7 @@ interface ModbusRequest {}
 // 定义 Modbus 响应基类（需根据协议扩展）
 interface ModbusResponse {}
 
+@ChannelHandler.Sharable
 public class CustomModbusHandler extends SimpleChannelInboundHandler<ModbusRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ModbusRequest msg) {
