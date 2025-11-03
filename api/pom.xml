@@ -17,10 +17,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.wsf</groupId>
-            <artifactId>infrastructure</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!-- api should declare interfaces/DTOs only; it must NOT depend on app (implementation) -->
     </dependencies>
 </project>

@@ -17,6 +17,19 @@
     </properties>
 
     <dependencies>
+        <!-- Application Layer Dependencies -->
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>app</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <!-- Infrastructure Layer Dependencies (for web/rest specific needs) -->
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>infrastructure</artifactId>

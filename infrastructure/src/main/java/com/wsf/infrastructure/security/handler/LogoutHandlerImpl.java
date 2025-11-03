@@ -1,7 +1,7 @@
 package com.wsf.infrastructure.security.handler;
 
-import com.wsf.entity.Token;
-import com.wsf.repository.TokenRepository;
+import com.wsf.infrastructure.security.entity.Token;
+import com.wsf.infrastructure.security.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;

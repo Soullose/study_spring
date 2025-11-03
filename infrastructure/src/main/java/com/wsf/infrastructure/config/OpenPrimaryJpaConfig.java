@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.querydsl.jpa.impl.JPAProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
-import com.wsf.jpa.repository.EnhanceJpaRepositoryImpl;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -35,8 +35,7 @@ import jakarta.persistence.EntityManagerFactory;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE,
 		entityManagerFactoryRef = "openEntityManagerFactory",
-		transactionManagerRef = "openTransactionManager",
-		repositoryBaseClass = EnhanceJpaRepositoryImpl.class)
+		transactionManagerRef = "openTransactionManager")
 @EnableJpaAuditing
 public class OpenPrimaryJpaConfig {
 	private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
@@ -52,7 +51,7 @@ public class OpenPrimaryJpaConfig {
 		return new JPAQueryFactory(JPAProvider.getTemplates(entityManager), entityManager);
 	}
 
-	public static final String REPOSITORY_PACKAGE = "com.wsf.**";
+	public static final String REPOSITORY_PACKAGE = "com.wsf.infrastructure.**";
 
 	@Primary
 	@Bean(name = "openPrimaryJpaProperties")

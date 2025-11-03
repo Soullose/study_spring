@@ -1,13 +1,11 @@
 package com.wsf.infrastructure.security.service;
 
-import com.wsf.entity.Token;
-import com.wsf.entity.User;
-import com.wsf.entity.UserAccount;
-import com.wsf.enums.TokenType;
 import com.wsf.infrastructure.security.domain.*;
-import com.wsf.repository.TokenRepository;
-import com.wsf.repository.UserAccountRepository;
-import com.wsf.repository.UserRepository;
+import com.wsf.infrastructure.security.entity.Token;
+import com.wsf.infrastructure.security.entity.UserAccount;
+import com.wsf.infrastructure.security.enums.TokenType;
+import com.wsf.infrastructure.security.repository.TokenRepository;
+import com.wsf.infrastructure.security.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +22,6 @@ import java.util.Set;
 public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
-
-    private final UserRepository userRepository;
-
-    //	private final RoleRepository roleRepository;
 
     private final TokenRepository tokenRepository;
 
@@ -47,13 +41,7 @@ public class AuthenticationService {
 
         UserAccount account = userAccountRepository.save(userAccount);
 
-        User user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .userAccount(account)
-                .build();
-        userRepository.save(user);
+        // 简化注册逻辑，暂时不创建User实体
 //		String jwtToken = jwtService.generateToken(new UserAccountDetail(account));
 //		saveUserToken(account, jwtToken);
         return RegisterResponse.builder().token(request.getFirstname() + request.getLastname()).build();

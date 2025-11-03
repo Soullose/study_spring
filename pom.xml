@@ -25,7 +25,7 @@
         <guava.version>33.5.0-jre</guava.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <jjwt.version>0.12.6</jjwt.version>
-<!--        <lombok.version>1.18.38</lombok.version>-->
+        <lombok.version>1.18.38</lombok.version>
         <querydsl.version>5.1.0</querydsl.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <mysql.version>9.2.0</mysql.version>
@@ -189,18 +189,51 @@
                 <artifactId>uuid-creator</artifactId>
                 <version>${uuid-creator.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+
+            <!-- Cryptography Libraries -->
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.70</version>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>1.78</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on -->
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcpkix-jdk15on</artifactId>
-                <version>1.70</version>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>1.78</version>
             </dependency>
+
+            <!-- MQTT Clients -->
+            <dependency>
+                <groupId>org.eclipse.paho</groupId>
+                <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.paho</groupId>
+                <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+
+            <!-- Additional Spring Integration -->
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-stream</artifactId>
+            </dependency>
+
+            <!-- Jackson Hibernate Support -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-hibernate5</artifactId>
+                <version>2.17.2</version>
+            </dependency>
+
+            <!-- Hibernate Dialects -->
+            <dependency>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-community-dialects</artifactId>
+                <version>6.4.8.Final</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

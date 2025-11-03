@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.wsf.infrastructure.security.repository.TokenRepository;
 import com.wsf.infrastructure.security.service.JwtService;
 import com.wsf.infrastructure.security.service.OpenUserDetailsService;
-import com.wsf.repository.TokenRepository;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -59,7 +59,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 				/// 数据库校验token有效性
 				Boolean isTokenValid = tokenRepository.findByToken(jwt).map(t -> !t.isRevoked() && !t.isExpired())
 						.orElse(false);
-				if (jwtService.isTokenValid(jwt, userDetails)) {
+				if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
 					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
 							null, userDetails.getAuthorities());
 					/// 添加其他详细信息到身份认证中如IP地址、会话ID或任何其他相关详细信息。

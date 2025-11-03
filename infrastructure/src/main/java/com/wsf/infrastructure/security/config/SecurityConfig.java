@@ -28,8 +28,6 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.entity.QUser;
-import com.wsf.entity.User;
 import com.wsf.infrastructure.config.OpenPrimaryJpaConfig;
 import com.wsf.infrastructure.security.filter.JwtAuthenticationTokenFilter;
 import com.wsf.infrastructure.security.filter.LoginFilter;
@@ -82,9 +80,9 @@ public class SecurityConfig {
 			throws Exception {
 		log.debug("配置SecurityFilterChain");
 		/// 测试
-		QUser qUser = QUser.user;
-		User o = (User) jpaQueryFactory.from(qUser).fetchFirst();
-		log.debug("o:{}", o);
+//		QUser qUser = QUser.user;
+//		User o = (User) jpaQueryFactory.from(qUser).fetchFirst();
+//		log.debug("o:{}", o);
 		RedisUtil redisUtil = new RedisUtil();
 		redisUtil.setStr("xxxx1", "222222222222222222222", 60000);
 		http.authorizeHttpRequests((requests) -> requests

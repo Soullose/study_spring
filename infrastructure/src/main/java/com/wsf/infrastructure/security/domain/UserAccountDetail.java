@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.wsf.entity.Role;
-import com.wsf.entity.UserAccount;
+import com.wsf.infrastructure.security.entity.Role;
+import com.wsf.infrastructure.security.entity.UserAccount;
 
 import lombok.Data;
 import lombok.Getter;
