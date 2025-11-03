@@ -9,3 +9,5 @@ start/target
 target/
 
 *.log
+
+watch/
