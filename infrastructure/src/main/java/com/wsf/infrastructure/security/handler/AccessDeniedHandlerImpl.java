@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,13 +14,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 访问拒绝实现类
  */
-@Slf4j
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
+	private static final Logger log = LoggerFactory.getLogger(AccessDeniedHandlerImpl.class);
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {

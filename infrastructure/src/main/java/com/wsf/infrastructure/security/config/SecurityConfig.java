@@ -22,6 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
@@ -64,6 +65,8 @@ public class SecurityConfig {
 	private final JwtService jwtService;
 
 	private final ApplicationEventPublisher applicationEventPublisher;
+
+	private final AuthenticationFailureHandler authenticationFailureHandler;
 
 	/// 在 SecurityConfiguration 中声明
 	@Bean
@@ -113,7 +116,7 @@ public class SecurityConfig {
 
 	 @Bean
 	public LoginFilter loginFilter(AuthenticationManager authenticationManager) throws Exception {
-		LoginFilter loginFilter = new LoginFilter();
+		LoginFilter loginFilter = new LoginFilter(authenticationFailureHandler);
 		loginFilter.setAuthenticationManager(authenticationManager);
 		// loginFilter.setRememberMeServices(rememberMeServices);
 		loginFilter.setAuthenticationSuccessHandler(loginSuccessHandler);

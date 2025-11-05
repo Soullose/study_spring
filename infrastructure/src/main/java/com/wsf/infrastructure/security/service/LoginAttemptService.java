@@ -5,9 +5,11 @@ import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.stereotype.Component;
 
 import com.wsf.infrastructure.utils.RedisUtil;
 
+@Component
 public class LoginAttemptService {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginAttemptService.class);
@@ -22,7 +24,7 @@ public class LoginAttemptService {
 	}
 
 	public void recordFailedLogin(String username) {
-		RedisUtil redisUtil = new RedisUtil();
+		 RedisUtil redisUtil = new RedisUtil();
 		String lockKey = LOCK_KEY_PREFIX + username;
 		String attemptsKey = FAILED_ATTEMPTS_KEY_PREFIX + username;
 		/// 获取失败次数
@@ -34,13 +36,4 @@ public class LoginAttemptService {
 			}
 		}
 	}
-
-	// private RAtomicLong getRedisCounter(String key) {
-	// RAtomicLong atomicLong = redisUtil.rAtomicLong(key);
-	// if (atomicLong.get() == 0) {
-	// /// 设置过期时间，15分钟
-	// atomicLong.expire(Duration.ofMinutes(LOCK_TIME_DURATION));
-	// }
-	// return atomicLong;
-	// }
 }

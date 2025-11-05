@@ -1,7 +1,6 @@
 package com.wsf.infrastructure.security.service;
 
 import java.util.Collections;
-import java.util.Set;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class UserAccountDetailService {
 
 	private final UserAccountRepository userAccountRepository;
 	private final RoleRepository roleRepository;
-
+//	private final LoginAttemptService loginAttemptService;
 	/**
 	 * 查询用户明细数据包括角色等等
 	 *
@@ -28,6 +27,7 @@ public class UserAccountDetailService {
 	 * @return	{@link UserAccountDetail}
 	 */
 	public UserAccountDetail loadUserDetailByUsername(String username) {
+//		loginAttemptService.
 //		if (username != null) {
 //			throw new LockedException("用户被锁定");
 //		}

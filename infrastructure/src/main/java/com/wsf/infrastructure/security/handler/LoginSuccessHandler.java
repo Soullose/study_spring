@@ -1,6 +1,7 @@
 package com.wsf.infrastructure.security.handler;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
 import com.wsf.infrastructure.security.service.JwtService;
+import com.wsf.infrastructure.utils.ResponseUtils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +35,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		String jwtToken = jwtService.generateToken(userAccountDetail);
 
-		response.getWriter().write(jwtToken);
-		response.setStatus(HttpServletResponse.SC_OK);
+		HashMap<String, String> result = new HashMap<>();
+		result.put("accessToken", jwtToken);
+		ResponseUtils.writeSuccessMsg(response, result);
 	}
 }

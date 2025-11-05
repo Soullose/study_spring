@@ -1,19 +1,23 @@
 package com.wsf.infrastructure.security.handler;
 
-import com.wsf.infrastructure.security.entity.Token;
-import com.wsf.infrastructure.security.repository.TokenRepository;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.wsf.infrastructure.security.entity.Token;
+import com.wsf.infrastructure.security.repository.TokenRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class LogoutHandlerImpl implements LogoutHandler {
+	private static final Logger log = LoggerFactory.getLogger(LogoutHandlerImpl.class);
 
 	private final TokenRepository tokenRepository;
 

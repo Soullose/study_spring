@@ -13,12 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wsf.infrastructure.security.handler.AuthenticationFailureHandlerImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ import lombok.Setter;
 //@Component
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(LoginFilter.class);
 
 
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
@@ -56,9 +56,12 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public LoginFilter() {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-        setAuthenticationFailureHandler(new AuthenticationFailureHandlerImpl());
     }
 
+    public LoginFilter(AuthenticationFailureHandler authenticationFailureHandler) {
+        super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+        setAuthenticationFailureHandler(authenticationFailureHandler);
+    }
     protected LoginFilter(AuthenticationManager authenticationManager) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
     }
