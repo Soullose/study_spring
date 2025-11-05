@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.wsf.domain.BaseEntity;
 
+import com.wsf.infrastructure.security.entity.Token;
 import jakarta.persistence.*;
 import lombok.*;
 

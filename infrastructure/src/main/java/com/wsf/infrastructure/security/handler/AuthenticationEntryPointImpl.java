@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -26,6 +27,8 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		log.debug("request:{}", request);
+		log.debug("请求URL: {} {}", request.getMethod(), request.getRequestURI());
+		log.debug("当前认证信息: {}", SecurityContextHolder.getContext().getAuthentication());
 		String errorMsg = authException.getMessage();
 		log.error("AuthenticationEntryPointImpl:{}", errorMsg);
 		int status = HttpStatus.UNAUTHORIZED.value();

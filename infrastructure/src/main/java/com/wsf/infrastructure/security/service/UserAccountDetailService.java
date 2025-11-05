@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.security.service;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,8 +34,9 @@ public class UserAccountDetailService {
 		var userAccount = userAccountRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
 
+		// 优雅处理角色查询，即使没有角色也不抛出异常
 		var roles = roleRepository.findByUserAccounts(userAccount)
-				.orElseThrow(NullPointerException::new);
+				.orElse(Collections.emptySet());
 
 		log.debug("roles:{}", roles.size());
 

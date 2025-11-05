@@ -23,7 +23,7 @@ public class StudyController {
 //    @PreAuthorize("hasAuthority('hello:test')")
     public ResponseEntity<String> HelloWorld() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null || !authentication.isAuthenticated()) {
+        if (authentication != null && !authentication.isAuthenticated()) {
             log.debug("未登录");
 
             Object principal = authentication.getPrincipal();

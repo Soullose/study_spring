@@ -11,8 +11,8 @@ spring:
   profiles:
     include: jpa,datasource,openapi,redis
     #打包的程序输出的异常信息前端可以显示
-  mvc:
-    path-match:
-      matching-strategy: ant_path_matcher
+#  mvc:
+#    path-match:
+#      matching-strategy: ant_path_matcher
   application:
     name: w2-server

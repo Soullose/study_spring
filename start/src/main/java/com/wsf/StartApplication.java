@@ -15,7 +15,7 @@ import org.springframework.web.context.request.RequestContextListener;
 
 import com.wsf.infrastructure.vfs.ApacheVfsApplicationContextInitializer;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.wsf")
 public class StartApplication {
 
     private final static Logger log = LoggerFactory.getLogger(StartApplication.class);

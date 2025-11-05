@@ -104,7 +104,7 @@ public class SecurityConfig {
 				/// 禁用 X-Frame-Options 响应头，允许页面被嵌套到 iframe 中
 				.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.addFilterAt(loginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
-				.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+				.addFilterAfter(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 		;
 
 		return http.build();

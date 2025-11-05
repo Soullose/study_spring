@@ -1,6 +1,7 @@
 package com.wsf.infrastructure.security.domain;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,10 @@ public class UserAccountDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = userAccount.getRoles();
-        int roleSize = roles.size();
+        int roleSize = roles != null ? roles.size() : 0;
         log.debug("UserAccountDetail-roles:{}", roleSize);
-        if (roles == null) {
-            return null;
+        if (roles == null || roles.isEmpty()) {
+            return Collections.emptyList();
         }
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

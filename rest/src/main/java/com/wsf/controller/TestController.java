@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * open SoulLose 2022-05-30 09:52
  */
 @Slf4j
-@RequestMapping("test")
+@RequestMapping("/test")
 @RestController
 public class TestController {
 
@@ -39,7 +39,7 @@ public class TestController {
 		//
 		// userRepository.save(user);
 		log.info("test");
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("test");
 	}
 
 	@GetMapping("/test1")
