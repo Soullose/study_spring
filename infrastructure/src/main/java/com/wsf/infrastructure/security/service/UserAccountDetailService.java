@@ -19,7 +19,7 @@ public class UserAccountDetailService {
 
 	private final UserAccountRepository userAccountRepository;
 	private final RoleRepository roleRepository;
-//	private final LoginAttemptService loginAttemptService;
+	private final LoginAttemptService loginAttemptService;
 	/**
 	 * 查询用户明细数据包括角色等等
 	 *
@@ -27,7 +27,7 @@ public class UserAccountDetailService {
 	 * @return	{@link UserAccountDetail}
 	 */
 	public UserAccountDetail loadUserDetailByUsername(String username) {
-//		loginAttemptService.
+		loginAttemptService.hasAttemptsLocked(username);
 //		if (username != null) {
 //			throw new LockedException("用户被锁定");
 //		}
