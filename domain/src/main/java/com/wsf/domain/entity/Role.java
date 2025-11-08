@@ -1,9 +1,13 @@
 package com.wsf.domain.entity;
 
 import com.wsf.domain.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,6 +20,7 @@ import java.util.Set;
 @Table(name = "T_OPEN_ROLE_")
 public class Role extends BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 6402450559307770244L;
 
     @Column(name = "role_name_")

@@ -5,6 +5,7 @@ import com.wsf.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends BaseEntity implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 3050292059722106684L;
 
 	@Column(name = "first_name_")

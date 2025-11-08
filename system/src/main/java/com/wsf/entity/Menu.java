@@ -5,6 +5,7 @@ import com.wsf.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -23,6 +24,7 @@ import java.util.Set;
 @Table(name = "T_OPEN_MENU_")
 public class Menu extends BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -6489977862733269490L;
 
     @Column(name = "menu_name_")

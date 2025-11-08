@@ -4,6 +4,7 @@ import com.wsf.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Table(name = "T_USER_ACCOUNT_")
 public class UserAccount extends BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 6402450559307770244L;
 
     @Column(name = "username_")
@@ -24,27 +26,27 @@ public class UserAccount extends BaseEntity implements Serializable {
     @Column(name = "password_")
     private String password;
 
-    ///帐户未过期
+    /// 帐户未过期
     @Column(name = "account_nonExpired")
     private boolean accountNonExpired;
 
-    ///帐户未锁定
+    /// 帐户未锁定
     @Column(name = "account_nonLocked")
     private boolean accountNonLocked;
 
-    ///证书未过期
+    /// 证书未过期
     @Column(name = "credentials_nonExpired")
     private boolean credentialsNonExpired;
 
-    ///禁用
+    /// 禁用
     @Column(name = "enabled_")
     private boolean enabled = true;
 
-    ///人员
+    /// 人员
     @OneToOne(mappedBy = "userAccount")
     private User user;
 
-    ///登录的token
+    /// 登录的token
     @OneToMany(mappedBy = "userAccount")
     private Set<Token> tokens;
 

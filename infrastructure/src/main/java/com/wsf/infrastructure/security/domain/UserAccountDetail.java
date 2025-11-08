@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.security.domain;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -20,6 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 public class UserAccountDetail implements UserDetails {
+
+    @Serial
+    private static final long serialVersionUID = -7402378876757177613L;
 
     private UserAccount userAccount;
 

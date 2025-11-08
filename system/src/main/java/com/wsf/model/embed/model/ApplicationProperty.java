@@ -7,6 +7,8 @@ import lombok.Setter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -20,6 +22,7 @@ import java.io.Serializable;
 @Table(name = "t_open_application_property_")
 public class ApplicationProperty extends BaseEntity implements Serializable {
     
+    @Serial
     private static final long serialVersionUID = 1182864316154864701L;
     
     @Column(name = "name_")

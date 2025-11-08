@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @Table(name = "T_OPEN_TOKEN_")
 public class Token extends BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -529387902106465050L;
 
     @Column(name = "token_",length = 512)
