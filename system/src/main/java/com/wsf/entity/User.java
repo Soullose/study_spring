@@ -2,6 +2,7 @@ package com.wsf.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wsf.domain.BaseEntity;
+import com.wsf.infrastructure.security.entity.UserAccount;
 import jakarta.persistence.*;
 import lombok.*;
 
