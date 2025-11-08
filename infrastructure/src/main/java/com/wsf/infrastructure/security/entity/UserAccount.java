@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_user_account_")
+@Table(name = "T_USER_ACCOUNT_")
 public class UserAccount extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 6402450559307770244L;

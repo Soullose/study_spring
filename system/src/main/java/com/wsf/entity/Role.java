@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_open_role_")
+@Table(name = "T_OPEN_ROLE_")
 public class Role extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -5749803185558149450L;

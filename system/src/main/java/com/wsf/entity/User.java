@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_open_user_")
+@Table(name = "T_OPEN_USER_")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends BaseEntity implements Serializable {
 

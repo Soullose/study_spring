@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_open_menu_")
+@Table(name = "T_OPEN_MENU_")
 public class Menu extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -6489977862733269490L;
