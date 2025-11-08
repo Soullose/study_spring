@@ -2,7 +2,7 @@ package com.wsf.mapstruct;
 
 import com.wsf.domain.BaseMapper;
 import com.wsf.dto.UserDto;
-import com.wsf.entity.User;
+import com.wsf.domain.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

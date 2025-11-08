@@ -1,6 +1,6 @@
 package com.wsf.dto;
 
-import com.wsf.entity.Role;
+import com.wsf.domain.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

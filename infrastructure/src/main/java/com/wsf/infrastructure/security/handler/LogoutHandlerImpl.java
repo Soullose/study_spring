@@ -7,7 +7,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.wsf.infrastructure.security.entity.Token;
+import com.wsf.domain.entity.Token;
 import com.wsf.infrastructure.security.repository.TokenRepository;
 
 import jakarta.servlet.http.HttpServletRequest;

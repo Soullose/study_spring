@@ -1,7 +1,7 @@
-package com.wsf.infrastructure.security.entity;
+package com.wsf.domain.entity;
 
 import com.wsf.domain.BaseEntity;
-import com.wsf.infrastructure.security.enums.TokenType;
+import com.wsf.domain.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

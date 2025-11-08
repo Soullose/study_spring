@@ -1,12 +1,11 @@
-package com.wsf.infrastructure.security.entity;
+package com.wsf.domain.entity;
+
+import com.wsf.domain.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Set;
-
-import com.wsf.domain.BaseEntity;
-
-import jakarta.persistence.*;
-import lombok.*;
 
 @Getter
 @Setter
@@ -40,6 +39,14 @@ public class UserAccount extends BaseEntity implements Serializable {
     ///禁用
     @Column(name = "enabled_")
     private boolean enabled = true;
+
+    ///人员
+    @OneToOne(mappedBy = "userAccount")
+    private User user;
+
+    ///登录的token
+    @OneToMany(mappedBy = "userAccount")
+    private Set<Token> tokens;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "t_open_userAccount_role_",

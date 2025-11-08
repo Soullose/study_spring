@@ -1,6 +1,7 @@
 package com.wsf.entity;
 
 import com.wsf.domain.BaseEntity;
+import com.wsf.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

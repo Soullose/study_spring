@@ -1,8 +1,8 @@
 package com.wsf.infrastructure.security.service;
 
 import com.wsf.infrastructure.security.domain.*;
-import com.wsf.infrastructure.security.entity.Token;
-import com.wsf.infrastructure.security.entity.UserAccount;
+import com.wsf.domain.entity.Token;
+import com.wsf.domain.entity.UserAccount;
 import com.wsf.infrastructure.security.enums.TokenType;
 import com.wsf.infrastructure.security.repository.TokenRepository;
 import com.wsf.infrastructure.security.repository.UserAccountRepository;
