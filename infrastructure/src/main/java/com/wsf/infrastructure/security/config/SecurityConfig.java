@@ -3,6 +3,7 @@ package com.wsf.infrastructure.security.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wsf.infrastructure.security.filter.UserAwareRateLimitFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -52,6 +53,8 @@ public class SecurityConfig {
 
 	private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
+	private final UserAwareRateLimitFilter userAwareRateLimitFilter;
+
 	private final OpenUserDetailsService userDetailsService;
 
 	private final LoginSuccessHandler loginSuccessHandler;
@@ -86,8 +89,6 @@ public class SecurityConfig {
 //		QUser qUser = QUser.user;
 //		User o = (User) jpaQueryFactory.from(qUser).fetchFirst();
 //		log.debug("o:{}", o);
-		RedisUtil redisUtil = new RedisUtil();
-		redisUtil.setStr("xxxx1", "222222222222222222222", 60000);
 		http.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/doc.html", "/swagger-ui.html", "/api/doc.html", "/webjars/**", "/v3/**",
 						"/swagger-resources/**")
@@ -108,6 +109,8 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.addFilterAt(loginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
 				.addFilterAfter(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+				/// 在JWT过滤器之后添加限流过滤器
+				.addFilterAfter(userAwareRateLimitFilter, JwtAuthenticationTokenFilter.class)
 		;
 
 		return http.build();
