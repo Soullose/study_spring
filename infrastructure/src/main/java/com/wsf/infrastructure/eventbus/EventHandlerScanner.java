@@ -93,7 +93,7 @@ public class EventHandlerScanner implements BeanPostProcessor, ApplicationContex
     /**
      * 注册事件处理方法
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private void registerEventHandler(Object bean, Method method, EventSubscribe annotation) {
         // 验证方法参数
         Class<?>[] parameterTypes = method.getParameterTypes();
@@ -107,7 +107,7 @@ public class EventHandlerScanner implements BeanPostProcessor, ApplicationContex
         if (annotation.value() != void.class) {
             // 使用注解指定的类型
             if (!Event.class.isAssignableFrom(annotation.value())) {
-                log.warn("Specified event type {} must implement Event interface. Method: {}", 
+                log.warn("Specified event type {} must implement Event interface. Method: {}",
                         annotation.value().getSimpleName(), method.getName());
                 return;
             }
@@ -116,29 +116,29 @@ public class EventHandlerScanner implements BeanPostProcessor, ApplicationContex
             // 从方法参数推断类型
             Class<?> paramType = parameterTypes[0];
             if (!Event.class.isAssignableFrom(paramType)) {
-                log.warn("Method parameter type {} must implement Event interface. Method: {}", 
+                log.warn("Method parameter type {} must implement Event interface. Method: {}",
                         paramType.getSimpleName(), method.getName());
                 return;
             }
             eventType = (Class<? extends Event>) paramType;
         }
 
-        // 创建事件处理器
-        EventHandler<? extends Event> handler = event -> {
+        // 创建事件处理器 - 使用原始类型避免泛型类型不匹配问题
+        EventHandler handler = event -> {
             try {
                 method.setAccessible(true);
                 method.invoke(bean, event);
             } catch (Exception e) {
-                log.error("Error invoking event handler method: {} for event: {}", 
+                log.error("Error invoking event handler method: {} for event: {}",
                          method.getName(), event.getClass().getSimpleName(), e);
                 throw new RuntimeException("Event handler invocation failed", e);
             }
         };
 
-        // 注册到事件总线
-        eventBus.register(eventType, (EventHandler<Event>) handler, annotation);
+        // 注册到事件总线 - 使用原始类型避免泛型类型不匹配
+        eventBus.register(eventType, handler, annotation);
         
-        log.debug("Registered event handler: {}.{} for event type: {}", 
+        log.debug("Registered event handler: {}.{} for event type: {}",
                  bean.getClass().getSimpleName(), method.getName(), eventType.getSimpleName());
     }
 
