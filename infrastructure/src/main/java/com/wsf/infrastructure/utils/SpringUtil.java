@@ -52,6 +52,7 @@ public class SpringUtil implements ApplicationContextAware {
 	 *            Bean 的泛型类型
 	 * @return 对应名称的 Bean 实例
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String name) {
 		return (T) getApplicationContext().getBean(name);
 	}

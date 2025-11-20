@@ -1,13 +1,14 @@
 package com.wsf.controller;
 
-import com.wsf.domain.events.UserCreatedEvent;
-import com.wsf.infrastructure.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wsf.domain.events.UserCreatedEvent;
+import com.wsf.infrastructure.eventbus.EventBus;
 
 /**
  * 事件总线演示控制器
@@ -92,11 +93,11 @@ public class EventBusDemoController {
         status.append("事件总线状态:\n");
         status.append("已注册的事件类型: ").append(eventBus.getRegisteredEventTypes().size()).append("\n");
         
-        for (Class<?> eventType : eventBus.getRegisteredEventTypes()) {
-            int handlerCount = eventBus.getHandlerCount(eventType);
-            status.append("  - ").append(eventType.getSimpleName())
-                  .append(": ").append(handlerCount).append(" 个处理器\n");
-        }
+//        for (Class<?> eventType : eventBus.getRegisteredEventTypes()) {
+//            int handlerCount = eventBus.getHandlerCount(eventType);
+//            status.append("  - ").append(eventType.getSimpleName())
+//                  .append(": ").append(handlerCount).append(" 个处理器\n");
+//        }
         
         return status.toString();
     }

@@ -1,14 +1,15 @@
 package com.wsf.entity;
 
-import com.wsf.domain.BaseEntity;
-import com.wsf.domain.entity.Role;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import com.wsf.domain.BaseEntity;
+import com.wsf.domain.entity.Role;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 /**
  * open
@@ -36,9 +37,11 @@ public class Menu extends BaseEntity implements Serializable {
     @Column(name = "component_")
     private String component;
 
+    @Builder.Default
     @Column(name = "visible_")
     private boolean visible = false;
 
+    @Builder.Default
     @Column(name = "status_")
     private boolean status = false;
 
