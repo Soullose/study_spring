@@ -33,6 +33,7 @@
         <redisson.version>3.44.0</redisson.version>
         <cosid.version>2.11.0</cosid.version>
         <hutool.version>5.8.35</hutool.version>
+        <java-uuid.version>5.1.0</java-uuid.version>
         <uuid-creator.version>6.1.1</uuid-creator.version>
         <knife4j.version>4.5.0</knife4j.version>
     </properties>
@@ -203,6 +204,12 @@
                 <groupId>me.ahoo.cosid</groupId>
                 <artifactId>cosid-spring-boot-starter</artifactId>
                 <version>${cosid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.uuid</groupId>
+                <artifactId>java-uuid-generator</artifactId>
+                <version>${java-uuid.version}</version>
             </dependency>
 
             <dependency>
