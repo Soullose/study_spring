@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,7 +24,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.querydsl.jpa.impl.JPAProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -33,61 +33,64 @@ import jakarta.persistence.EntityManagerFactory;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE,
-		entityManagerFactoryRef = "openEntityManagerFactory",
-		transactionManagerRef = "openTransactionManager")
+@EnableJpaRepositories(
+    basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE, entityManagerFactoryRef = "openEntityManagerFactory", transactionManagerRef = "openTransactionManager"
+)
 @EnableJpaAuditing
+@EntityScan(basePackages = OpenPrimaryJpaConfig.DOMAIN_PACKAGE)
 public class OpenPrimaryJpaConfig {
-	private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
+  private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
 
-	public OpenPrimaryJpaConfig() {
-	}
+  public static final String REPOSITORY_PACKAGE = "com.wsf.infrastructure.**";
+  public static final String DOMAIN_PACKAGE = "com.wsf.domain.**";
 
-	@Primary
-	@Bean(name = "jpaQueryFactory")
-	@ConditionalOnMissingBean
-	public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
-		log.debug("创建JPAQueryFactory");
-		return new JPAQueryFactory(JPAProvider.getTemplates(entityManager), entityManager);
-	}
+  public OpenPrimaryJpaConfig() {
+  }
 
-	public static final String REPOSITORY_PACKAGE = "com.wsf.infrastructure.**";
+  @Primary
+  @Bean(name = "jpaQueryFactory")
+  @ConditionalOnMissingBean
+  public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+    log.debug("创建JPAQueryFactory");
+    return new JPAQueryFactory(JPAProvider.getTemplates(entityManager), entityManager);
+  }
 
-	@Primary
-	@Bean(name = "openPrimaryJpaProperties")
-	@ConfigurationProperties(prefix = "spring.jpa.primary")
-	public JpaProperties openPrimaryJpaProperties() {
-		log.debug(REPOSITORY_PACKAGE);
-		return new JpaProperties();
-	}
+  @Primary
+  @Bean(name = "openPrimaryJpaProperties")
+  @ConfigurationProperties(prefix = "spring.jpa.primary")
+  public JpaProperties openPrimaryJpaProperties() {
+    log.debug(REPOSITORY_PACKAGE);
+    return new JpaProperties();
+  }
 
-	@Primary
-	@Bean(name = "openPrimaryHibernateProperties")
-	@ConfigurationProperties(prefix = "spring.jpa.primary.hibernate")
-	public HibernateProperties openPrimaryHibernateProperties() {
-		return new HibernateProperties();
-	}
+  @Primary
+  @Bean(name = "openPrimaryHibernateProperties")
+  @ConfigurationProperties(prefix = "spring.jpa.primary.hibernate")
+  public HibernateProperties openPrimaryHibernateProperties() {
+    return new HibernateProperties();
+  }
 
-	@Primary
-	@Bean(name = "openEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
-			@Qualifier(value = "openDataSource") DataSource openDataSource,
-			@Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
-			EntityManagerFactoryBuilder builder) {
-		return builder.dataSource(openDataSource).properties(jpaProperties.getProperties()).packages(REPOSITORY_PACKAGE)
-				.persistenceUnit("openDS").build();
-	}
+  @Primary
+  @Bean(name = "openEntityManagerFactory")
+  public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
+      @Qualifier(value = "openDataSource") DataSource openDataSource,
+      @Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
+      EntityManagerFactoryBuilder builder) {
+    return builder.dataSource(openDataSource).properties(jpaProperties.getProperties())
+        .packages(REPOSITORY_PACKAGE, DOMAIN_PACKAGE)
+        .persistenceUnit("openDS").build();
+  }
 
-	@Primary
-	@Bean(name = "openTransactionManager")
-	public JpaTransactionManager openTransactionManager(
-			@Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
-		return new JpaTransactionManager(factory);
-	}
+  @Primary
+  @Bean(name = "openTransactionManager")
+  public JpaTransactionManager openTransactionManager(
+      @Qualifier(value = "openEntityManagerFactory") EntityManagerFactory factory) {
+    return new JpaTransactionManager(factory);
+  }
 
-	@Primary
-	@Bean(name = "currentUserAuditorAware")
-	public AuditorAware<String> currentUserAuditorAware() {
-		return new CurrentUserAuditorAware();
-	}
+  @Primary
+  @Bean(name = "currentUserAuditorAware")
+  public AuditorAware<String> currentUserAuditorAware() {
+    return new CurrentUserAuditorAware();
+  }
 }
