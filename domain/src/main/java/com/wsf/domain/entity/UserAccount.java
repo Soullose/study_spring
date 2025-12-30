@@ -1,12 +1,15 @@
 package com.wsf.domain.entity;
 
-import com.wsf.domain.BaseEntity;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.wsf.domain.BaseEntity;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "T_USER_ACCOUNT_")
+@EntityListeners(AuditingEntityListener.class)
 public class UserAccount extends BaseEntity implements Serializable {
 
     @Serial

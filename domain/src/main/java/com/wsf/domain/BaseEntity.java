@@ -1,6 +1,12 @@
 package com.wsf.domain;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.wsf.domain.annotation.BaseId;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,29 +20,37 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 public abstract class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "custom-id-generator")
-    @BaseId
-    @Column(name = "id_")
-    @Access(AccessType.PROPERTY)
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE, generator = "custom-id-generator")
+  @BaseId
+  @Column(name = "id_")
+  @Access(AccessType.PROPERTY)
+  private String id;
 
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
+  @CreatedDate // 自动填充创建时间
+  @Column(name = "create_date_", updatable = false, columnDefinition = "timestamp")
+  private LocalDateTime createDate;// 创建时间
 
-        if (id == null || object == null || getClass() != object.getClass()) {
-            return false;
-        }
+  @LastModifiedDate // 自动填充修改时间
+  @Column(name = "modify_date_", columnDefinition = "timestamp")
+  private LocalDateTime modifyDate;// 修改时间
 
-        final BaseEntity other = (BaseEntity) object;
-
-        return id.equals(other.id);
+  public boolean equals(Object object) {
+    if (this == object) {
+      return true;
     }
 
-    public int hashCode() {
-        return (id == null) ? super.hashCode() : id.hashCode();
+    if (id == null || object == null || getClass() != object.getClass()) {
+      return false;
     }
+
+    final BaseEntity other = (BaseEntity) object;
+
+    return id.equals(other.id);
+  }
+
+  public int hashCode() {
+    return (id == null) ? super.hashCode() : id.hashCode();
+  }
 
 }

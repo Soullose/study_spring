@@ -9,7 +9,10 @@ import com.wsf.domain.BaseEntity;
 import com.wsf.domain.entity.Role;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * open
@@ -18,45 +21,44 @@ import lombok.*;
  */
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "T_OPEN_MENU_")
 public class Menu extends BaseEntity implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -6489977862733269490L;
+  @Serial
+  private static final long serialVersionUID = -6489977862733269490L;
 
-    @Column(name = "menu_name_")
-    private String name;
+  @Column(name = "menu_name_")
+  private String name;
 
-    @Column(name = "path_")
-    private String path;
+  @Column(name = "path_")
+  private String path;
 
-    @Column(name = "component_")
-    private String component;
+  @Column(name = "component_")
+  private String component;
 
-    @Builder.Default
-    @Column(name = "visible_")
-    private boolean visible = false;
+  @Column(name = "visible_")
+  private boolean visible = false;
 
-    @Builder.Default
-    @Column(name = "status_")
-    private boolean status = false;
+  @Column(name = "status_")
+  private boolean status = false;
 
-    @Column(name = "perms_")
-    private String perms;
+  @Column(name = "perms_")
+  private String perms;
 
-    @Column(name = "icon_")
-    private String icon;
+  @Column(name = "icon_")
+  private String icon;
 
-    @Column(name = "createTime_")
-    private LocalDateTime createTime;
+  @Column(name = "createTime_")
+  private LocalDateTime createTime;
 
-    // @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "t_open_role_menu_", joinColumns = { @JoinColumn(name = "menu_id_") }, inverseJoinColumns = {
-            @JoinColumn(name = "role_id_") })
-    private Set<Role> roles;
+  // @JsonIgnore
+  @ManyToMany
+  @JoinTable(
+      name = "t_open_role_menu_", joinColumns = {@JoinColumn(name = "menu_id_")}, inverseJoinColumns = {
+          @JoinColumn(name = "role_id_")}
+  )
+  private Set<Role> roles;
 }

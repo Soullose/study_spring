@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "T_OPEN_TOKEN")
+@Table(name = "T_OPEN_TOKEN_")
 @Comment("登录认证记录表")
 public class Token extends BaseEntity implements Serializable {
 
