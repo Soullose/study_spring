@@ -1,4 +1,4 @@
-package com.wsf.infrastructure.config.datasource;
+package com.wsf.infrastructure.datasource;
 
 import javax.sql.DataSource;
 
