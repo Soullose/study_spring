@@ -1,20 +1,22 @@
 package com.wsf.infrastructure.security.service;
 
-import com.wsf.domain.enums.TokenType;
-import com.wsf.infrastructure.security.domain.*;
-import com.wsf.domain.entity.Token;
-import com.wsf.domain.entity.UserAccount;
-import com.wsf.infrastructure.security.repository.TokenRepository;
-import com.wsf.infrastructure.security.repository.UserAccountRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.Set;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import com.wsf.domain.entity.Token;
+import com.wsf.domain.entity.UserAccount;
+import com.wsf.domain.enums.TokenType;
+import com.wsf.infrastructure.security.domain.*;
+import com.wsf.infrastructure.security.repository.TokenRepository;
+import com.wsf.infrastructure.security.repository.UserAccountRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -77,14 +79,13 @@ public class AuthenticationService {
     /// 保存token
     private void saveUserToken(UserAccount account, String jwtToken) {
 //		log.info("{}",LocalDateTime.now(Clock.system(ZoneId.of("CTT",ZoneId.SHORT_IDS))));
-        Token token = Token.builder()
-                .userAccount(account)
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .createDateTime(LocalDateTime.now())
-                .build();
+        Token token = new Token();
+        token.setUserAccount(account);
+        token.setToken(jwtToken);
+        token.setTokenType(TokenType.BEARER);
+        token.setExpired(false);
+        token.setRevoked(false);
+        token.setCreateDateTime(LocalDateTime.now());
         tokenRepository.save(token);
     }
 }

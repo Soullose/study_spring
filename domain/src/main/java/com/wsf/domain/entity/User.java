@@ -1,13 +1,16 @@
 package com.wsf.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wsf.domain.BaseEntity;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.Comment;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.wsf.domain.BaseEntity;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "T_OPEN_USER_")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Comment("系统用户表")
 public class User extends BaseEntity implements Serializable {
 
 	@Serial
@@ -39,6 +43,7 @@ public class User extends BaseEntity implements Serializable {
 	private String phoneNumber;
 
 	@Column(name = "email_")
+	@Comment("邮箱")
 	private String email;
 
 	@Column(name = "create_time_")

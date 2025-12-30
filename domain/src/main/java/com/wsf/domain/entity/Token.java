@@ -1,46 +1,52 @@
 package com.wsf.domain.entity;
 
-import com.wsf.domain.BaseEntity;
-import com.wsf.domain.enums.TokenType;
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@Builder
+import org.hibernate.annotations.Comment;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.wsf.domain.BaseEntity;
+import com.wsf.domain.enums.TokenType;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "T_OPEN_TOKEN_")
+@Table(name = "T_OPEN_TOKEN")
+@Comment("登录认证记录表")
 public class Token extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -529387902106465050L;
 
-    @Column(name = "token_",length = 512)
+    @Column(length = 512)
+    @Comment("认证号")
     private String token;
 
-    @Column(name = "token_type_")
+//    @Column(name = "token_type_")
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
 
     ///到期
-    @Column(name = "expired_")
+//    @Column(name = "expired_")
     private boolean expired;
 
     ///废除
-    @Column(name = "revoked_")
+//    @Column(name = "revoked_")
     private boolean revoked;
 
     ///创建时间(登录时间)
-    @Column(name = "create_date_time_")
+//    @Column(name = "create_date_time_")
     private LocalDateTime createDateTime;
 
     @ManyToOne

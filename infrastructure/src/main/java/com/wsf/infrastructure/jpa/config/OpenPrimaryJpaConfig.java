@@ -1,5 +1,8 @@
 package com.wsf.infrastructure.jpa.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -65,9 +69,15 @@ public class OpenPrimaryJpaConfig {
 
   @Primary
   @Bean(name = "openPrimaryHibernateProperties")
-  @ConfigurationProperties(prefix = "spring.jpa.primary.hibernate")
+  @ConfigurationProperties(prefix = "spring.jpa.hibernate")
   public HibernateProperties openPrimaryHibernateProperties() {
-    return new HibernateProperties();
+    HibernateProperties hibernateProperties = new HibernateProperties();
+    hibernateProperties.setDdlAuto("update");
+    hibernateProperties.getNaming().setImplicitStrategy("org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy");
+    /// PhysicalNamingStrategyStandardImpl
+//    hibernateProperties.getNaming().setPhysicalStrategy("org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
+    hibernateProperties.getNaming().setPhysicalStrategy("org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
+    return hibernateProperties;
   }
 
   @Primary
@@ -75,8 +85,17 @@ public class OpenPrimaryJpaConfig {
   public LocalContainerEntityManagerFactoryBean openEntityManagerFactory(
       @Qualifier(value = "openDataSource") DataSource openDataSource,
       @Qualifier(value = "openPrimaryJpaProperties") JpaProperties jpaProperties,
+      @Qualifier(value = "openPrimaryHibernateProperties") HibernateProperties hibernateProperties,
       EntityManagerFactoryBuilder builder) {
-    return builder.dataSource(openDataSource).properties(jpaProperties.getProperties())
+    log.debug("创建Primary EntityManagerFactory，数据源: {}", openDataSource);
+    /// 合并 JPA 和 Hibernate 属性
+    Map<String, Object> properties = new HashMap<>();
+    properties.putAll(jpaProperties.getProperties());
+    properties.putAll(hibernateProperties.determineHibernateProperties(
+            jpaProperties.getProperties(),
+            new HibernateSettings()
+    ));
+    return builder.dataSource(openDataSource).properties(properties)
         .packages(REPOSITORY_PACKAGE, DOMAIN_PACKAGE)
         .persistenceUnit("openDS").build();
   }

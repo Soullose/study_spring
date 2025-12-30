@@ -4,6 +4,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
+import org.hibernate.annotations.Comment;
+
 import com.wsf.domain.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -19,6 +21,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "T_OPEN_ROLE_")
+@Comment("系统角色表")
 public class Role extends BaseEntity implements Serializable {
 
     @Serial
