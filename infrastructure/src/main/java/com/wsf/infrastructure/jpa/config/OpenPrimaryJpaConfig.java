@@ -1,4 +1,4 @@
-package com.wsf.infrastructure.config;
+package com.wsf.infrastructure.jpa.config;
 
 import javax.sql.DataSource;
 

@@ -3,7 +3,6 @@ package com.wsf.infrastructure.security.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wsf.infrastructure.security.filter.UserAwareRateLimitFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -30,16 +29,16 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.infrastructure.config.OpenPrimaryJpaConfig;
+import com.wsf.infrastructure.jpa.config.OpenPrimaryJpaConfig;
 import com.wsf.infrastructure.security.filter.JwtAuthenticationTokenFilter;
 import com.wsf.infrastructure.security.filter.LoginFilter;
+import com.wsf.infrastructure.security.filter.UserAwareRateLimitFilter;
 import com.wsf.infrastructure.security.handler.AccessDeniedHandlerImpl;
 import com.wsf.infrastructure.security.handler.AuthenticationEntryPointImpl;
 import com.wsf.infrastructure.security.handler.LoginSuccessHandler;
 import com.wsf.infrastructure.security.handler.LogoutHandlerImpl;
 import com.wsf.infrastructure.security.service.JwtService;
 import com.wsf.infrastructure.security.service.OpenUserDetailsService;
-import com.wsf.infrastructure.utils.RedisUtil;
 
 import lombok.RequiredArgsConstructor;
 
