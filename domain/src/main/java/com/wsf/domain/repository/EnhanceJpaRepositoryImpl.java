@@ -1,11 +1,10 @@
-package com.wsf.jpa.repository;
+package com.wsf.domain.repository;
 
 
-import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 
 /**
  * open

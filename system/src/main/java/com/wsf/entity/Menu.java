@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.wsf.domain.BaseEntity;
-import com.wsf.domain.entity.Role;
+import com.wsf.domain.model.entity.Role;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

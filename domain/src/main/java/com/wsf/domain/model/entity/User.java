@@ -1,4 +1,4 @@
-package com.wsf.domain.entity;
+package com.wsf.domain.model.entity;
 
 import java.io.Serial;
 import java.io.Serializable;

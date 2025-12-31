@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wsf.domain.entity.Token;
-import com.wsf.domain.entity.UserAccount;
 import com.wsf.domain.enums.TokenType;
+import com.wsf.domain.model.entity.Token;
+import com.wsf.domain.model.entity.UserAccount;
 import com.wsf.infrastructure.security.domain.*;
 import com.wsf.infrastructure.security.repository.TokenRepository;
 import com.wsf.infrastructure.security.repository.UserAccountRepository;
@@ -39,9 +39,12 @@ public class AuthenticationService {
         UserAccount userAccount = UserAccount.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .enabled(true)
+                .accountNonExpired(false)
+                .accountNonLocked(false)
                 .build();
 
-        UserAccount account = userAccountRepository.save(userAccount);
+        userAccountRepository.save(userAccount);
 
         // 简化注册逻辑，暂时不创建User实体
 //		String jwtToken = jwtService.generateToken(new UserAccountDetail(account));

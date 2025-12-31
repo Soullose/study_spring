@@ -1,13 +1,10 @@
-package com.wsf.jpa.repository;
+package com.wsf.domain.repository;
 
 
 
-import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
-
-import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @NoRepositoryBean
 public interface EnhanceJpaRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {

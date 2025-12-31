@@ -1,11 +1,12 @@
 package com.wsf.dto;
 
-import com.wsf.domain.entity.Role;
+import java.util.Set;
+
+import com.wsf.domain.model.entity.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 /**
  * open
