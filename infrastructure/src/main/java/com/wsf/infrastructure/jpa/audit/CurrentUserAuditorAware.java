@@ -1,4 +1,4 @@
-package com.wsf.infrastructure.jpa;
+package com.wsf.infrastructure.jpa.audit;
 
 import java.util.Optional;
 
@@ -15,7 +15,10 @@ public class CurrentUserAuditorAware implements AuditorAware<String> {
   @Override
   public Optional<String> getCurrentAuditor() {
     Optional.ofNullable(SecurityContextHolder.getContext())
-        .ifPresent(context -> log.debug("SecurityContext:{}", context));
+        .ifPresent(context -> {
+          log.debug("SecurityContext:{}", context);
+          log.debug("Authentication:{}", context.getAuthentication());
+        });
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication == null || !authentication.isAuthenticated()) {
       return Optional.empty();

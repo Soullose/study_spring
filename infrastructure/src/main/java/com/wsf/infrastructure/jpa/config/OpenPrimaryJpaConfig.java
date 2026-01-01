@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.querydsl.jpa.impl.JPAProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.infrastructure.jpa.CurrentUserAuditorAware;
+import com.wsf.infrastructure.jpa.audit.CurrentUserAuditorAware;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
