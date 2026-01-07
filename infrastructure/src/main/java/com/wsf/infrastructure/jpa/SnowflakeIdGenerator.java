@@ -1,4 +1,4 @@
-package com.wsf.jpa.id.snowflake;
+package com.wsf.infrastructure.jpa;
 
 import java.time.Instant;
 import java.util.Date;

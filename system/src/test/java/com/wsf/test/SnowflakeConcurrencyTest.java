@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.wsf.jpa.id.snowflake.SnowflakeIdGenerator;
+import com.wsf.infrastructure.jpa.SnowflakeIdGenerator;
 
 public class SnowflakeConcurrencyTest {// 测试参数配置
     private static final int THREAD_COUNT = 128;     // 并发线程数
