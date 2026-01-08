@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.wsf.domain.model.entity.Role;
 import com.wsf.domain.model.entity.UserAccount;
-import com.wsf.domain.repository.OpenRepository;
+import com.wsf.infrastructure.jpa.repository.OpenRepository;
 
 public interface RoleRepository extends OpenRepository<Role> {
 

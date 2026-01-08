@@ -7,7 +7,7 @@ package com.wsf.repository;
  */
 
 import com.wsf.domain.model.entity.User;
-import com.wsf.domain.repository.OpenRepository;
+import com.wsf.infrastructure.jpa.repository.OpenRepository;
 
 public interface UserRepository extends OpenRepository<User> {
 }

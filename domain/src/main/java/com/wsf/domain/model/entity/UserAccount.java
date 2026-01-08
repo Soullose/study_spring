@@ -19,6 +19,7 @@ import lombok.*;
 @Entity
 @Table(name = "T_USER_ACCOUNT_")
 @EntityListeners(AuditingEntityListener.class)
+//@SQLRestriction("")
 public class UserAccount extends BaseEntity implements Serializable {
 
   @Serial
@@ -54,6 +55,7 @@ public class UserAccount extends BaseEntity implements Serializable {
   @OneToMany(mappedBy = "userAccount")
   private Set<Token> tokens;
 
+  @ElementCollection(fetch = FetchType.LAZY)
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "t_open_userAccount_role_", joinColumns = {@JoinColumn(name = "userAccount_id_")}, inverseJoinColumns = {

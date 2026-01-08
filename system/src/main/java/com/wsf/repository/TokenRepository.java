@@ -2,7 +2,7 @@
 //
 //import com.wsf.entity.Token;
 //import com.wsf.entity.UserAccount;
-//import com.wsf.domain.repository.OpenRepository;
+//import com.wsf.infrastructure.jpa.repository.OpenRepository;
 //
 //import java.util.Optional;
 //import java.util.Set;

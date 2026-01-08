@@ -1,4 +1,4 @@
-package com.wsf.domain.repository;
+package com.wsf.infrastructure.jpa.repository;
 
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
