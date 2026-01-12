@@ -4,7 +4,7 @@
 //import org.mapstruct.ReportingPolicy;
 //
 //import com.wsf.domain.BaseMapper;
-//import com.wsf.domain.model.entity.User;
+//import com.wsf.infrastructure.persistence.entity.user.User;
 //import com.wsf.dto.UserDto;
 //
 //@Mapper(componentModel = "spring",uses = {RoleMapper.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)

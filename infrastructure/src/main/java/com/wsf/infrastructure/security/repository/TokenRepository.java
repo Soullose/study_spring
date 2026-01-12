@@ -7,8 +7,8 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.wsf.domain.model.entity.Token;
-import com.wsf.domain.model.entity.UserAccount;
+import com.wsf.infrastructure.persistence.entity.token.Token;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 
 public interface TokenRepository extends JpaRepository<Token, String> {
 

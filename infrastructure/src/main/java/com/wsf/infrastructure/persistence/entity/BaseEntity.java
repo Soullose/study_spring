@@ -1,11 +1,11 @@
-package com.wsf.domain;
+package com.wsf.infrastructure.persistence.entity;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.wsf.domain.annotation.BaseId;
+import com.wsf.infrastructure.jpa.id.annotation.BaseId;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.wsf.domain.model.entity;
+package com.wsf.infrastructure.persistence.entity.user;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import org.hibernate.annotations.Comment;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wsf.domain.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.BaseEntity;
 
 import jakarta.persistence.*;
 import lombok.*;

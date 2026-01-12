@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wsf.domain.enums.TokenType;
-import com.wsf.domain.model.entity.Token;
-import com.wsf.domain.model.entity.UserAccount;
+import com.wsf.infrastructure.persistence.entity.token.Token;
+import com.wsf.infrastructure.persistence.entity.token.enums.TokenType;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 import com.wsf.infrastructure.security.domain.*;
 import com.wsf.infrastructure.security.repository.TokenRepository;
 import com.wsf.infrastructure.security.repository.UserAccountRepository;

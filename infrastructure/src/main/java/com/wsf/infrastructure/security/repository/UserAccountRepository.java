@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.wsf.domain.model.entity.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 
 @Repository
 public interface UserAccountRepository

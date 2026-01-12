@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.wsf.domain.model.entity.Role;
-import com.wsf.domain.model.entity.UserAccount;
+import com.wsf.infrastructure.persistence.entity.role.Role;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String>, JpaSpecificationExecutor<Role> {

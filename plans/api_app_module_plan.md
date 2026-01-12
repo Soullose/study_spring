@@ -231,7 +231,7 @@ package com.wsf.app.service;
 
 import com.wsf.api.service.UserService;
 import com.wsf.api.dto.user.*;
-import com.wsf.domain.model.entity.User;
+import com.wsf.infrastructure.persistence.entity.user.User;
 import com.wsf.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

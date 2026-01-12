@@ -2,7 +2,7 @@ package com.wsf.dto;
 
 import java.util.Set;
 
-import com.wsf.domain.model.entity.Role;
+import com.wsf.infrastructure.persistence.entity.role.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

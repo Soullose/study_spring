@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.wsf.domain.BaseEntity;
-import com.wsf.domain.model.entity.Role;
+import com.wsf.infrastructure.persistence.entity.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.role.Role;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

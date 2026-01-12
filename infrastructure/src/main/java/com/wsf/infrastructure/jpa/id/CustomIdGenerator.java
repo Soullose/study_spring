@@ -1,4 +1,4 @@
-package com.wsf.domain;
+package com.wsf.infrastructure.jpa.id;
 
 import java.io.Serializable;
 import java.security.SecureRandom;

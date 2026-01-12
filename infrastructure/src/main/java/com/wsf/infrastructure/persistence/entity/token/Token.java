@@ -1,4 +1,4 @@
-package com.wsf.domain.model.entity;
+package com.wsf.infrastructure.persistence.entity.token;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -7,8 +7,9 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.Comment;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.wsf.domain.BaseEntity;
-import com.wsf.domain.enums.TokenType;
+import com.wsf.infrastructure.persistence.entity.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.token.enums.TokenType;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

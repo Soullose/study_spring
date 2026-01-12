@@ -6,8 +6,8 @@ package com.wsf.repository;
  * 2022-04-28 09:45
  */
 
-import com.wsf.domain.model.entity.User;
 import com.wsf.infrastructure.jpa.repository.OpenRepository;
+import com.wsf.infrastructure.persistence.entity.user.User;
 
 public interface UserRepository extends OpenRepository<User> {
 }

@@ -1,4 +1,4 @@
-package com.wsf.domain.model.entity;
+package com.wsf.infrastructure.persistence.entity.role;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -6,7 +6,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 
-import com.wsf.domain.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.user.UserAccount;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

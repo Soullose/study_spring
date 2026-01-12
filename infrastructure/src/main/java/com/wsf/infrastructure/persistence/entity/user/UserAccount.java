@@ -1,4 +1,4 @@
-package com.wsf.domain.model.entity;
+package com.wsf.infrastructure.persistence.entity.user;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.wsf.domain.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.role.Role;
+import com.wsf.infrastructure.persistence.entity.token.Token;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +21,7 @@ import lombok.*;
 @Entity
 @Table(name = "T_USER_ACCOUNT_")
 @EntityListeners(AuditingEntityListener.class)
-//@SQLRestriction("")
+// @SQLRestriction("")
 public class UserAccount extends BaseEntity implements Serializable {
 
   @Serial
