@@ -19,13 +19,13 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <commons-lang3.version>3.17.0</commons-lang3.version>
-        <commons-io.version>2.18.0</commons-io.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <commons-io.version>2.21.0</commons-io.version>
         <commons-vfs2.version>2.10.0</commons-vfs2.version>
         <guava.version>33.5.0-jre</guava.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <jjwt.version>0.12.6</jjwt.version>
-        <lombok.version>1.18.38</lombok.version>
+        <lombok.version>1.18.42</lombok.version>
         <querydsl.version>5.1.0</querydsl.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <mysql.version>9.2.0</mysql.version>
@@ -33,7 +33,7 @@
         <redisson.version>3.44.0</redisson.version>
         <cosid.version>2.11.0</cosid.version>
         <hutool.version>5.8.35</hutool.version>
-        <java-uuid.version>5.1.0</java-uuid.version>
+        <java-uuid.version>5.2.0</java-uuid.version>
         <uuid-creator.version>6.1.1</uuid-creator.version>
         <knife4j.version>4.5.0</knife4j.version>
     </properties>
