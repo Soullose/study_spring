@@ -1,11 +1,9 @@
 package com.wsf.infrastructure.common.result;
 
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public enum ResultCode implements IResultCode{
 
     SUCCESS("00000", "一切ok"),
@@ -251,9 +249,15 @@ public enum ResultCode implements IResultCode{
     EMAIL_REMINDER_SERVICE_FAILED("C0503", "邮件提醒服务失败");
 
 
-    private String code;
+    private final String code;
 
-    private String msg;
+    private final String msg;
+    
+    ResultCode(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+    
     @Override
     public String getCode() {
         return code;

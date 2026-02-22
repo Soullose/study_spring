@@ -13,15 +13,19 @@ import com.github.f4b6a3.uuid.alt.GUID;
 ///主键生成策略
 public class CustomIdGenerator implements IdentifierGenerator {
 
+	private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+
 	@Override
 	public Serializable generate(SharedSessionContractImplementor arg0, Object arg1) throws HibernateException {
-//		RandomGenerator random = RandomGenerator.getDefault();
-//		TimeOrderedEpochFactory factory = new TimeOrderedEpochFactory(random::nextLong);
-		SecureRandom secureRandom = new SecureRandom();
-		GUID guid = GUID.v7(Instant.now(), secureRandom);
-//		UUID uuid = UuidCreator.getTimeOrderedEpochPlus1();
+		return generateId();
+	}
+
+	/**
+	 * 静态方法生成ID，供非Hibernate场景使用
+	 */
+	public static String generateId() {
+		GUID guid = GUID.v7(Instant.now(), SECURE_RANDOM);
 		return guid.toString();
-//		return factory.create().toString();
 	}
 
 }
