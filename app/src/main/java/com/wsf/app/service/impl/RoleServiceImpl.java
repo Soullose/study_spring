@@ -10,7 +10,7 @@ import com.wsf.domain.model.datapermission.entity.DataPermission;
 import com.wsf.domain.repository.MenuRepository;
 import com.wsf.domain.repository.RoleRepository;
 import com.wsf.domain.repository.DataPermissionRepository;
-import com.wsf.infrastructure.jpa.id.CustomIdGenerator;
+import com.wsf.domain.service.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +30,7 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final MenuRepository menuRepository;
     private final DataPermissionRepository dataPermissionRepository;
+    private final IdGenerator idGenerator;
 
     @Override
     @Transactional
@@ -41,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
             throw new IllegalArgumentException("角色编码已存在: " + request.getCode());
         }
         
-        String roleId = CustomIdGenerator.generateId();
+        String roleId = idGenerator.generate();
         RoleName name = new RoleName(request.getName());
         
         Role role = Role.create(roleId, code, name, request.getDescription());

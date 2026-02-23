@@ -11,7 +11,7 @@ import com.wsf.domain.model.user.valueobject.PhoneNumber;
 import com.wsf.domain.model.user.valueobject.UserName;
 import com.wsf.domain.repository.UserAccountRepository;
 import com.wsf.domain.repository.UserRepository;
-import com.wsf.infrastructure.jpa.id.CustomIdGenerator;
+import com.wsf.domain.service.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserAccountRepository accountRepository;
+    private final IdGenerator idGenerator;
 
     @Override
     @Transactional
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         
         // 创建用户
-        String userId = CustomIdGenerator.generateId();
+        String userId = idGenerator.generate();
         UserName name = new UserName(
             request.getFirstName() != null ? request.getFirstName() : "",
             request.getLastName() != null ? request.getLastName() : ""
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 throw new IllegalArgumentException("创建账户时密码不能为空");
             }
             
-            String accountId = CustomIdGenerator.generateId();
+            String accountId = idGenerator.generate();
             Password password = new Password(request.getPassword(), false);
             UserAccount account = UserAccount.create(accountId, request.getUsername(), password, userId);
             accountRepository.save(account);
@@ -133,7 +134,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("用户名已被使用: " + username);
         }
         
-        String accountId = CustomIdGenerator.generateId();
+        String accountId = idGenerator.generate();
         Password pwd = new Password(password, false);
         UserAccount account = UserAccount.create(accountId, username, pwd, userId);
         accountRepository.save(account);

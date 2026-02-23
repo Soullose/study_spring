@@ -5,7 +5,7 @@ import com.wsf.api.service.MenuService;
 import com.wsf.domain.model.menu.aggregate.Menu;
 import com.wsf.domain.model.menu.valueobject.MenuType;
 import com.wsf.domain.repository.MenuRepository;
-import com.wsf.infrastructure.jpa.id.CustomIdGenerator;
+import com.wsf.domain.service.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +22,12 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository menuRepository;
+    private final IdGenerator idGenerator;
 
     @Override
     @Transactional
     public MenuDto createMenu(CreateMenuRequest request) {
-        String menuId = CustomIdGenerator.generateId();
+        String menuId = idGenerator.generate();
         
         Menu menu = switch (request.getMenuType()) {
             case "DIR" -> Menu.createDirectory(

@@ -6,7 +6,7 @@ import com.wsf.domain.model.datapermission.entity.DataPermission;
 import com.wsf.domain.model.datapermission.valueobject.DataScope;
 import com.wsf.domain.model.datapermission.valueobject.ResourceType;
 import com.wsf.domain.repository.DataPermissionRepository;
-import com.wsf.infrastructure.jpa.id.CustomIdGenerator;
+import com.wsf.domain.service.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +25,12 @@ import java.util.stream.Collectors;
 public class DataPermissionServiceImpl implements DataPermissionService {
 
     private final DataPermissionRepository dataPermissionRepository;
+    private final IdGenerator idGenerator;
 
     @Override
     @Transactional
     public DataPermissionDto createPermission(CreateDataPermissionRequest request) {
-        String permissionId = CustomIdGenerator.generateId();
+        String permissionId = idGenerator.generate();
         
         ResourceType resourceType = ResourceType.valueOf(request.getResourceType());
         DataScope dataScope = DataScope.valueOf(request.getDataScope());
