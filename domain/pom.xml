@@ -22,6 +22,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
+        <!-- Spring Context（提供 ApplicationEvent、ApplicationEventPublisher 等事件基础设施） -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
         <!-- Apache 工具库 -->
         <dependency>
             <groupId>org.apache.commons</groupId>

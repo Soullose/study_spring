@@ -3,7 +3,12 @@ package com.wsf.enums;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public enum TokenType implements EnumEvents<TokenType> {
+/**
+ * Token 类型枚举。
+ *
+ * @author wsf
+ */
+public enum TokenType {
 	BEARER(1, "Bearer");
 
 	public final int code;
@@ -14,10 +19,17 @@ public enum TokenType implements EnumEvents<TokenType> {
 		this.name = name;
 	}
 
-	@Override
-	public String Code2String(TokenType t) {
-		TokenType type = Arrays.stream(TokenType.values()).filter(tokenType -> tokenType.code == t.code).findFirst()
-				.orElseThrow(() -> new NoSuchElementException("没有找到区域类型"));
-		return type.name;
+	/**
+	 * 根据 code 获取 TokenType 名称。
+	 *
+	 * @param code Token 类型编码
+	 * @return TokenType 名称
+	 */
+	public static String codeToString(int code) {
+		return Arrays.stream(TokenType.values())
+				.filter(tokenType -> tokenType.code == code)
+				.findFirst()
+				.map(t -> t.name)
+				.orElseThrow(() -> new NoSuchElementException("没有找到 Token 类型对应的 code: " + code));
 	}
 }
