@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,20 +30,16 @@ import lombok.Setter;
 //@Component
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected final Logger log = LoggerFactory.getLogger(LoginFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginFilter.class);
 
 
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
 
     public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
 
-    public static final String SPRING_SECURITY_FORM_REMEMBER_ME_KEY = "rememberMe";
-
     private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
 
     private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
-
-    private String rememberMeParameter = SPRING_SECURITY_FORM_REMEMBER_ME_KEY;
 
 
     private boolean postOnly = true;
@@ -61,9 +56,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public LoginFilter(AuthenticationFailureHandler authenticationFailureHandler) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
         setAuthenticationFailureHandler(authenticationFailureHandler);
-    }
-    protected LoginFilter(AuthenticationManager authenticationManager) {
-        super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
     }
 
     @Override
@@ -86,7 +78,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
             setDetails(request, usernamePasswordAuthenticationToken);
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
         } catch (Exception e) {
-            log.error("attemptAuthentication error: {}", e.getMessage());
+            log.error("attemptAuthentication error: {}", e.getMessage(), e);
             throw e;
         }
     }
@@ -105,14 +97,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
             return jsonNode.get(this.usernameParameter).asText("");
         }
         return null;
-    }
-
-    @Nullable
-    protected boolean obtainRememberMe(JsonNode jsonNode) {
-        if (jsonNode.has(this.rememberMeParameter)) {
-            return jsonNode.get(this.rememberMeParameter).asBoolean(false);
-        }
-        return false;
     }
 
     protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
