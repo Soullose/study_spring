@@ -2,6 +2,8 @@ package com.wsf.domain.event;
 
 import java.time.Instant;
 
+import org.springframework.context.ApplicationEvent;
+
 /**
  * 统一领域事件基类（继承 Spring ApplicationEvent）。
  * <p>
@@ -13,6 +15,10 @@ import java.time.Instant;
  *   <li>支持 {@code @Order} 控制执行顺序</li>
  *   <li>支持 SpEL {@code condition} 条件过滤</li>
  * </ul>
+ * <p>
+ * 注意：Spring 6.x 中 {@code ApplicationEvent.getTimestamp()} 是 final 方法，
+ * 本类使用 {@code eventTimestamp} 字段存储自定义时间戳，通过 {@link #getEventTimestamp()} 访问。
+ * </p>
  *
  * @author wsf
  * @since 1.0
@@ -22,8 +28,8 @@ public abstract class BaseDomainEvent extends ApplicationEvent {
     /** 事件唯一标识（用于追踪和去重） */
     private final String eventId;
 
-    /** 事件发生时间戳（epoch millis） */
-    private final long timestamp;
+    /** 事件发生时间戳（epoch millis），因 ApplicationEvent.getTimestamp() 为 final，使用独立字段 */
+    private final long eventTimestamp;
 
     /**
      * 构造领域事件。
@@ -33,7 +39,7 @@ public abstract class BaseDomainEvent extends ApplicationEvent {
     protected BaseDomainEvent(Object source) {
         super(source);
         this.eventId = java.util.UUID.randomUUID().toString();
-        this.timestamp = Instant.now().toEpochMilli();
+        this.eventTimestamp = Instant.now().toEpochMilli();
     }
 
     /**
@@ -46,12 +52,15 @@ public abstract class BaseDomainEvent extends ApplicationEvent {
     }
 
     /**
-     * 获取事件发生时间戳。
+     * 获取自定义事件时间戳（epoch 毫秒）。
+     * <p>
+     * 与父类 {@code ApplicationEvent.getTimestamp()} 不同，此方法返回的是构造时记录的瞬时时间。
+     * </p>
      *
      * @return epoch 毫秒时间戳
      */
-    public long getTimestamp() {
-        return timestamp;
+    public long getEventTimestamp() {
+        return eventTimestamp;
     }
 
     /**
@@ -67,7 +76,8 @@ public abstract class BaseDomainEvent extends ApplicationEvent {
     public String toString() {
         return this.getClass().getSimpleName() + "{" +
                 "eventId='" + eventId + '\'' +
-                ", timestamp=" + timestamp +
+                ", eventTimestamp=" + eventTimestamp +
+                ", timestamp=" + super.getTimestamp() +
                 ", source=" + getSource() +
                 '}';
     }
