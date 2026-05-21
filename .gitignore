@@ -13,3 +13,5 @@ target/
 watch/
 
 .roo/mcp.json
+
+/htmlReport
