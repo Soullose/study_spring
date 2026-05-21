@@ -24,7 +24,7 @@ class MenuConverterTest {
         po.setId("M002");
         po.setName("系统管理");
         po.setVisible(true);
-        po.setStatus(true);
+        po.setEnabled(true);
 
         Menu domain = converter.toDomain(po);
         assertThat(domain.getId()).isEqualTo("M002");

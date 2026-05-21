@@ -32,7 +32,7 @@ public interface MenuConverter {
     @Mapping(target = "icon", source = "icon")
     @Mapping(target = "sortOrder", source = "sortOrder")
     @Mapping(target = "visible", source = "status", qualifiedByName = "statusToVisible")
-    @Mapping(target = "status", source = "status", qualifiedByName = "statusToEnabled")
+    @Mapping(target = "enabled", source = "status", qualifiedByName = "statusToEnabled")
     @Mapping(target = "externalLink", source = "externalLink")
     @Mapping(target = "cacheEnabled", source = "cacheEnabled")
     @Mapping(target = "roles", ignore = true)
@@ -50,7 +50,7 @@ public interface MenuConverter {
         MenuType menuType = po.getMenuType() != null ? po.getMenuType() : MenuType.MENU;
         MenuStatus status = new MenuStatus(
             po.getVisible() != null ? po.getVisible() : true,
-            po.getStatus() != null ? po.getStatus() : true
+            po.getEnabled() != null ? po.getEnabled() : true
         );
         
         return Menu.rebuild(

@@ -80,10 +80,10 @@ public class MenuPO extends BaseEntity {
     private Boolean visible = true;
     
     /**
-     * 状态
+     * 是否启用
      */
-    @Column(name = "status_")
-    private Boolean status = true;
+    @Column(name = "enabled_")
+    private Boolean enabled = true;
     
     /**
      * 外链地址
