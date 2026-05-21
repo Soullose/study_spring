@@ -34,6 +34,7 @@ import com.wsf.domain.model.user.valueobject.UserName;
  *
  * @author wsf
  */
+@org.junit.jupiter.api.Disabled("需要完整数据库和Redis环境，跳过集成测试")
 @SpringBootTest(classes = {
         com.wsf.StartApplication.class,
         SpringEventMigrationTest.TestConfig.class
