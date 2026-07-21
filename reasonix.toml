@@ -1,0 +1,2 @@
+[permissions]
+allow = ["Edit", "Bash(cd /home/wangsifan/dev/java-project/study_spring && if [ -f start/target/start-1.0-SNAPSHOT.jar ]; then echo \"=== jar 存在，查看 manifest ===\"; unzip -p start/target/start-1.0-SNAPSHOT.jar META-INF/MANIFEST.MF 2>/dev/null | head -30; else echo \"jar 不存在（未打包），无法查看 manifest\"; fi; echo \"=== lib 目录 ===\"; ls start/target/lib 2>/dev/null | head -5 || echo \"lib 不存在\")", "Bash(cd /home/wangsifan/dev/java-project/study_spring && bash -n start.sh && echo \"start.sh 语法 OK\" && chmod +x start.sh && echo \"已加执行权限\")"]
