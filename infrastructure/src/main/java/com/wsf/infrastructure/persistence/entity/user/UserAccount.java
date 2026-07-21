@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.wsf.infrastructure.persistence.entity.BaseEntity;
+import com.wsf.infrastructure.persistence.entity.menu.MenuPO;
 import com.wsf.infrastructure.persistence.entity.role.Role;
 import com.wsf.infrastructure.persistence.entity.token.Token;
 
@@ -65,4 +66,13 @@ public class UserAccount extends BaseEntity implements Serializable {
       }
   )
   private Set<Role> roles;
+
+  /// 账户级补充菜单（角色菜单之外的额外授权）
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "t_open_userAccount_menu_", joinColumns = {@JoinColumn(name = "userAccount_id_")}, inverseJoinColumns = {
+          @JoinColumn(name = "menu_id_")
+      }
+  )
+  private Set<MenuPO> supplementaryMenus;
 }
