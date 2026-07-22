@@ -13,6 +13,7 @@ import com.github.f4b6a3.uuid.alt.GUID;
  * 使用GUID v7生成时间有序的UUID
  * 实现domain层的IdGenerator接口
  */
+@Deprecated
 @Component
 public class UuidIdGenerator implements IdGenerator {
     

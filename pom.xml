@@ -32,7 +32,6 @@
         <mysql.version>9.2.0</mysql.version>
         <postgresql.version>42.7.5</postgresql.version>
         <redisson.version>3.44.0</redisson.version>
-        <cosid.version>2.11.0</cosid.version>
         <hutool.version>5.8.35</hutool.version>
         <java-uuid.version>5.2.0</java-uuid.version>
         <uuid-creator.version>6.1.1</uuid-creator.version>
