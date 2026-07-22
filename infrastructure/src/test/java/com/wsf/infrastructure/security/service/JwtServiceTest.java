@@ -28,7 +28,7 @@ class JwtServiceTest {
                 .build();
         UserAccountDetail userDetails = new UserAccountDetail(account);
 
-        String token = jwtService.generateToken(userDetails);
+        String token = jwtService.generateAccessToken(userDetails);
         assertThat(token).isNotNull().isNotEmpty();
     }
 
@@ -42,7 +42,7 @@ class JwtServiceTest {
                 .build();
         UserAccountDetail userDetails = new UserAccountDetail(account);
 
-        String token = jwtService.generateToken(userDetails);
+        String token = jwtService.generateAccessToken(userDetails);
         String extracted = jwtService.extractUsername(token);
 
         assertThat(extracted).isEqualTo("testuser");
@@ -58,7 +58,7 @@ class JwtServiceTest {
                 .build();
         UserAccountDetail userDetails = new UserAccountDetail(account);
 
-        String token = jwtService.generateToken(userDetails);
+        String token = jwtService.generateAccessToken(userDetails);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
 
         assertThat(isValid).isTrue();
@@ -78,7 +78,7 @@ class JwtServiceTest {
                 .enabled(true)
                 .build();
 
-        String token = jwtService.generateToken(new UserAccountDetail(accountA));
+        String token = jwtService.generateAccessToken(new UserAccountDetail(accountA));
         boolean isValid = jwtService.isTokenValid(token, new UserAccountDetail(accountB));
 
         assertThat(isValid).isFalse();

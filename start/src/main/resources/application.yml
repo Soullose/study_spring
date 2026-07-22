@@ -9,7 +9,7 @@ spring:
     ansi:
       enabled: detect
   profiles:
-    include: jpa,datasource,openapi,redis
+    include: jpa,datasource,openapi,redis,security
     #打包的程序输出的异常信息前端可以显示
 #  mvc:
 #    path-match:

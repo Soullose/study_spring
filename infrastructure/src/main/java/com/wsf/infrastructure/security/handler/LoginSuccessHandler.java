@@ -33,7 +33,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		UserAccountDetail userAccountDetail = (UserAccountDetail) authentication.getPrincipal();
 
-		String jwtToken = jwtService.generateToken(userAccountDetail);
+		String jwtToken = jwtService.generateAccessToken(userAccountDetail);
 
 		HashMap<String, String> result = new HashMap<>();
 		result.put("accessToken", jwtToken);

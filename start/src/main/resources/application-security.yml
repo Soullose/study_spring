@@ -1,0 +1,5 @@
+security:
+  jwt:
+    secret: ${JWT_SECRET:zX9cV7bN4mK2jH5gF3dS1aQ8wE6rT0yU9iL4oP7sR2uV6xY8zA1bC3dE5fG7hJ9kL1mN4oP6qR8sT2uV5wX7yZ0aB3cD6eF9gH1iJ4kL7mN0oP3qR6sT9uV2wX5yZ8}
+    access-token-ttl: PT30M      # 30 分钟
+    refresh-token-ttl: P7D       # 7 天
