@@ -1,9 +1,11 @@
 package com.wsf.infrastructure.persistence.converter;
 
+import com.wsf.domain.model.user.aggregate.User;
 import com.wsf.domain.model.user.valueobject.Email;
 import com.wsf.domain.model.user.valueobject.IdCardNumber;
 import com.wsf.domain.model.user.valueobject.PhoneNumber;
 import com.wsf.domain.model.user.valueobject.UserName;
+import com.wsf.infrastructure.persistence.entity.user.UserPO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -32,13 +34,13 @@ public interface UserConverter {
     @Mapping(target = "idCardNumber", source = "idCardNumber", qualifiedByName = "idCardToValue")
     @Mapping(target = "createTime", source = "createTime")
     @Mapping(target = "userAccount", ignore = true)
-    com.wsf.infrastructure.persistence.entity.user.User toPO(com.wsf.domain.model.user.aggregate.User user);
+    UserPO toPO(User user);
 
     /**
      * 持久化实体转领域模型
      * 由于领域模型使用rebuild静态工厂方法，这里使用default方法实现
      */
-    default com.wsf.domain.model.user.aggregate.User toDomain(com.wsf.infrastructure.persistence.entity.user.User po) {
+    default User toDomain(UserPO po) {
         if (po == null) {
             return null;
         }

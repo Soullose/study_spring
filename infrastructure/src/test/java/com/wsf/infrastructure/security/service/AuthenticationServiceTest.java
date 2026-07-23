@@ -1,9 +1,9 @@
 package com.wsf.infrastructure.security.service;
 
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 import com.wsf.infrastructure.security.domain.*;
 import com.wsf.infrastructure.security.repository.TokenRepository;
-import com.wsf.infrastructure.security.repository.UserAccountRepository;
+import com.wsf.infrastructure.security.repository.UserAccountPORepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class AuthenticationServiceTest {
     @Mock
     private TokenRepository tokenRepository;
     @Mock
-    private UserAccountRepository userAccountRepository;
+    private UserAccountPORepository userAccountRepository;
     @Mock
     private JwtService jwtService;
     @Mock

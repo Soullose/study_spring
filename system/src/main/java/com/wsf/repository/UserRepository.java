@@ -7,7 +7,7 @@ package com.wsf.repository;
  */
 
 import com.wsf.infrastructure.jpa.repository.OpenRepository;
-import com.wsf.infrastructure.persistence.entity.user.User;
+import com.wsf.infrastructure.persistence.entity.user.UserPO;
 
-public interface UserRepository extends OpenRepository<User> {
+public interface UserRepository extends OpenRepository<UserPO> {
 }

@@ -1,7 +1,9 @@
 package com.wsf.infrastructure.persistence.converter;
 
+import com.wsf.domain.model.account.aggregate.UserAccount;
 import com.wsf.domain.model.account.valueobject.AccountStatus;
 import com.wsf.domain.model.account.valueobject.Password;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -29,13 +31,13 @@ public interface UserAccountConverter {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "tokens", ignore = true)
     @Mapping(target = "roles", ignore = true)
-    com.wsf.infrastructure.persistence.entity.user.UserAccount toPO(com.wsf.domain.model.account.aggregate.UserAccount account);
+    UserAccountPO toPO(UserAccount account);
 
     /**
      * 持久化实体转领域模型
      * 由于领域模型使用rebuild静态工厂方法，这里使用default方法实现
      */
-    default com.wsf.domain.model.account.aggregate.UserAccount toDomain(com.wsf.infrastructure.persistence.entity.user.UserAccount po) {
+    default UserAccount toDomain(UserAccountPO po) {
         if (po == null) {
             return null;
         }
@@ -51,7 +53,7 @@ public interface UserAccountConverter {
         
         String userId = po.getUser() != null ? po.getUser().getId() : null;
         
-        return com.wsf.domain.model.account.aggregate.UserAccount.rebuild(
+        return UserAccount.rebuild(
             po.getId(),
             po.getUsername(),
             password,

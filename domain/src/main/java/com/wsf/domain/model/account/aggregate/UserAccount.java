@@ -16,61 +16,61 @@ import java.util.Set;
  */
 @Getter
 public class UserAccount {
-    
+
     /**
      * 账户ID
      */
     private final String id;
-    
+
     /**
      * 用户名
      */
     private final String username;
-    
+
     /**
      * 密码
      */
     private Password password;
-    
+
     /**
      * 账户状态
      */
     private AccountStatus status;
-    
+
     /**
      * 关联的用户ID（可选）
      */
     private String userId;
-    
+
     /**
      * 关联的角色列表
      */
     private final Set<Role> roles = new HashSet<>();
-    
+
     /**
      * 用户补充菜单权限
      */
     private final Set<Menu> supplementaryMenus = new HashSet<>();
-    
+
     /**
      * 用户补充数据权限
      */
     private final Set<DataPermission> supplementaryDataPermissions = new HashSet<>();
-    
+
     /**
      * 创建时间
      */
     private final LocalDateTime createTime;
-    
+
     /**
      * 更新时间
      */
     private LocalDateTime updateTime;
-    
+
     /**
      * 私有构造函数
      */
-    private UserAccount(String id, String username, Password password, 
+    private UserAccount(String id, String username, Password password,
                         AccountStatus status, String userId) {
         this.id = id;
         this.username = username;
@@ -80,7 +80,7 @@ public class UserAccount {
         this.createTime = LocalDateTime.now();
         this.updateTime = this.createTime;
     }
-    
+
     /**
      * 创建账户（工厂方法）
      */
@@ -90,7 +90,7 @@ public class UserAccount {
         }
         return new UserAccount(id, username, password, AccountStatus.normal(), userId);
     }
-    
+
     /**
      * 重建账户（从持久化层恢复）
      */
@@ -107,7 +107,7 @@ public class UserAccount {
         account.updateTime = updateTime;
         return account;
     }
-    
+
     /**
      * 更新密码
      */
@@ -115,7 +115,7 @@ public class UserAccount {
         this.password = newPassword;
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 关联用户
      */
@@ -123,7 +123,7 @@ public class UserAccount {
         this.userId = userId;
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 解除用户关联
      */
@@ -131,7 +131,7 @@ public class UserAccount {
         this.userId = null;
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 启用账户
      */
@@ -139,7 +139,7 @@ public class UserAccount {
         this.status = status.enable();
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 禁用账户
      */
@@ -147,7 +147,7 @@ public class UserAccount {
         this.status = status.disable();
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 锁定账户
      */
@@ -155,7 +155,7 @@ public class UserAccount {
         this.status = status.lock();
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 解锁账户
      */
@@ -163,7 +163,7 @@ public class UserAccount {
         this.status = status.unlock();
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 分配角色
      */
@@ -171,7 +171,7 @@ public class UserAccount {
         this.roles.add(role);
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 移除角色
      */
@@ -179,7 +179,7 @@ public class UserAccount {
         this.roles.removeIf(role -> role.getId().equals(roleId));
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 批量分配角色
      */
@@ -187,7 +187,7 @@ public class UserAccount {
         this.roles.addAll(roles);
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 清空角色
      */
@@ -195,7 +195,7 @@ public class UserAccount {
         this.roles.clear();
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 添加补充菜单权限
      */
@@ -203,7 +203,7 @@ public class UserAccount {
         this.supplementaryMenus.add(menu);
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 移除补充菜单权限
      */
@@ -211,7 +211,7 @@ public class UserAccount {
         this.supplementaryMenus.removeIf(menu -> menu.getId().equals(menuId));
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 添加补充数据权限
      */
@@ -219,7 +219,7 @@ public class UserAccount {
         this.supplementaryDataPermissions.add(permission);
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 移除补充数据权限
      */
@@ -227,14 +227,14 @@ public class UserAccount {
         this.supplementaryDataPermissions.removeIf(p -> p.getId().equals(permissionId));
         this.updateTime = LocalDateTime.now();
     }
-    
+
     /**
      * 账户是否可用
      */
     public boolean isAvailable() {
         return status.isAvailable();
     }
-    
+
     /**
      * 获取角色ID列表
      */

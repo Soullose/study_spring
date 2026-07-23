@@ -77,7 +77,7 @@ public interface MenuJpaRepository
     /**
      * 根据账户ID查找补充菜单列表
      */
-    @Query("SELECT m FROM MenuPO m JOIN UserAccount ua ON ua.id = :userAccountId WHERE m MEMBER OF ua.supplementaryMenus ORDER BY m.sortOrder ASC")
+    @Query("SELECT m FROM MenuPO m JOIN UserAccountPO ua ON ua.id = :userAccountId WHERE m MEMBER OF ua.supplementaryMenus ORDER BY m.sortOrder ASC")
     Set<MenuPO> findSupplementaryMenusByUserAccountId(String userAccountId);
     
     /**

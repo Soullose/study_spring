@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.wsf.infrastructure.persistence.entity.role.Role;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String>, JpaSpecificationExecutor<Role> {
 
-    Optional<Set<Role>> findByUserAccounts(UserAccount userAccount);
+    Optional<Set<Role>> findByUserAccounts(UserAccountPO userAccount);
 }

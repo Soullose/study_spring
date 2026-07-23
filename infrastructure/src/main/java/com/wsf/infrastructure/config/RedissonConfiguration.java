@@ -26,7 +26,18 @@ public class RedissonConfiguration {
         config.setCodec(new JsonJacksonCodec());
         SingleServerConfig singleConfig = config.useSingleServer();
         singleConfig.setAddress("redis://" + redisProperties.getHost() + ":" + redisProperties.getPort());
-        singleConfig.setPassword(redisProperties.getPassword());
+        String password = redisProperties.getPassword();
+        if (password != null && !password.isEmpty()) {
+            singleConfig.setPassword(password);
+        }
+
+        // 可选：设置超时
+        if (redisProperties.getTimeout() != null) {
+            singleConfig.setTimeout((int) redisProperties.getTimeout().toMillis());
+        }
+        if (redisProperties.getConnectTimeout() != null) {
+            singleConfig.setConnectTimeout((int) redisProperties.getConnectTimeout().toMillis());
+        }
         return Redisson.create(config);
     }
 }

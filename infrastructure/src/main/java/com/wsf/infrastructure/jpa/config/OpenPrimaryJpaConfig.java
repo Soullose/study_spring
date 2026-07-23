@@ -41,7 +41,7 @@ import jakarta.persistence.EntityManagerFactory;
     basePackages = OpenPrimaryJpaConfig.REPOSITORY_PACKAGE, entityManagerFactoryRef = "openEntityManagerFactory", transactionManagerRef = "openTransactionManager"
 )
 @EnableJpaAuditing
-@EntityScan(basePackages = OpenPrimaryJpaConfig.DOMAIN_PACKAGE)
+//@EntityScan(basePackages = OpenPrimaryJpaConfig.DOMAIN_PACKAGE)
 public class OpenPrimaryJpaConfig {
   private static final Logger log = LoggerFactory.getLogger(OpenPrimaryJpaConfig.class);
 
@@ -96,7 +96,7 @@ public class OpenPrimaryJpaConfig {
             new HibernateSettings()
     ));
     return builder.dataSource(openDataSource).properties(properties)
-        .packages(REPOSITORY_PACKAGE, DOMAIN_PACKAGE)
+        .packages(REPOSITORY_PACKAGE)
         .persistenceUnit("openDS").build();
   }
 

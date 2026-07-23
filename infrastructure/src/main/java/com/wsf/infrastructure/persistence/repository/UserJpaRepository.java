@@ -1,6 +1,6 @@
 package com.wsf.infrastructure.persistence.repository;
 
-import com.wsf.infrastructure.persistence.entity.user.User;
+import com.wsf.infrastructure.persistence.entity.user.UserPO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -14,29 +14,29 @@ import java.util.Optional;
  */
 @Repository
 public interface UserJpaRepository 
-        extends JpaRepository<User, String>, 
-                JpaSpecificationExecutor<User>,
-                QuerydslPredicateExecutor<User> {
+        extends JpaRepository<UserPO, String>,
+                JpaSpecificationExecutor<UserPO>,
+                QuerydslPredicateExecutor<UserPO> {
     
     /**
      * 根据邮箱查找用户
      */
-    Optional<User> findByEmail(String email);
+    Optional<UserPO> findByEmail(String email);
     
     /**
      * 根据手机号查找用户
      */
-    Optional<User> findByPhoneNumber(String phoneNumber);
+    Optional<UserPO> findByPhoneNumber(String phoneNumber);
     
     /**
      * 根据身份证号查找用户
      */
-    Optional<User> findByIdCardNumber(String idCardNumber);
+    Optional<UserPO> findByIdCardNumber(String idCardNumber);
     
     /**
      * 根据真实姓名模糊查询用户列表
      */
-    List<User> findByRealNameContaining(String realName);
+    List<UserPO> findByRealNameContaining(String realName);
     
     /**
      * 检查邮箱是否存在

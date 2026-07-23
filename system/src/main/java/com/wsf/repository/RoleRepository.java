@@ -5,10 +5,10 @@ import java.util.Set;
 
 import com.wsf.infrastructure.jpa.repository.OpenRepository;
 import com.wsf.infrastructure.persistence.entity.role.Role;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 public interface RoleRepository extends OpenRepository<Role> {
 
-    Optional<Set<Role>> findByUserAccounts(UserAccount userAccount);
+    Optional<Set<Role>> findByUserAccounts(UserAccountPO userAccount);
 
 }

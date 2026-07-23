@@ -79,17 +79,17 @@ public class UserAccountRepositoryImpl implements UserAccountRepository {
 
     @Override
     public void deleteById(String id) {
-        jpaRepository.deleteById(id);
+        this.deleteById(id);
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return jpaRepository.existsByUsername(username);
+        return this.existsByUsername(username);
     }
 
     @Override
     public boolean existsByUserId(String userId) {
-        return jpaRepository.findByUserId(userId).isPresent();
+        return this.findByUserId(userId).isPresent();
     }
 
     @Override

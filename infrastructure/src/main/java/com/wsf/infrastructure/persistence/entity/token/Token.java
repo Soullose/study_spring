@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.wsf.infrastructure.persistence.entity.BaseEntity;
 import com.wsf.infrastructure.persistence.entity.token.enums.TokenType;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -52,5 +52,5 @@ public class Token extends BaseEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_account_id_")
-    private UserAccount userAccount;
+    private UserAccountPO userAccount;
 }

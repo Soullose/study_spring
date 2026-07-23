@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.wsf.infrastructure.persistence.entity.role.Role;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 import lombok.Data;
 import lombok.Getter;
@@ -25,9 +25,9 @@ public class UserAccountDetail implements UserDetails {
     @Serial
     private static final long serialVersionUID = -7402378876757177613L;
 
-    private UserAccount userAccount;
+    private UserAccountPO userAccount;
 
-    public UserAccountDetail(UserAccount userAccount) {
+    public UserAccountDetail(UserAccountPO userAccount) {
         this.userAccount = userAccount;
     }
 

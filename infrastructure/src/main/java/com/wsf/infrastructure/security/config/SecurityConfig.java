@@ -58,13 +58,13 @@ public class SecurityConfig {
 
 	private final LoginSuccessHandler loginSuccessHandler;
 
-	private final LogoutHandlerImpl logoutHandler;
-
-	private final JPAQueryFactory jpaQueryFactory;
+//	private final LogoutHandlerImpl logoutHandler;
+//
+//	private final JPAQueryFactory jpaQueryFactory;
 
 //	private final RedisUtil redisUtil;
 
-	private final JwtService jwtService;
+//	private final JwtService jwtService;
 
 	private final ApplicationEventPublisher applicationEventPublisher;
 

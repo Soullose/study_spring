@@ -7,15 +7,15 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 @Repository
-public interface UserAccountRepository
+public interface UserAccountPORepository
     extends
-      JpaRepository<UserAccount, String>,
-      JpaSpecificationExecutor<UserAccount>,
-      QuerydslPredicateExecutor<UserAccount> {
+      JpaRepository<UserAccountPO, String>,
+      JpaSpecificationExecutor<UserAccountPO>,
+      QuerydslPredicateExecutor<UserAccountPO> {
 
   /// 根据用户名查询UserAccount
-  Optional<UserAccount> findByUsername(String username);
+  Optional<UserAccountPO> findByUsername(String username);
 }

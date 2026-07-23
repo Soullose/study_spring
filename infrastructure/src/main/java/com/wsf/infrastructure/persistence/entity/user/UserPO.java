@@ -13,6 +13,7 @@ import com.wsf.infrastructure.persistence.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/// 人员管理
 @Getter
 @Setter
 @ToString
@@ -24,7 +25,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Comment("系统用户表")
 @EntityListeners(AuditingEntityListener.class)
-public class User extends BaseEntity implements Serializable {
+public class UserPO extends BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 3050292059722106684L;
@@ -53,5 +54,5 @@ public class User extends BaseEntity implements Serializable {
 
   @OneToOne()
   @JoinColumn(name = "useraccount_id_")
-  private UserAccount userAccount;
+  private UserAccountPO userAccount;
 }

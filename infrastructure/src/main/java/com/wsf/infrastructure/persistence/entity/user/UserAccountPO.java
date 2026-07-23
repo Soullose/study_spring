@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
+import org.hibernate.annotations.Comment;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.wsf.infrastructure.persistence.entity.BaseEntity;
@@ -14,6 +15,7 @@ import com.wsf.infrastructure.persistence.entity.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
 
+/// 用于登录系统的账户
 @Getter
 @Setter
 @Builder
@@ -21,9 +23,10 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "T_USER_ACCOUNT_")
+@Comment("系统账户表")
 @EntityListeners(AuditingEntityListener.class)
 // @SQLRestriction("")
-public class UserAccount extends BaseEntity implements Serializable {
+public class UserAccountPO extends BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 6402450559307770244L;
@@ -52,7 +55,7 @@ public class UserAccount extends BaseEntity implements Serializable {
 
   /// 人员
   @OneToOne(mappedBy = "userAccount")
-  private User user;
+  private UserPO user;
 
   /// 登录的token
   @OneToMany(mappedBy = "userAccount")

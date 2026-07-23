@@ -1,7 +1,7 @@
 package com.wsf.infrastructure.security.service;
 
 import com.wsf.infrastructure.security.domain.UserAccountDetail;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class JwtServiceTest {
     @Test
     @DisplayName("应生成JWT Token")
     void should_generateToken() {
-        UserAccount account = UserAccount.builder()
+        UserAccountPO account = UserAccountPO.builder()
                 .username("admin")
                 .password("password")
                 .enabled(true)
@@ -35,7 +35,7 @@ class JwtServiceTest {
     @Test
     @DisplayName("应提取用户名")
     void should_extractUsername() {
-        UserAccount account = UserAccount.builder()
+        UserAccountPO account = UserAccountPO.builder()
                 .username("testuser")
                 .password("password")
                 .enabled(true)
@@ -51,7 +51,7 @@ class JwtServiceTest {
     @Test
     @DisplayName("应验证有效Token")
     void should_validateValidToken() {
-        UserAccount account = UserAccount.builder()
+        UserAccountPO account = UserAccountPO.builder()
                 .username("validuser")
                 .password("password")
                 .enabled(true)
@@ -67,12 +67,12 @@ class JwtServiceTest {
     @Test
     @DisplayName("应拒绝无效Token（用户名不匹配）")
     void should_rejectToken_when_usernameMismatch() {
-        UserAccount accountA = UserAccount.builder()
+        UserAccountPO accountA = UserAccountPO.builder()
                 .username("userA")
                 .password("password")
                 .enabled(true)
                 .build();
-        UserAccount accountB = UserAccount.builder()
+        UserAccountPO accountB = UserAccountPO.builder()
                 .username("userB")
                 .password("password")
                 .enabled(true)

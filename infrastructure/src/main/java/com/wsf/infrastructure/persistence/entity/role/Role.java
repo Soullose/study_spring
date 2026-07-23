@@ -7,7 +7,7 @@ import java.util.Set;
 import org.hibernate.annotations.Comment;
 
 import com.wsf.infrastructure.persistence.entity.BaseEntity;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,5 +35,5 @@ public class Role extends BaseEntity implements Serializable {
     private String code;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<UserAccount> userAccounts;
+    private Set<UserAccountPO> userAccounts;
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.wsf.infrastructure.persistence.entity.token.Token;
-import com.wsf.infrastructure.persistence.entity.user.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 public interface TokenRepository extends JpaRepository<Token, String> {
 
@@ -20,5 +20,5 @@ public interface TokenRepository extends JpaRepository<Token, String> {
 
     Optional<Token> findByToken(String token);
 
-    Optional<Set<Token>> findByUserAccount(UserAccount userAccount);
+    Optional<Set<Token>> findByUserAccount(UserAccountPO userAccount);
 }

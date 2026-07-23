@@ -5,10 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class RegisterResponse {
-	private String token;
+
+public record RegisterResponse(String accessToken,String refreshToken) {
 }

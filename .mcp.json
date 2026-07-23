@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "codegraph": {
+      "type": "stdio",
+      "command": "e:\\dev\\sdk\\codegraph-win32-x64\\node.exe",
+      "args": [
+        "e:\\dev\\sdk\\codegraph-win32-x64\\lib\\dist\\bin\\codegraph.js",
+        "serve",
+        "--mcp"
+      ],
+      "tier": "eager"
+    }
+  }
+}
