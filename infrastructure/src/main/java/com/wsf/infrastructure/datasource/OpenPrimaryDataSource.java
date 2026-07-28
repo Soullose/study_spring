@@ -25,6 +25,7 @@ public class OpenPrimaryDataSource {
 
 	@Primary
 	@Bean(name = "openDataSource")
+	@ConfigurationProperties(prefix = "spring.datasource.open.hikari")
 	public DataSource openDataSource() {
 		return this.openDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
 	}
