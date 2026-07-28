@@ -2,6 +2,8 @@ package com.wsf.infrastructure.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -16,11 +18,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 @Configuration
+@ConditionalOnProperty(prefix = "websocket.netty", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class NettyWebSocketServer {
     private static final Logger log = LoggerFactory.getLogger(NettyWebSocketServer.class);
 
-    // 监听端口
-    public static final int WEB_SOCKET_PORT = 8090;
+    // 监听端口（可通过配置覆盖，默认 8090）
+    @Value("${websocket.netty.port:8090}")
+    private int webSocketPort;
     // 主线程池执行器
     private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     // 子线程池执行器
@@ -55,6 +59,6 @@ public class NettyWebSocketServer {
                 .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new NettyChannelInitializer());
         /// 启动服务器，监听端口，阻塞直到启动成功
-        serverBootstrap.bind(WEB_SOCKET_PORT).sync();
+        serverBootstrap.bind(webSocketPort).sync();
     }
 }

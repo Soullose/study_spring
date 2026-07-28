@@ -16,3 +16,8 @@ spring:
 #      matching-strategy: ant_path_matcher
   application:
     name: w2-server
+
+websocket:
+  netty:
+    enabled: false   # true 启动 WebSocket 服务，false 不启动
+    port: 8090
