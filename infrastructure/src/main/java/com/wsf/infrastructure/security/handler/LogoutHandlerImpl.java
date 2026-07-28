@@ -1,5 +1,6 @@
 package com.wsf.infrastructure.security.handler;
 
+import com.wsf.infrastructure.security.service.RedisTokenStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,8 @@ public class LogoutHandlerImpl implements LogoutHandler {
 
 	private final TokenRepository tokenRepository;
 
+	private final RedisTokenStore redisTokenStore;
+
 	private static final String AUTHORIZATION = "authorization";
 
 	@Override public void logout(
@@ -41,6 +44,9 @@ public class LogoutHandlerImpl implements LogoutHandler {
 			storeToken.setExpired(true);
 			storeToken.setRevoked(true);
 			tokenRepository.save(storeToken);
+			// 补充：删除 Redis 中的 refresh token，使其立即失效
+			String userId = storeToken.getUserAccount().getId();
+			redisTokenStore.revoke(userId);
 		}
 	}
 }
