@@ -41,8 +41,8 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .enabled(true)
-                .accountNonExpired(false)
-                .accountNonLocked(false)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
                 .build();
 
         userAccountRepository.save(userAccount);
