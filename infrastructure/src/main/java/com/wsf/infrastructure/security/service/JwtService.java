@@ -20,12 +20,21 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-  @Value("${security.jwt.secret}")
+  // @Value("${security.jwt.secret}")
   private String secret;
-  @Value("${security.jwt.access-token-ttl}")
+  // @Value("${security.jwt.access-token-ttl}")
   private Duration accessTtl;
-  @Value("${security.jwt.refresh-token-ttl}")
+  // @Value("${security.jwt.refresh-token-ttl}")
   private Duration refreshTtl;
+
+  public JwtService(
+      @Value("${security.jwt.secret}") String secret,
+      @Value("${security.jwt.access-token-ttl}") Duration accessTtl,
+      @Value("${security.jwt.refresh-token-ttl}") Duration refreshTtl) {
+    this.secret = secret;
+    this.accessTtl = accessTtl;
+    this.refreshTtl = refreshTtl;
+  }
 
   public String generateAccessToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);

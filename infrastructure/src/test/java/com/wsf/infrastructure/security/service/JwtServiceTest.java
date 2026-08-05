@@ -1,12 +1,15 @@
 package com.wsf.infrastructure.security.service;
 
-import com.wsf.infrastructure.security.domain.UserAccountDetail;
-import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Duration;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
+import com.wsf.infrastructure.security.domain.UserAccountDetail;
 
 @DisplayName("JwtService 单元测试")
 class JwtServiceTest {
@@ -15,7 +18,10 @@ class JwtServiceTest {
 
     @BeforeEach
     void setUp() {
-        jwtService = new JwtService();
+        jwtService = new JwtService(
+                "zX9cV7bN4mK2jH5gF3dS1aQ8wE6rT0yU9iL4oP7sR2uV6xY8zA1bC3dE5fG7hJ9kL1mN4oP6qR8sT2uV5wX7yZ0aB3cD6eF9gH1iJ4kL7mN0oP3qR6sT9uV2wX5yZ8",
+                Duration.ofMinutes(30), Duration.ofDays(7)
+        );
     }
 
     @Test
