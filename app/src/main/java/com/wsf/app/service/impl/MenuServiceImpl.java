@@ -1,18 +1,20 @@
 package com.wsf.app.service.impl;
 
-import com.wsf.api.dto.menu.*;
-import com.wsf.api.service.MenuService;
-import com.wsf.domain.model.menu.aggregate.Menu;
-import com.wsf.domain.model.menu.valueobject.MenuType;
-import com.wsf.domain.repository.MenuRepository;
-import com.wsf.domain.service.IdGenerator;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.wsf.api.dto.menu.CreateMenuRequest;
+import com.wsf.api.dto.menu.MenuDto;
+import com.wsf.api.dto.menu.UpdateMenuRequest;
+import com.wsf.api.service.MenuService;
+import com.wsf.domain.model.menu.aggregate.Menu;
+import com.wsf.domain.repository.MenuRepository;
+import com.wsf.domain.service.IdGenerator;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 菜单服务实现
@@ -28,35 +30,35 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public MenuDto createMenu(CreateMenuRequest request) {
         String menuId = idGenerator.generate();
-        
+
         Menu menu = switch (request.getMenuType()) {
             case "DIR" -> Menu.createDirectory(
-                    menuId, 
-                    request.getName(), 
+                    menuId,
+                    request.getName(),
                     request.getParentId(),
-                    request.getIcon(), 
+                    request.getIcon(),
                     request.getSortOrder()
             );
             case "MENU" -> Menu.createMenu(
-                    menuId, 
-                    request.getName(), 
+                    menuId,
+                    request.getName(),
                     request.getParentId(),
-                    request.getPath(), 
+                    request.getPath(),
                     request.getComponent(),
-                    request.getPermission(), 
-                    request.getIcon(), 
+                    request.getPermission(),
+                    request.getIcon(),
                     request.getSortOrder()
             );
             case "BUTTON" -> Menu.createButton(
-                    menuId, 
-                    request.getName(), 
+                    menuId,
+                    request.getName(),
                     request.getParentId(),
-                    request.getPermission(), 
+                    request.getPermission(),
                     request.getSortOrder()
             );
             default -> throw new IllegalArgumentException("无效的菜单类型: " + request.getMenuType());
         };
-        
+
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
     }
@@ -66,7 +68,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto updateMenu(String menuId, UpdateMenuRequest request) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("菜单不存在: " + menuId));
-        
+
         menu.update(
                 request.getName(),
                 request.getPath(),
@@ -75,7 +77,7 @@ public class MenuServiceImpl implements MenuService {
                 request.getIcon(),
                 request.getSortOrder()
         );
-        
+
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
     }
@@ -120,7 +122,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto showMenu(String menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("菜单不存在: " + menuId));
-        
+
         menu.show();
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
@@ -131,7 +133,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto hideMenu(String menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("菜单不存在: " + menuId));
-        
+
         menu.hide();
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
@@ -142,7 +144,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto enableMenu(String menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("菜单不存在: " + menuId));
-        
+
         menu.enable();
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
@@ -153,12 +155,12 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto disableMenu(String menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("菜单不存在: " + menuId));
-        
+
         menu.disable();
         Menu savedMenu = menuRepository.save(menu);
         return toDto(savedMenu);
     }
-    
+
     /**
      * 转换为DTO（不含子菜单）
      */
@@ -181,20 +183,20 @@ public class MenuServiceImpl implements MenuService {
                 .updateTime(menu.getUpdateTime())
                 .build();
     }
-    
+
     /**
      * 转换为DTO（含子菜单）
      */
     private MenuDto toDtoWithChildren(Menu menu) {
         MenuDto dto = toDto(menu);
-        
+
         if (menu.getChildren() != null && !menu.getChildren().isEmpty()) {
             List<MenuDto> children = menu.getChildren().stream()
                     .map(this::toDtoWithChildren)
                     .toList();
             dto.setChildren(children);
         }
-        
+
         return dto;
     }
 }

@@ -1,17 +1,19 @@
 package com.wsf.infrastructure.persistence.converter;
 
-import com.wsf.domain.model.account.aggregate.UserAccount;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import com.wsf.domain.model.account.aggregate.UserAccount;
+import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
 
 @DisplayName("UserAccountConverter 转换器测试")
 class UserAccountConverterTest {
 
     private final UserAccountConverter converter = new UserAccountConverter() {
         @Override
-        public com.wsf.infrastructure.persistence.entity.user.UserAccount toPO(UserAccount account) {
+        public UserAccountPO toPO(UserAccount account) {
             return null;
         }
     };
@@ -19,7 +21,7 @@ class UserAccountConverterTest {
     @Test
     @DisplayName("应转换 PO → Domain")
     void should_convertPOToDomain() {
-        com.wsf.infrastructure.persistence.entity.user.UserAccount po = new com.wsf.infrastructure.persistence.entity.user.UserAccount();
+        UserAccountPO po = new UserAccountPO();
         po.setId("A003");
         po.setUsername("user");
         po.setPassword("hash");

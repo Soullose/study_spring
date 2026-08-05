@@ -1,17 +1,15 @@
 package com.wsf.app.service.impl;
 
-import com.wsf.api.dto.user.CreateUserRequest;
-import com.wsf.api.dto.user.UpdateUserRequest;
-import com.wsf.api.dto.user.UserDto;
-import com.wsf.domain.model.account.aggregate.UserAccount;
-import com.wsf.domain.model.account.valueobject.Password;
-import com.wsf.domain.model.user.aggregate.User;
-import com.wsf.domain.model.user.valueobject.Email;
-import com.wsf.domain.model.user.valueobject.PhoneNumber;
-import com.wsf.domain.model.user.valueobject.UserName;
-import com.wsf.domain.repository.UserAccountRepository;
-import com.wsf.domain.repository.UserRepository;
-import com.wsf.domain.service.IdGenerator;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +18,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.wsf.api.dto.user.CreateUserRequest;
+import com.wsf.api.dto.user.UpdateUserRequest;
+import com.wsf.api.dto.user.UserDto;
+import com.wsf.domain.model.user.aggregate.User;
+import com.wsf.domain.model.user.valueobject.Email;
+import com.wsf.domain.model.user.valueobject.PhoneNumber;
+import com.wsf.domain.model.user.valueobject.UserName;
+import com.wsf.domain.repository.UserAccountRepository;
+import com.wsf.domain.repository.UserRepository;
+import com.wsf.domain.service.IdGenerator;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("UserServiceImpl 单元测试")

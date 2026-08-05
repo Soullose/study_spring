@@ -1,11 +1,11 @@
 package com.wsf.domain.model.menu.aggregate;
 
-import com.wsf.domain.model.menu.valueobject.MenuStatus;
-import com.wsf.domain.model.menu.valueobject.MenuType;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import com.wsf.domain.model.menu.valueobject.MenuType;
 
 @DisplayName("Menu 聚合根测试")
 class MenuTest {
@@ -23,8 +23,10 @@ class MenuTest {
     @Test
     @DisplayName("createMenu()应创建页面类型菜单")
     void should_createMenu() {
-        Menu menu = Menu.createMenu("M002", "用户管理", "M001", "/users", "Users",
-                "sys:user:list", "user", 1);
+        Menu menu = Menu.createMenu(
+                "M002", "用户管理", "M001", "/users", "Users",
+                "sys:user:list", "user", 1
+        );
         assertThat(menu.getMenuType()).isEqualTo(MenuType.MENU);
         assertThat(menu.isMenu()).isTrue();
         assertThat(menu.getPath()).isEqualTo("/users");

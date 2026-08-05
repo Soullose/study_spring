@@ -1,5 +1,23 @@
 package com.wsf.app.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.wsf.api.dto.role.CreateRoleRequest;
 import com.wsf.api.dto.role.RoleDto;
 import com.wsf.api.dto.role.UpdateRoleRequest;
@@ -10,21 +28,6 @@ import com.wsf.domain.repository.DataPermissionRepository;
 import com.wsf.domain.repository.MenuRepository;
 import com.wsf.domain.repository.RoleRepository;
 import com.wsf.domain.service.IdGenerator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("RoleServiceImpl 单元测试")
@@ -121,7 +124,6 @@ class RoleServiceImplTest {
         roleService.deleteRole("R001");
         verify(roleRepository).deleteById("R001");
     }
-
 
     @Test
     @DisplayName("应查找所有角色")

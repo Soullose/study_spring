@@ -1,9 +1,9 @@
 package com.wsf.infrastructure.security.service;
 
-import com.wsf.infrastructure.persistence.entity.user.UserAccountPO;
-import com.wsf.infrastructure.security.domain.*;
-import com.wsf.infrastructure.security.repository.TokenRepository;
-import com.wsf.infrastructure.security.repository.UserAccountPORepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.wsf.infrastructure.security.domain.RegisterRequest;
+import com.wsf.infrastructure.security.domain.RegisterResponse;
+import com.wsf.infrastructure.security.repository.TokenRepository;
+import com.wsf.infrastructure.security.repository.UserAccountPORepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("AuthenticationService 测试")
