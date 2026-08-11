@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <conversionRule conversionWord="w2_color"
                     class="com.wsf.infrastructure.logback.W2LogbackColor"/>
 
@@ -15,7 +16,7 @@
     <appender name="DEFAULT_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="ch.qos.logback.classic.PatternLayout">
-                <pattern>%d %green([%thread]) %w2_color(%level) %boldCyan(%logger{50}) - %w2_color(%msg%n)</pattern>
+                <pattern>%d %green([%thread]) %w2_color(%level) %boldCyan(%logger{50}) - %clr(%w2_color(%msg%n))</pattern>
             </layout>
         </encoder>
     </appender>
