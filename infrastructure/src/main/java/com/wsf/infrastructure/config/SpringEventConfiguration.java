@@ -21,10 +21,10 @@ import org.springframework.security.concurrent.DelegatingSecurityContextRunnable
  * <p>
  * 提供：
  * <ul>
- *   <li>{@code eventUserExecutor} —— 用户域事件专用线程池</li>
- *   <li>{@code eventAccountExecutor} —— 账户域事件专用线程池</li>
- *   <li>{@code eventSystemExecutor} —— 系统域事件（如角色分配）专用线程池</li>
- *   <li>{@code applicationEventMulticaster} —— 自定义事件广播器（同步 + 错误处理）</li>
+ * <li>{@code eventUserExecutor} —— 用户域事件专用线程池</li>
+ * <li>{@code eventAccountExecutor} —— 账户域事件专用线程池</li>
+ * <li>{@code eventSystemExecutor} —— 系统域事件（如角色分配）专用线程池</li>
+ * <li>{@code applicationEventMulticaster} —— 自定义事件广播器（同步 + 错误处理）</li>
  * </ul>
  * 通过 {@code @Async("eventUserExecutor")} 在不同监听器上指定不同线程池，
  * 实现事件按领域的物理隔离，避免某一领域的大量事件阻塞其他领域。
@@ -58,8 +58,8 @@ public class SpringEventConfiguration implements AsyncConfigurer {
      */
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return (Throwable ex, Method method, Object... params) ->
-                log.error("Async method [{}] threw uncaught exception", method.getName(), ex);
+        return (Throwable ex, Method method, Object... params) -> log
+                .error("Async method [{}] threw uncaught exception", method.getName(), ex);
     }
 
     // ======================== 领域线程池 ========================
@@ -67,10 +67,10 @@ public class SpringEventConfiguration implements AsyncConfigurer {
     /**
      * 用户域事件线程池。
      * <ul>
-     *   <li>核心线程数 = CPU 核数（IO 密集型可适当放大）</li>
-     *   <li>最大线程数 = CPU 核数 × 2</li>
-     *   <li>队列容量 200</li>
-     *   <li>拒绝策略：CallerRunsPolicy（让调用线程执行，防止丢事件）</li>
+     * <li>核心线程数 = CPU 核数（IO 密集型可适当放大）</li>
+     * <li>最大线程数 = CPU 核数 × 2</li>
+     * <li>队列容量 200</li>
+     * <li>拒绝策略：CallerRunsPolicy（让调用线程执行，防止丢事件）</li>
      * </ul>
      */
     @Bean("eventUserExecutor")
@@ -123,9 +123,9 @@ public class SpringEventConfiguration implements AsyncConfigurer {
     /**
      * 构建标准线程池。
      *
-     * @param prefix       线程名前缀
-     * @param coreSize     核心线程数
-     * @param maxSize      最大线程数
+     * @param prefix 线程名前缀
+     * @param coreSize 核心线程数
+     * @param maxSize 最大线程数
      * @param queueCapacity 阻塞队列容量
      * @return 配置完成的 ThreadPoolTaskExecutor
      */

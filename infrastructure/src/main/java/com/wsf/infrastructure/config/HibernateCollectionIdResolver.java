@@ -1,19 +1,26 @@
 package com.wsf.infrastructure.config;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DatabindContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
-import org.hibernate.collection.internal.*;
-import org.hibernate.collection.spi.*;
-import org.hibernate.mapping.Array;
-import org.hibernate.mapping.List;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.hibernate.collection.spi.PersistentArrayHolder;
+import org.hibernate.collection.spi.PersistentBag;
+import org.hibernate.collection.spi.PersistentIdentifierBag;
+import org.hibernate.collection.spi.PersistentList;
+import org.hibernate.collection.spi.PersistentMap;
+import org.hibernate.collection.spi.PersistentSet;
+import org.hibernate.collection.spi.PersistentSortedMap;
+import org.hibernate.collection.spi.PersistentSortedSet;
+import org.hibernate.mapping.Array;
+import org.hibernate.mapping.List;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.DatabindContext;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 class HibernateCollectionIdResolver extends TypeIdResolverBase {
 
@@ -22,10 +29,13 @@ class HibernateCollectionIdResolver extends TypeIdResolverBase {
 
     @Override
     public String idFromValue(Object value) {
-        //translate from HibernanteCollection class to JDK collection class
+        // translate from HibernanteCollection class to JDK collection class
         if (value instanceof PersistentArrayHolder) {
             return Array.class.getName();
-        } else if (value instanceof PersistentBag || value instanceof PersistentIdentifierBag || value instanceof PersistentList) {
+        } else if (
+            value instanceof PersistentBag || value instanceof PersistentIdentifierBag
+                    || value instanceof PersistentList
+        ) {
             return List.class.getName();
         } else if (value instanceof PersistentSortedMap) {
             return TreeMap.class.getName();
@@ -36,7 +46,7 @@ class HibernateCollectionIdResolver extends TypeIdResolverBase {
         } else if (value instanceof PersistentSet) {
             return HashSet.class.getName();
         } else {
-            //default is JDK collection
+            // default is JDK collection
             return value.getClass().getName();
         }
     }
@@ -46,7 +56,7 @@ class HibernateCollectionIdResolver extends TypeIdResolverBase {
         return idFromValue(value);
     }
 
-    //deserialize the json annotated JDK collection class name to JavaType
+    // deserialize the json annotated JDK collection class name to JavaType
     @Override
     public JavaType typeFromId(DatabindContext ctx, String id) throws IOException {
         try {

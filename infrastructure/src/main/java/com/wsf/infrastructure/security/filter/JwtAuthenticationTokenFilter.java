@@ -72,7 +72,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 					if (isTokenValidInDb) {
 						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-								userDetails, null, authorities);
+								userDetails, null, authorities
+						);
 						/// 添加其他详细信息到身份认证中如IP地址、会话ID或任何其他相关详细信息。
 						/// 通过设置身份验证令牌的详细信息，您可以将这些信息提供给身份验证和授权过程的其他组件。
 						/// 它允许下游组件（如身份验证提供者或访问决策管理器）在身份验证和授权过程中访问和使用这些附加细节。
@@ -107,6 +108,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		// 继续后续过滤器链执行
 		filterChain.doFilter(request, response);
 	}
+
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		return request.getRequestURI().startsWith("/api/v1/auth/login");

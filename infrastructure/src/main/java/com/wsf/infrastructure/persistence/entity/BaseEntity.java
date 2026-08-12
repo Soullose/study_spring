@@ -7,19 +7,24 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import com.wsf.infrastructure.jpa.id.annotation.BaseId;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 
 /**
  * open
  * SoulLose
  * 2022-05-04 16:42
  */
-@Getter
-@Setter
+@Data
 @MappedSuperclass
 public abstract class BaseEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE, generator = "custom-id-generator")
   @BaseId
@@ -34,23 +39,5 @@ public abstract class BaseEntity {
   @LastModifiedDate // 自动填充修改时间
   @Column(name = "modify_date_", columnDefinition = "timestamp")
   private LocalDateTime modifyDate;// 修改时间
-
-  public boolean equals(Object object) {
-    if (this == object) {
-      return true;
-    }
-
-    if (id == null || object == null || getClass() != object.getClass()) {
-      return false;
-    }
-
-    final BaseEntity other = (BaseEntity) object;
-
-    return id.equals(other.id);
-  }
-
-  public int hashCode() {
-    return (id == null) ? super.hashCode() : id.hashCode();
-  }
 
 }

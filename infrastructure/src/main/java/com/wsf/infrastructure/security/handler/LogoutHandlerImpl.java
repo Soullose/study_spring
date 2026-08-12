@@ -1,6 +1,5 @@
 package com.wsf.infrastructure.security.handler;
 
-import com.wsf.infrastructure.security.service.RedisTokenStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -10,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import com.wsf.infrastructure.persistence.entity.token.Token;
 import com.wsf.infrastructure.security.repository.TokenRepository;
+import com.wsf.infrastructure.security.service.RedisTokenStore;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,11 +26,11 @@ public class LogoutHandlerImpl implements LogoutHandler {
 
 	private static final String AUTHORIZATION = "authorization";
 
-	@Override public void logout(
+	@Override
+	public void logout(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			Authentication authentication
-	) {
+			Authentication authentication) {
 
 		final String authHeader = request.getHeader(AUTHORIZATION);
 		final String jwt;
