@@ -1,8 +1,8 @@
 package com.wsf.controller.handler;
 
-import com.wsf.infrastructure.common.result.Result;
-import com.wsf.infrastructure.common.result.ResultCode;
-import lombok.extern.slf4j.Slf4j;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -10,8 +10,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import com.wsf.api.common.result.Result;
+import com.wsf.api.common.result.ResultCode;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -31,7 +33,7 @@ public class GlobalExceptionHandler {
         // 使用 Result.failed(int status, IResultCode resultCode, String msg)
         Result<Void> result = Result.failed(
                 HttpStatus.BAD_REQUEST.value(),
-                ResultCode.INVALID_USER_INPUT,  // 请确保您有该枚举常量
+                ResultCode.INVALID_USER_INPUT, // 请确保您有该枚举常量
                 errorMsg
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
@@ -45,7 +47,7 @@ public class GlobalExceptionHandler {
         log.warn("非法参数异常: {}", ex.getMessage());
         Result<Void> result = Result.failed(
                 HttpStatus.BAD_REQUEST.value(),
-                ResultCode.USER_REQUEST_PARAMETER_ERROR,        // 请确保您有该枚举常量
+                ResultCode.USER_REQUEST_PARAMETER_ERROR, // 请确保您有该枚举常量
                 ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
@@ -73,7 +75,7 @@ public class GlobalExceptionHandler {
         log.warn("状态冲突异常: {}", ex.getMessage());
         Result<Void> result = Result.failed(
                 HttpStatus.CONFLICT.value(),
-                ResultCode.USER_OPERATION_EXCEPTION,     // 请确保您有该枚举常量
+                ResultCode.USER_OPERATION_EXCEPTION, // 请确保您有该枚举常量
                 ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(result);

@@ -1,11 +1,12 @@
-package com.wsf.infrastructure.common.result;
-
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
+package com.wsf.api.common.result;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+
+import lombok.Data;
 
 @Data
 public class Result<T> implements Serializable {
@@ -35,8 +36,10 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> failed() {
-        return result(HttpStatus.INTERNAL_SERVER_ERROR.value(), ResultCode.SYSTEM_ERROR.getCode(),
-                ResultCode.SYSTEM_ERROR.getMsg(), null);
+        return result(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(), ResultCode.SYSTEM_ERROR.getCode(),
+                ResultCode.SYSTEM_ERROR.getMsg(), null
+        );
     }
 
     public static <T> Result<T> failed(String msg) {
@@ -60,8 +63,10 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> failed(IResultCode resultCode, String msg) {
-        return result(HttpStatus.INTERNAL_SERVER_ERROR.value(), resultCode.getCode(),
-                StringUtils.isNotBlank(msg) ? msg : resultCode.getMsg(), null);
+        return result(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(), resultCode.getCode(),
+                StringUtils.isNotBlank(msg) ? msg : resultCode.getMsg(), null
+        );
     }
 
     public static <T> Result<T> failed(int status, IResultCode resultCode, String msg) {

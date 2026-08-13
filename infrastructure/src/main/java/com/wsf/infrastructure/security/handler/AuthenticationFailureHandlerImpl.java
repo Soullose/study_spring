@@ -11,9 +11,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import com.wsf.infrastructure.common.result.ResultCode;
+import com.wsf.api.common.result.ResultCode;
+import com.wsf.api.utils.ResponseUtils;
 import com.wsf.infrastructure.utils.IpUtils;
-import com.wsf.infrastructure.utils.ResponseUtils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

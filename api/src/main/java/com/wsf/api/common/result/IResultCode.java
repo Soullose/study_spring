@@ -1,4 +1,4 @@
-package com.wsf.infrastructure.common.result;
+package com.wsf.api.common.result;
 
 public interface IResultCode {
 

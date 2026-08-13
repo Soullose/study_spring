@@ -1,21 +1,23 @@
 package com.wsf.infrastructure.security.handler;
 
-import com.wsf.infrastructure.security.domain.TokenPair;
-import com.wsf.infrastructure.security.domain.UserAccountDetail;
-import com.wsf.infrastructure.security.service.TokenIssueService;
-import com.wsf.infrastructure.utils.ResponseUtils;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Map;
+import com.wsf.api.utils.ResponseUtils;
+import com.wsf.infrastructure.security.domain.TokenPair;
+import com.wsf.infrastructure.security.domain.UserAccountDetail;
+import com.wsf.infrastructure.security.service.TokenIssueService;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
@@ -27,14 +29,17 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException, ServletException {
         log.debug("登录成功");
 
         UserAccountDetail userAccountDetail = (UserAccountDetail) authentication.getPrincipal();
         TokenPair pair = tokenIssueService.issue(userAccountDetail.getUserAccount());
 
-        ResponseUtils.writeSuccessMsg(response, Map.of(
-                "accessToken", pair.accessToken(),
-                "refreshToken", pair.refreshToken()));
+        ResponseUtils.writeSuccessMsg(
+                response, Map.of(
+                        "accessToken", pair.accessToken(),
+                        "refreshToken", pair.refreshToken()
+                )
+        );
     }
 }

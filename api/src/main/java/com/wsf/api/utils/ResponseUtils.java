@@ -1,4 +1,4 @@
-package com.wsf.infrastructure.utils;
+package com.wsf.api.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,8 +7,8 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import com.wsf.infrastructure.common.result.Result;
-import com.wsf.infrastructure.common.result.ResultCode;
+import com.wsf.api.common.result.Result;
+import com.wsf.api.common.result.ResultCode;
 
 import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletResponse;

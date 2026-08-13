@@ -1,17 +1,16 @@
 package com.wsf.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.context.SecurityContext;
+// import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wsf.infrastructure.security.domain.UserAccountDetail;
+// import com.querydsl.jpa.impl.JPAQueryFactory;
+// import com.wsf.infrastructure.security.domain.UserAccountDetail;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,8 +25,8 @@ public class TestController {
 	// @Autowired
 	// private UserRepository userRepository;
 
-	@Autowired
-	private JPAQueryFactory jpaQueryFactory;
+	// @Autowired
+	// private JPAQueryFactory jpaQueryFactory;
 
 	@GetMapping("/test")
 	public ResponseEntity<?> test() {
@@ -49,6 +48,7 @@ public class TestController {
 		// List<User> fetch = jpaQueryFactory.selectFrom(QUser.user).fetch();
 		return ResponseEntity.ok().build();
 	}
+
 	@Transactional
 	@GetMapping("/test2")
 	public ResponseEntity<?> test2() {
@@ -58,12 +58,12 @@ public class TestController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/employees")
-	public String employee() {
-		SecurityContext context = SecurityContextHolder.getContext();
-		Authentication authentication = context.getAuthentication();
-		UserAccountDetail principal = (UserAccountDetail) authentication.getPrincipal();
-		log.debug("当前用户:{}", principal);
-		return "人员信息";
-	}
+	// @GetMapping("/employees")
+	// public String employee() {
+	// SecurityContext context = SecurityContextHolder.getContext();
+	// Authentication authentication = context.getAuthentication();
+	// UserAccountDetail principal = (UserAccountDetail) authentication.getPrincipal();
+	// log.debug("当前用户:{}", principal);
+	// return "人员信息";
+	// }
 }

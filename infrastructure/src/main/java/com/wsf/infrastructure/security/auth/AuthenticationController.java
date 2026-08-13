@@ -1,17 +1,19 @@
 package com.wsf.infrastructure.security.auth;
 
-import com.wsf.infrastructure.common.result.Result;
-import com.wsf.infrastructure.security.domain.AuthenticateRequest;
-import com.wsf.infrastructure.security.domain.AuthenticateResponse;
-import com.wsf.infrastructure.security.domain.RegisterRequest;
-import com.wsf.infrastructure.security.domain.RegisterResponse;
-import com.wsf.infrastructure.security.service.AuthenticationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wsf.api.common.result.Result;
+import com.wsf.infrastructure.security.domain.AuthenticateRequest;
+import com.wsf.infrastructure.security.domain.AuthenticateResponse;
+import com.wsf.infrastructure.security.domain.RegisterRequest;
+import com.wsf.infrastructure.security.domain.RegisterResponse;
+import com.wsf.infrastructure.security.service.AuthenticationService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -38,8 +40,8 @@ public class AuthenticationController {
         return ResponseEntity.ok("");
     }
 
-//	@PostMapping("/refresh-token")
-//	public Result<TokenPair> refreshToken(@RequestBody @Validated RefreshRequest req) {
-//		return Result.success(service.refresh(req.getRefreshToken()));
-//	}
+    // @PostMapping("/refresh-token")
+    // public Result<TokenPair> refreshToken(@RequestBody @Validated RefreshRequest req) {
+    // return Result.success(service.refresh(req.getRefreshToken()));
+    // }
 }

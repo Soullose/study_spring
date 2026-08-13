@@ -1,7 +1,14 @@
 package com.wsf.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -43,7 +50,7 @@ public class UserController {
      * 更新用户
      * PUT /api/v1/users/{userId}
      *
-     * @param userId  用户ID
+     * @param userId 用户ID
      * @param request 更新用户请求体
      * @return 更新后的用户信息
      */
@@ -66,7 +73,7 @@ public class UserController {
      * 为用户创建账户
      * POST /api/v1/users/{userId}/account
      *
-     * @param userId    用户ID
+     * @param userId 用户ID
      * @param accountId 账户ID（请求体）
      * @return 操作结果
      */
@@ -78,7 +85,7 @@ public class UserController {
      * 解除用户账户关联
      * DELETE /api/v1/users/{userId}/account
      *
-     * @param userId    用户ID
+     * @param userId 用户ID
      * @param accountId 账户ID（请求体）
      * @return 操作结果
      */

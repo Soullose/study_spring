@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.wsf.infrastructure.common.result.ResultCode;
+import com.wsf.api.common.result.ResultCode;
+import com.wsf.api.utils.ResponseUtils;
 import com.wsf.infrastructure.security.repository.TokenRepository;
 import com.wsf.infrastructure.security.service.JwtService;
 import com.wsf.infrastructure.security.service.OpenUserDetailsService;
-import com.wsf.infrastructure.utils.ResponseUtils;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
