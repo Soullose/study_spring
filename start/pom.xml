@@ -19,14 +19,46 @@
 
     <dependencies>
         <!-- start should only start the application and depend on system -->
+
+        <!-- Application Layer Dependencies -->
         <dependency>
             <groupId>com.wsf</groupId>
-            <artifactId>system</artifactId>
+            <artifactId>api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.wsf</groupId>
             <artifactId>rest</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>infrastructure-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>infrastructure-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>infrastructure-security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wsf</groupId>
+            <artifactId>infrastructure-vfs</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -56,7 +88,7 @@
             </plugin>
             
             <!-- 复制依赖到lib目录 -->
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -74,15 +106,15 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             
             <!-- 移除Spring Boot Maven插件，因为它会创建fat JAR -->
-            <!--
+            
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            -->
+           
         </plugins>
     </build>
 

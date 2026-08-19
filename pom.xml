@@ -44,11 +44,14 @@
         <module>start</module>
         <module>infrastructure</module>
         <module>rest</module>
-        <module>system</module>
         <module>api</module>
         <module>domain</module>
         <module>app</module>
         <module>adapter</module>
+        <module>infrastructure-core</module>
+        <module>infrastructure-security</module>
+        <module>infrastructure-persistence</module>
+        <module>infrastructure-vfs</module>
     </modules>
 
     <dependencyManagement>
